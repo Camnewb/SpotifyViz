@@ -11,7 +11,9 @@ reader = csv.DictReader(open(file_path))
 graph = Graph()
 
 graph.add_all_nodes(reader)
-graph.save_graph()
+# graph.save_graph()
+graph.attach_edges()
+
 
 # Least squares it against all other nodes
 # Pick CONNECTIONS nodes with lowest difference squared score (maybe consider using a threshold)

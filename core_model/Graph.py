@@ -6,29 +6,63 @@ import os
 class Graph:
     def __init__(self):
         # Constants
-        self.USING_CONNECTION_LIMIT = True
+        self.ATTRIBUTES = ["acousticness","danceability","duration_ms",
+                            "energy","instrumentalness",
+                            "liveness","loudness","speechiness","tempo",
+                            "valence","popularity","key","mode","count"]
+        self.USING_CONNECTION_LIMIT = False
         self.NODE_CONNECTION_LIMIT = 0
-        self.NODE_CONNECTION_SCORE_THRESHOLD = 0
+        self.NODE_CONNECTION_SCORE_THRESHOLD = 100
         self.USING_EDGE_LIMIT = True
         self.EDGE_LIMIT = 0
         self.EDGE_SCORE_THRESHOLD = 0
-        self.SEED_NODES = 5
+        
 
         # initializing networkX graph
         self.graph = nx.MultiGraph()
         
-    def similarity_score(self, node1, node2):
-        pass
+    def sim_score(self, node1, node2):    
+        score = 0
+        for attr in self.ATTRIBUTES:
+            node1_attr = float(self.graph.nodes[node1][attr])
+            node2_attr = float(self.graph.nodes[node2][attr])
+            dif = node1_attr - node2_attr
+            score += dif ** 2
+
+        return score
+
+    def get_similar_nodes(self, node):
+        best = []
+
+        if self.USING_CONNECTION_LIMIT:
+            for node2 in self.graph.nodes:
+                if len(best) <= self.NODE_CONNECTION_LIMIT + 1:
+                    best.append(node2)
+                elif sim_score(best[0], node2):
+                    'RESOLVE LATER'
+                    pass 
+                    
+        else:
+            for node2 in self.graph.nodes:
+                if self.sim_score(node, node2) < self.NODE_CONNECTION_SCORE_THRESHOLD:
+                    best.append(node)
+        return best
 
     # Note: All features are being read in as strings
     def add_all_nodes(self, reader):
         for row in reader:
-            self.graph.add_node(row['artists'], attr_dict=dict(row))
+            self.graph.add_node(row['artists'], **row)
 
-    def attach_edges(self, reader):
-        # iterate through 
-
-
+    def attach_edges(self):
+        counter = 0
+        for node in self.graph.nodes:
+            counter += 1
+            if counter % 5 == 0:
+                print(counter)
+            self.get_similar_nodes(node)
+        
+        
+        
     def save_graph(self, type=0):
         os.chdir("./core_model/saved_models/") # moving wd to saved_models
 
