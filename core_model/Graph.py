@@ -16,7 +16,6 @@ class Graph:
         self.USING_EDGE_LIMIT = True
         self.EDGE_LIMIT = 0
         self.EDGE_SCORE_THRESHOLD = 0
-        
 
         # initializing networkX graph
         self.graph = nx.MultiGraph()
@@ -61,8 +60,6 @@ class Graph:
                 print(counter)
             self.get_similar_nodes(node)
         
-        
-        
     def save_graph(self, type=0):
         os.chdir("./core_model/saved_models/") # moving wd to saved_models
 
@@ -75,6 +72,3 @@ class Graph:
             nx.write_weighted_edgelist(self.graph, f"wEdegList{time_str}.csv")
 
         os.chdir('./../..') # moving working directory back to default
-        
-        
-    

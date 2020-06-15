@@ -4,7 +4,7 @@ from Graph import Graph
 
 # initialzing reader
 folder = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(folder, 'csv/data_by_artist.csv')
+file_path = os.path.join(folder, 'csv/test.csv')
 reader = csv.DictReader(open(file_path))
 
 # initialzing Graph
