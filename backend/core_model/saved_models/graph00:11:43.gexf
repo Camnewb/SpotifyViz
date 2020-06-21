@@ -1,0 +1,509 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf version="1.2" xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd">
+  <meta lastmodifieddate="2020-06-11">
+    <creator>NetworkX 2.4</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes class="node" mode="static">
+      <attribute id="0" title="attr_dict" type="string" />
+    </attributes>
+    <nodes>
+      <node id="Francisco Canaro" label="Francisco Canaro">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Francisco Canaro', 'acousticness': '0.983072342302594', 'danceability': '0.6547106307895912', 'duration_ms': '177776.51345390387', 'energy': '0.29262187913542104', 'instrumentalness': '0.4906754324261136', 'liveness': '0.20111768857520956', 'loudness': '-11.733372739303036', 'speechiness': '0.11100683722981924', 'tempo': '123.60878561976185', 'valence': '0.7464689016321132', 'popularity': '0.054256726951918834', 'key': '2', 'mode': '1', 'count': '2267'}" />
+        </attvalues>
+      </node>
+      <node id="Frédéric Chopin" label="Frédéric Chopin">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Frédéric Chopin', 'acousticness': '0.9899606741573084', 'danceability': '0.3400870786516855', 'duration_ms': '251871.94850187266', 'energy': '0.1068738389513109', 'instrumentalness': '0.8768992780898869', 'liveness': '0.15567743445692905', 'loudness': '-22.57557771535583', 'speechiness': '0.04291348314606748', 'tempo': '90.97777247191023', 'valence': '0.2036439138576776', 'popularity': '5.74812734082397', 'key': '1', 'mode': '1', 'count': '1068'}" />
+        </attvalues>
+      </node>
+      <node id="Ludwig van Beethoven" label="Ludwig van Beethoven">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Ludwig van Beethoven', 'acousticness': '0.955018652849742', 'danceability': '0.34015730569948216', 'duration_ms': '439361.3316062176', 'energy': '0.1531761658031087', 'instrumentalness': '0.6907695239378229', 'liveness': '0.1640777202072538', 'loudness': '-20.107703626943017', 'speechiness': '0.055549844559585435', 'tempo': '104.83353575129536', 'valence': '0.26025492227979263', 'popularity': '5.237305699481865', 'key': '0', 'mode': '1', 'count': '965'}" />
+        </attvalues>
+      </node>
+      <node id="Wolfgang Amadeus Mozart" label="Wolfgang Amadeus Mozart">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Wolfgang Amadeus Mozart', 'acousticness': '0.9620839378238376', 'danceability': '0.3538952331606218', 'duration_ms': '327808.0373056995', 'energy': '0.13834816580310869', 'instrumentalness': '0.5148373379170976', 'liveness': '0.18709056994818699', 'loudness': '-20.214154404145077', 'speechiness': '0.06775595854922277', 'tempo': '108.59492020725395', 'valence': '0.33285523316062177', 'popularity': '9.624870466321244', 'key': '7', 'mode': '1', 'count': '965'}" />
+        </attvalues>
+      </node>
+      <node id="Johann Sebastian Bach" label="Johann Sebastian Bach">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Johann Sebastian Bach', 'acousticness': '0.9584049945711216', 'danceability': '0.3542243213897936', 'duration_ms': '203461.7578718784', 'energy': '0.20193230184581995', 'instrumentalness': '0.7443224756026062', 'liveness': '0.16583669923995653', 'loudness': '-20.93651791530944', 'speechiness': '0.04884375678610207', 'tempo': '106.5518686210642', 'valence': '0.5705261672095548', 'popularity': '14.704668838219328', 'key': '7', 'mode': '1', 'count': '921'}" />
+        </attvalues>
+      </node>
+      <node id="Igor Stravinsky" label="Igor Stravinsky">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Igor Stravinsky', 'acousticness': '0.9186965425531928', 'danceability': '0.34009973404255306', 'duration_ms': '186150.28723404254', 'energy': '0.20999595079787245', 'instrumentalness': '0.6015250176595741', 'liveness': '0.2338039893617018', 'loudness': '-20.366152925531914', 'speechiness': '0.057502127659574485', 'tempo': '107.55557313829794', 'valence': '0.2351473404255319', 'popularity': '1.0398936170212767', 'key': '0', 'mode': '1', 'count': '752'}" />
+        </attvalues>
+      </node>
+      <node id="Frank Sinatra" label="Frank Sinatra">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Frank Sinatra', 'acousticness': '0.7379014945652173', 'danceability': '0.3873029891304352', 'duration_ms': '189419.5516304348', 'energy': '0.23644239130434824', 'instrumentalness': '0.020025567771739132', 'liveness': '0.228494429347826', 'loudness': '-14.268798913043476', 'speechiness': '0.04747622282608695', 'tempo': '110.19835733695648', 'valence': '0.3642320652173913', 'popularity': '26.26358695652174', 'key': '5', 'mode': '1', 'count': '736'}" />
+        </attvalues>
+      </node>
+      <node id="Giuseppe Verdi" label="Giuseppe Verdi">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Giuseppe Verdi', 'acousticness': '0.9569007299270078', 'danceability': '0.3694925547445258', 'duration_ms': '209247.50802919708', 'energy': '0.18495694890510933', 'instrumentalness': '0.08220480725547437', 'liveness': '0.26452189781021884', 'loudness': '-17.133328467153262', 'speechiness': '0.09350467153284664', 'tempo': '100.32364379562055', 'valence': '0.230716788321168', 'popularity': '2.2948905109489046', 'key': '0', 'mode': '1', 'count': '685'}" />
+        </attvalues>
+      </node>
+      <node id="Billie Holiday" label="Billie Holiday">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Billie Holiday', 'acousticness': '0.9126907216494856', 'danceability': '0.5856170839469808', 'duration_ms': '185348.74226804124', 'energy': '0.20344300441826232', 'instrumentalness': '0.013548102886597937', 'liveness': '0.21263740795287212', 'loudness': '-13.038502209131089', 'speechiness': '0.057381148748159035', 'tempo': '110.265060382916', 'valence': '0.5172703976435941', 'popularity': '14.957290132547865', 'key': '5', 'mode': '1', 'count': '679'}" />
+        </attvalues>
+      </node>
+      <node id="Ignacio Corsini" label="Ignacio Corsini">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Ignacio Corsini', 'acousticness': '0.9852377952755932', 'danceability': '0.5449275590551189', 'duration_ms': '154427.64409448818', 'energy': '0.1878934645669288', 'instrumentalness': '0.4278313772440943', 'liveness': '0.18246488188976365', 'loudness': '-20.875118110236247', 'speechiness': '0.12111826771653555', 'tempo': '106.57927401574808', 'valence': '0.6387999999999999', 'popularity': '0.02047244094488189', 'key': '5', 'mode': '1', 'count': '635'}" />
+        </attvalues>
+      </node>
+      <node id="Arturo Toscanini" label="Arturo Toscanini">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Arturo Toscanini', 'acousticness': '0.9187466034755136', 'danceability': '0.3168638230647708', 'duration_ms': '321346.0900473933', 'energy': '0.20435298578199068', 'instrumentalness': '0.481935857109005', 'liveness': '0.2752102685624013', 'loudness': '-17.080761453396505', 'speechiness': '0.057923222748815124', 'tempo': '102.5062496050554', 'valence': '0.28148657187993703', 'popularity': '0.3048973143759874', 'key': '0', 'mode': '1', 'count': '633'}" />
+        </attvalues>
+      </node>
+      <node id="Vladimir Horowitz" label="Vladimir Horowitz">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Vladimir Horowitz', 'acousticness': '0.9898000000000028', 'danceability': '0.3424370967741933', 'duration_ms': '273592.6580645161', 'energy': '0.119778258064516', 'instrumentalness': '0.8795927419354844', 'liveness': '0.18347403225806425', 'loudness': '-23.126467741935468', 'speechiness': '0.043261612903225874', 'tempo': '95.07533064516115', 'valence': '0.2254000000000002', 'popularity': '3.6564516129032256', 'key': '1', 'mode': '1', 'count': '620'}" />
+        </attvalues>
+      </node>
+      <node id="New York Philharmonic" label="New York Philharmonic">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'New York Philharmonic', 'acousticness': '0.8902585365853654', 'danceability': '0.2784645528455284', 'duration_ms': '419538.931707317', 'energy': '0.19938944715447166', 'instrumentalness': '0.6394318377235771', 'liveness': '0.21238211382113814', 'loudness': '-18.859439024390237', 'speechiness': '0.04947186991869923', 'tempo': '103.98466991869921', 'valence': '0.20698032520325207', 'popularity': '6.700813008130082', 'key': '5', 'mode': '1', 'count': '615'}" />
+        </attvalues>
+      </node>
+      <node id="Johnny Cash" label="Johnny Cash">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Johnny Cash', 'acousticness': '0.6687209168081507', 'danceability': '0.6188913412563665', 'duration_ms': '163941.8234295416', 'energy': '0.4522205432937182', 'instrumentalness': '0.02197428129032257', 'liveness': '0.2434755517826826', 'loudness': '-11.609943972835305', 'speechiness': '0.09559371816638376', 'tempo': '114.82901867572151', 'valence': '0.6807285229202035', 'popularity': '27.11375212224109', 'key': '10', 'mode': '1', 'count': '589'}" />
+        </attvalues>
+      </node>
+      <node id="Bob Dylan" label="Bob Dylan">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Bob Dylan', 'acousticness': '0.5604538905565859', 'danceability': '0.5122402597402598', 'duration_ms': '257476.3098330241', 'energy': '0.4767400742115021', 'instrumentalness': '0.032994623135436', 'liveness': '0.3121499072356215', 'loudness': '-11.25659369202225', 'speechiness': '0.06493358070500925', 'tempo': '125.70258812615944', 'valence': '0.5528734693877555', 'popularity': '30.97402597402597', 'key': '7', 'mode': '1', 'count': '539'}" />
+        </attvalues>
+      </node>
+      <node id="The Rolling Stones" label="The Rolling Stones">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'The Rolling Stones', 'acousticness': '0.2942927388805969', 'danceability': '0.5243638059701492', 'duration_ms': '229349.7891791045', 'energy': '0.7193768656716417', 'instrumentalness': '0.17677898143656734', 'liveness': '0.268068843283582', 'loudness': '-7.797065298507467', 'speechiness': '0.052302798507462674', 'tempo': '124.1476007462687', 'valence': '0.6518585820895515', 'popularity': '34.42723880597015', 'key': '0', 'mode': '1', 'count': '536'}" />
+        </attvalues>
+      </node>
+      <node id="Elvis Presley" label="Elvis Presley">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Elvis Presley', 'acousticness': '0.7357121324110673', 'danceability': '0.4964584980237148', 'duration_ms': '156182.41699604742', 'energy': '0.4294729249011859', 'instrumentalness': '0.052367134071146314', 'liveness': '0.24818023715415005', 'loudness': '-12.856581027667975', 'speechiness': '0.05845395256917001', 'tempo': '111.88876877470365', 'valence': '0.6247766798418972', 'popularity': '33.58893280632411', 'key': '0', 'mode': '1', 'count': '506'}" />
+        </attvalues>
+      </node>
+      <node id="Ella Fitzgerald" label="Ella Fitzgerald">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Ella Fitzgerald', 'acousticness': '0.8334376237623758', 'danceability': '0.4375544554455444', 'duration_ms': '213890.2118811881', 'energy': '0.2353433663366338', 'instrumentalness': '0.004389204039603961', 'liveness': '0.20965504950495054', 'loudness': '-13.437958415841598', 'speechiness': '0.061368118811881124', 'tempo': '109.59559009901', 'valence': '0.3954299009900992', 'popularity': '22.186138613861385', 'key': '0', 'mode': '1', 'count': '505'}" />
+        </attvalues>
+      </node>
+      <node id="Lata Mangeshkar" label="Lata Mangeshkar">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Lata Mangeshkar', 'acousticness': '0.9420588235294134', 'danceability': '0.5014868154158214', 'duration_ms': '217429.08924949288', 'energy': '0.3136178498985798', 'instrumentalness': '0.2540633784584176', 'liveness': '0.21507058823529407', 'loudness': '-12.231494929006093', 'speechiness': '0.08489655172413789', 'tempo': '115.85504056795129', 'valence': '0.6577139959432051', 'popularity': '3.983772819472617', 'key': '1', 'mode': '1', 'count': '493'}" />
+        </attvalues>
+      </node>
+      <node id="Leonard Bernstein" label="Leonard Bernstein">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Leonard Bernstein', 'acousticness': '0.8678897959183668', 'danceability': '0.3127630612244898', 'duration_ms': '339839.74489795923', 'energy': '0.221400112244898', 'instrumentalness': '0.5413700557755102', 'liveness': '0.2266824489795917', 'loudness': '-19.06776530612245', 'speechiness': '0.08058693877551026', 'tempo': '103.52505510204077', 'valence': '0.2327163265306121', 'popularity': '11.851020408163267', 'key': '0', 'mode': '1', 'count': '490'}" />
+        </attvalues>
+      </node>
+      <node id="The Beach Boys" label="The Beach Boys">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'The Beach Boys', 'acousticness': '0.4050373621399176', 'danceability': '0.5052181069958845', 'duration_ms': '148191.9938271605', 'energy': '0.5300380658436216', 'instrumentalness': '0.11656899432098765', 'liveness': '0.19324032921810694', 'loudness': '-9.9158683127572', 'speechiness': '0.044099382716049434', 'tempo': '125.84536213991774', 'valence': '0.6375481481481484', 'popularity': '27.34567901234568', 'key': '9', 'mode': '1', 'count': '486'}" />
+        </attvalues>
+      </node>
+      <node id="Miles Davis" label="Miles Davis">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Miles Davis', 'acousticness': '0.6625046268656718', 'danceability': '0.4594311300639656', 'duration_ms': '396823.5586353944', 'energy': '0.3048106396588484', 'instrumentalness': '0.20579061503198315', 'liveness': '0.2245695095948827', 'loudness': '-14.609889125799556', 'speechiness': '0.055199360341151374', 'tempo': '113.14600426439219', 'valence': '0.4158349680170577', 'popularity': '22.78038379530917', 'key': '0', 'mode': '0', 'count': '469'}" />
+        </attvalues>
+      </node>
+      <node id="Charlo" label="Charlo">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Charlo', 'acousticness': '0.9895472103004322', 'danceability': '0.6837017167381978', 'duration_ms': '182715.1909871245', 'energy': '0.2566652360515021', 'instrumentalness': '0.41228312330472106', 'liveness': '0.21131802575107286', 'loudness': '-11.563186695278967', 'speechiness': '0.13166824034334765', 'tempo': '124.45155793991415', 'valence': '0.7430901287553651', 'popularity': '0.03433476394849785', 'key': '2', 'mode': '1', 'count': '466'}" />
+        </attvalues>
+      </node>
+      <node id="Glenn Gould" label="Glenn Gould">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Glenn Gould', 'acousticness': '0.9800995575221256', 'danceability': '0.3611424778761061', 'duration_ms': '210707.56194690266', 'energy': '0.22124716814159268', 'instrumentalness': '0.8590305840707959', 'liveness': '0.14164623893805325', 'loudness': '-21.88109734513275', 'speechiness': '0.04709026548672568', 'tempo': '109.72236061946907', 'valence': '0.6229506637168145', 'popularity': '19.254424778761067', 'key': '7', 'mode': '1', 'count': '452'}" />
+        </attvalues>
+      </node>
+      <node id="Queen" label="Queen">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Queen', 'acousticness': '0.28331226420581657', 'danceability': '0.4547221476510067', 'duration_ms': '231039.55704697987', 'energy': '0.6048747203579419', 'instrumentalness': '0.03557289731543625', 'liveness': '0.2720436241610737', 'loudness': '-9.806299776286352', 'speechiness': '0.0716883668903803', 'tempo': '117.18073154362413', 'valence': '0.4326809843400447', 'popularity': '32.41834451901566', 'key': '2', 'mode': '1', 'count': '447'}" />
+        </attvalues>
+      </node>
+      <node id="Columbia Symphony Orchestra" label="Columbia Symphony Orchestra">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Columbia Symphony Orchestra', 'acousticness': '0.9281303370786524', 'danceability': '0.3003112359550561', 'duration_ms': '304988.4337078652', 'energy': '0.19693801797752805', 'instrumentalness': '0.6140165074606743', 'liveness': '0.21844089887640464', 'loudness': '-19.866624719101136', 'speechiness': '0.04565752808988768', 'tempo': '104.95956179775284', 'valence': '0.2214177528089888', 'popularity': '4.462921348314606', 'key': '0', 'mode': '1', 'count': '445'}" />
+        </attvalues>
+      </node>
+      <node id="Dean Martin" label="Dean Martin">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Dean Martin', 'acousticness': '0.8652004504504502', 'danceability': '0.4684761261261264', 'duration_ms': '160703.23423423426', 'energy': '0.2178923423423424', 'instrumentalness': '0.026072865810810808', 'liveness': '0.17684144144144134', 'loudness': '-14.457869369369385', 'speechiness': '0.04454729729729733', 'tempo': '111.49340090090082', 'valence': '0.4783033783783784', 'popularity': '19.511261261261264', 'key': '7', 'mode': '1', 'count': '444'}" />
+        </attvalues>
+      </node>
+      <node id="Jascha Heifetz" label="Jascha Heifetz">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Jascha Heifetz', 'acousticness': '0.9420270880361179', 'danceability': '0.3408259593679454', 'duration_ms': '335931.0519187359', 'energy': '0.18153216704288952', 'instrumentalness': '0.4960790361173812', 'liveness': '0.2026241534988714', 'loudness': '-19.067514672686226', 'speechiness': '0.0580821670428894', 'tempo': '105.42274040632051', 'valence': '0.3564893905191873', 'popularity': '2.46726862302483', 'key': '2', 'mode': '1', 'count': '443'}" />
+        </attvalues>
+      </node>
+      <node id="The Beatles" label="The Beatles">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'The Beatles', 'acousticness': '0.3610657009638553', 'danceability': '0.5221178313253014', 'duration_ms': '174665.99759036145', 'energy': '0.5463308433734942', 'instrumentalness': '0.05163805542168677', 'liveness': '0.22308530120481931', 'loudness': '-9.688185542168679', 'speechiness': '0.05327542168674701', 'tempo': '121.08298313253005', 'valence': '0.616364819277108', 'popularity': '48.419277108433725', 'key': '0', 'mode': '1', 'count': '415'}" />
+        </attvalues>
+      </node>
+      <node id="Giacomo Puccini" label="Giacomo Puccini">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Giacomo Puccini', 'acousticness': '0.9701577669902924', 'danceability': '0.2875912621359224', 'duration_ms': '211903.85922330094', 'energy': '0.1758696844660194', 'instrumentalness': '0.08378133480582524', 'liveness': '0.2610131067961164', 'loudness': '-17.31633980582526', 'speechiness': '0.060725000000000064', 'tempo': '100.83425728155336', 'valence': '0.1689966019417474', 'popularity': '7.939320388349516', 'key': '2', 'mode': '1', 'count': '412'}" />
+        </attvalues>
+      </node>
+      <node id="William Kapell" label="William Kapell">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'William Kapell', 'acousticness': '0.9691995049504964', 'danceability': '0.3764183168316833', 'duration_ms': '212588.6534653465', 'energy': '0.16587371782178206', 'instrumentalness': '0.7716423260148523', 'liveness': '0.21422599009900972', 'loudness': '-20.93613118811884', 'speechiness': '0.05450915841584159', 'tempo': '101.3189084158416', 'valence': '0.3052282178217824', 'popularity': '0.037128712871287134', 'key': '2', 'mode': '1', 'count': '404'}" />
+        </attvalues>
+      </node>
+      <node id="Fleetwood Mac" label="Fleetwood Mac">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Fleetwood Mac', 'acousticness': '0.35876493969465656', 'danceability': '0.5767582697201016', 'duration_ms': '239610.31043257', 'energy': '0.5206017811704832', 'instrumentalness': '0.13642447236641222', 'liveness': '0.2428605597964376', 'loudness': '-12.031832061068695', 'speechiness': '0.04142264631043257', 'tempo': '123.21703562340952', 'valence': '0.6062643765903311', 'popularity': '35.20356234096692', 'key': '9', 'mode': '1', 'count': '393'}" />
+        </attvalues>
+      </node>
+      <node id="Wiener Philharmoniker" label="Wiener Philharmoniker">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Wiener Philharmoniker', 'acousticness': '0.9284067796610168', 'danceability': '0.3054638418079098', 'duration_ms': '371608.7288135594', 'energy': '0.18542096045197745', 'instrumentalness': '0.2909935496610172', 'liveness': '0.2820974576271184', 'loudness': '-19.518988700564968', 'speechiness': '0.08348050847457622', 'tempo': '104.17616949152544', 'valence': '0.2344590395480225', 'popularity': '6.661016949152543', 'key': '10', 'mode': '1', 'count': '354'}" />
+        </attvalues>
+      </node>
+      <node id="Lead Belly" label="Lead Belly">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Lead Belly', 'acousticness': '0.93756484149856', 'danceability': '0.5821498559077806', 'duration_ms': '165797.04034582133', 'energy': '0.3530570605187321', 'instrumentalness': '0.12844645345821318', 'liveness': '0.20165417867435165', 'loudness': '-11.993717579250715', 'speechiness': '0.16539711815561955', 'tempo': '119.87739481268005', 'valence': '0.734704899135447', 'popularity': '2.8991354466858787', 'key': '4', 'mode': '1', 'count': '347'}" />
+        </attvalues>
+      </node>
+      <node id="Claude Debussy" label="Claude Debussy">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Claude Debussy', 'acousticness': '0.9691114369501476', 'danceability': '0.3215252199413487', 'duration_ms': '225724.53372434014', 'energy': '0.0849007038123168', 'instrumentalness': '0.6309286755131966', 'liveness': '0.15829824046920807', 'loudness': '-24.52395014662757', 'speechiness': '0.048234310850439895', 'tempo': '100.0261085043988', 'valence': '0.12142316715542525', 'popularity': '5.93841642228739', 'key': '1', 'mode': '1', 'count': '341'}" />
+        </attvalues>
+      </node>
+      <node id="Led Zeppelin" label="Led Zeppelin">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Led Zeppelin', 'acousticness': '0.22209213813813827', 'danceability': '0.4204144144144146', 'duration_ms': '325075.5015015015', 'energy': '0.6889279279279275', 'instrumentalness': '0.15940982867867876', 'liveness': '0.2278570570570569', 'loudness': '-10.228594594594602', 'speechiness': '0.06243873873873869', 'tempo': '119.0753093093093', 'valence': '0.5054348348348345', 'popularity': '41.729729729729726', 'key': '2', 'mode': '1', 'count': '333'}" />
+        </attvalues>
+      </node>
+      <node id="Johannes Brahms" label="Johannes Brahms">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Johannes Brahms', 'acousticness': '0.9389066265060242', 'danceability': '0.285977108433735', 'duration_ms': '426860.0662650602', 'energy': '0.16151635542168669', 'instrumentalness': '0.7106706193072286', 'liveness': '0.1593213855421686', 'loudness': '-18.85319879518072', 'speechiness': '0.0432298192771084', 'tempo': '100.19592168674693', 'valence': '0.21699999999999992', 'popularity': '4.53012048192771', 'key': '10', 'mode': '1', 'count': '332'}" />
+        </attvalues>
+      </node>
+      <node id="Arthur Rubinstein" label="Arthur Rubinstein">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Arthur Rubinstein', 'acousticness': '0.988963636363638', 'danceability': '0.3490484848484851', 'duration_ms': '309960.6', 'energy': '0.10114318181818177', 'instrumentalness': '0.8520179580909092', 'liveness': '0.1410057575757575', 'loudness': '-22.63443939393939', 'speechiness': '0.06111303030303036', 'tempo': '93.86317272727273', 'valence': '0.20853030303030293', 'popularity': '7.590909090909091', 'key': '1', 'mode': '1', 'count': '330'}" />
+        </attvalues>
+      </node>
+      <node id="Drake" label="Drake">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Drake', 'acousticness': '0.19610612852664586', 'danceability': '0.6747586206896551', 'duration_ms': '247976.3260188088', 'energy': '0.5868514106583075', 'instrumentalness': '0.006153556865203762', 'liveness': '0.1927009404388713', 'loudness': '-7.43633855799373', 'speechiness': '0.2260188087774294', 'tempo': '119.91527272727265', 'valence': '0.3832169278996862', 'popularity': '62.00313479623824', 'key': '1', 'mode': '1', 'count': '319'}" />
+        </attvalues>
+      </node>
+      <node id="Duke Ellington" label="Duke Ellington">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Duke Ellington', 'acousticness': '0.7582753993610221', 'danceability': '0.4721878594249204', 'duration_ms': '244510.46006389774', 'energy': '0.28008153354632576', 'instrumentalness': '0.3383584694568691', 'liveness': '0.24964792332268365', 'loudness': '-15.614198083067107', 'speechiness': '0.08159648562300317', 'tempo': '111.81959424920124', 'valence': '0.4447984025559106', 'popularity': '14.833865814696484', 'key': '5', 'mode': '1', 'count': '313'}" />
+        </attvalues>
+      </node>
+      <node id="London Symphony Orchestra" label="London Symphony Orchestra">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'London Symphony Orchestra', 'acousticness': '0.8367203594771241', 'danceability': '0.2433980392156864', 'duration_ms': '314399.5784313725', 'energy': '0.19393570261437926', 'instrumentalness': '0.7277078630392153', 'liveness': '0.16418202614379074', 'loudness': '-19.970189542483638', 'speechiness': '0.04545882352941177', 'tempo': '102.89705882352938', 'valence': '0.13576764705882352', 'popularity': '28.781045751633982', 'key': '0', 'mode': '1', 'count': '306'}" />
+        </attvalues>
+      </node>
+      <node id="Count Basie" label="Count Basie">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Count Basie', 'acousticness': '0.7684617647058818', 'danceability': '0.5533071895424829', 'duration_ms': '194180.7516339869', 'energy': '0.3599405228758171', 'instrumentalness': '0.2068893291503268', 'liveness': '0.18343006535947715', 'loudness': '-12.172568627450989', 'speechiness': '0.06571601307189541', 'tempo': '122.93484967320265', 'valence': '0.6088535947712413', 'popularity': '13.431372549019608', 'key': '5', 'mode': '1', 'count': '306'}" />
+        </attvalues>
+      </node>
+      <node id="Louis Armstrong" label="Louis Armstrong">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Louis Armstrong', 'acousticness': '0.7888519736842102', 'danceability': '0.5477796052631578', 'duration_ms': '229212.36513157893', 'energy': '0.28155164473684197', 'instrumentalness': '0.09485172796052634', 'liveness': '0.2758914473684209', 'loudness': '-13.111223684210534', 'speechiness': '0.09965493421052628', 'tempo': '110.79336184210514', 'valence': '0.5201138157894742', 'popularity': '20.25', 'key': '0', 'mode': '1', 'count': '304'}" />
+        </attvalues>
+      </node>
+      <node id="John Williams" label="John Williams">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'John Williams', 'acousticness': '0.8244729372937295', 'danceability': '0.26676171617161715', 'duration_ms': '257045.74587458745', 'energy': '0.19186495049504976', 'instrumentalness': '0.7352573822772277', 'liveness': '0.1536336633663367', 'loudness': '-20.297300330032996', 'speechiness': '0.04699867986798677', 'tempo': '102.24020132013206', 'valence': '0.16127854785478546', 'popularity': '37.39273927392739', 'key': '2', 'mode': '1', 'count': '303'}" />
+        </attvalues>
+      </node>
+      <node id="Eminem" label="Eminem">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Eminem', 'acousticness': '0.15050909666666662', 'danceability': '0.7255833333333331', 'duration_ms': '259956.94333333327', 'energy': '0.7408256666666664', 'instrumentalness': '0.008983149666666667', 'liveness': '0.25174', 'loudness': '-5.1359999999999975', 'speechiness': '0.2713736666666667', 'tempo': '115.9375233333334', 'valence': '0.5466499999999999', 'popularity': '56.09', 'key': '1', 'mode': '1', 'count': '300'}" />
+        </attvalues>
+      </node>
+      <node id="Doris Day" label="Doris Day">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Doris Day', 'acousticness': '0.8793859060402679', 'danceability': '0.42495302013422825', 'duration_ms': '171091.24496644296', 'energy': '0.16618999999999995', 'instrumentalness': '0.006280558523489932', 'liveness': '0.20369731543624164', 'loudness': '-15.163902684563755', 'speechiness': '0.04858691275167788', 'tempo': '109.559788590604', 'valence': '0.3502409395973156', 'popularity': '13.815436241610739', 'key': '0', 'mode': '1', 'count': '298'}" />
+        </attvalues>
+      </node>
+      <node id="Bob Marley &amp; The Wailers" label="Bob Marley &amp; The Wailers">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Bob Marley &amp; The Wailers', 'acousticness': '0.19562869047619047', 'danceability': '0.746955782312925', 'duration_ms': '274377.4557823129', 'energy': '0.551391156462585', 'instrumentalness': '0.028670318095238068', 'liveness': '0.27987857142857137', 'loudness': '-9.488435374149653', 'speechiness': '0.14907551020408175', 'tempo': '120.92750000000002', 'valence': '0.7453265306122444', 'popularity': '42.92176870748299', 'key': '9', 'mode': '1', 'count': '294'}" />
+        </attvalues>
+      </node>
+      <node id="Richard Wagner" label="Richard Wagner">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Richard Wagner', 'acousticness': '0.945442456140351', 'danceability': '0.23804771929824564', 'duration_ms': '336423.1859649123', 'energy': '0.22005392982456135', 'instrumentalness': '0.2733895750526317', 'liveness': '0.30656070175438616', 'loudness': '-17.396831578947364', 'speechiness': '0.04859964912280699', 'tempo': '97.30337192982455', 'valence': '0.1458077192982457', 'popularity': '2.4842105263157896', 'key': '0', 'mode': '1', 'count': '285'}" />
+        </attvalues>
+      </node>
+      <node id="Elton John" label="Elton John">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Elton John', 'acousticness': '0.3438165380782917', 'danceability': '0.5253202846975088', 'duration_ms': '279741.6690391459', 'energy': '0.5871562277580071', 'instrumentalness': '0.014575043060498222', 'liveness': '0.21769928825622786', 'loudness': '-9.702562277580078', 'speechiness': '0.04216014234875443', 'tempo': '128.06955516014241', 'valence': '0.5318537366548042', 'popularity': '38.27046263345196', 'key': '0', 'mode': '1', 'count': '281'}" />
+        </attvalues>
+      </node>
+      <node id="Isaac Stern" label="Isaac Stern">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Isaac Stern', 'acousticness': '0.9375587188612109', 'danceability': '0.3321345195729539', 'duration_ms': '356675.9466192171', 'energy': '0.18305957295373654', 'instrumentalness': '0.3888428958362992', 'liveness': '0.16302313167259794', 'loudness': '-18.530480427046253', 'speechiness': '0.0453', 'tempo': '105.34051245551605', 'valence': '0.2803128113879004', 'popularity': '4.049822064056939', 'key': '9', 'mode': '1', 'count': '281'}" />
+        </attvalues>
+      </node>
+      <node id="Willie Nelson" label="Willie Nelson">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Willie Nelson', 'acousticness': '0.6041862633451954', 'danceability': '0.5679466192170816', 'duration_ms': '190878.01067615655', 'energy': '0.3715729537366548', 'instrumentalness': '0.03257242558718861', 'liveness': '0.2061619217081851', 'loudness': '-13.068494661921706', 'speechiness': '0.046069039145907466', 'tempo': '115.51317793594306', 'valence': '0.4999797153024909', 'popularity': '32.245551601423486', 'key': '2', 'mode': '1', 'count': '281'}" />
+        </attvalues>
+      </node>
+      <node id="Thelonious Monk" label="Thelonious Monk">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Thelonious Monk', 'acousticness': '0.8035000000000008', 'danceability': '0.5454607142857141', 'duration_ms': '301987.90357142856', 'energy': '0.29097625000000016', 'instrumentalness': '0.4651894068214285', 'liveness': '0.14109749999999993', 'loudness': '-14.258096428571443', 'speechiness': '0.06027285714285713', 'tempo': '112.08047142857141', 'valence': '0.40784785714285693', 'popularity': '18.375', 'key': '5', 'mode': '1', 'count': '280'}" />
+        </attvalues>
+      </node>
+      <node id="Stevie Wonder" label="Stevie Wonder">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Stevie Wonder', 'acousticness': '0.3429013178571429', 'danceability': '0.5622857142857147', 'duration_ms': '245194.925', 'energy': '0.5226203571428572', 'instrumentalness': '0.02550518385714286', 'liveness': '0.18145178571428566', 'loudness': '-12.046778571428574', 'speechiness': '0.0521007142857143', 'tempo': '114.51322857142858', 'valence': '0.6192260714285714', 'popularity': '34.13214285714286', 'key': '1', 'mode': '1', 'count': '280'}" />
+        </attvalues>
+      </node>
+      <node id="Bruno Walter" label="Bruno Walter">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Bruno Walter', 'acousticness': '0.9101821428571432', 'danceability': '0.2702135714285716', 'duration_ms': '549057.5892857143', 'energy': '0.1452215357142857', 'instrumentalness': '0.5431980899642859', 'liveness': '0.17037428571428567', 'loudness': '-18.993160714285708', 'speechiness': '0.0633067857142857', 'tempo': '101.75963214285721', 'valence': '0.19590428571428575', 'popularity': '0.9071428571428573', 'key': '5', 'mode': '1', 'count': '280'}" />
+        </attvalues>
+      </node>
+      <node id="Mohammed Rafi" label="Mohammed Rafi">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Mohammed Rafi', 'acousticness': '0.8992145454545459', 'danceability': '0.5257600000000001', 'duration_ms': '232568.2690909091', 'energy': '0.3791356363636365', 'instrumentalness': '0.1577240190909091', 'liveness': '0.2417243636363637', 'loudness': '-11.267014545454545', 'speechiness': '0.10892654545454554', 'tempo': '114.47294909090914', 'valence': '0.6803999999999998', 'popularity': '5.541818181818181', 'key': '2', 'mode': '1', 'count': '275'}" />
+        </attvalues>
+      </node>
+      <node id="Marvin Gaye" label="Marvin Gaye">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Marvin Gaye', 'acousticness': '0.4052395202952028', 'danceability': '0.5541217712177118', 'duration_ms': '225721.75645756454', 'energy': '0.5559630996309968', 'instrumentalness': '0.1306756814760148', 'liveness': '0.221118450184502', 'loudness': '-10.695693726937268', 'speechiness': '0.04863874538745391', 'tempo': '115.61454243542437', 'valence': '0.6595686346863466', 'popularity': '31.900369003690038', 'key': '0', 'mode': '0', 'count': '271'}" />
+        </attvalues>
+      </node>
+      <node id="John Coltrane" label="John Coltrane">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'John Coltrane', 'acousticness': '0.6865917777777779', 'danceability': '0.4599814814814812', 'duration_ms': '437749.0777777778', 'energy': '0.3528588888888888', 'instrumentalness': '0.14173072692592587', 'liveness': '0.17565296296296282', 'loudness': '-13.186000000000007', 'speechiness': '0.05324148148148148', 'tempo': '116.13380740740742', 'valence': '0.4290574074074078', 'popularity': '22.57037037037037', 'key': '0', 'mode': '1', 'count': '270'}" />
+        </attvalues>
+      </node>
+      <node id="Shamshad Begum" label="Shamshad Begum">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Shamshad Begum', 'acousticness': '0.946573033707866', 'danceability': '0.6036104868913859', 'duration_ms': '197625.73033707862', 'energy': '0.3250025842696629', 'instrumentalness': '0.23161977104868905', 'liveness': '0.2253014981273408', 'loudness': '-10.344558052434461', 'speechiness': '0.18347715355805244', 'tempo': '112.07724719101124', 'valence': '0.7275805243445695', 'popularity': '0.6179775280898876', 'key': '0', 'mode': '1', 'count': '267'}" />
+        </attvalues>
+      </node>
+      <node id="JAY-Z" label="JAY-Z">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'JAY-Z', 'acousticness': '0.12510073120300752', 'danceability': '0.674187969924812', 'duration_ms': '260088.88345864665', 'energy': '0.7595639097744366', 'instrumentalness': '0.0024210074060150373', 'liveness': '0.22250902255639088', 'loudness': '-5.578150375939847', 'speechiness': '0.29526691729323323', 'tempo': '110.4446766917293', 'valence': '0.5787315789473684', 'popularity': '48.91353383458647', 'key': '1', 'mode': '1', 'count': '266'}" />
+        </attvalues>
+      </node>
+      <node id="Eugene Ormandy" label="Eugene Ormandy">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Eugene Ormandy', 'acousticness': '0.9169083969465648', 'danceability': '0.28998053435114524', 'duration_ms': '405145.0763358779', 'energy': '0.1928472900763358', 'instrumentalness': '0.6147956868702288', 'liveness': '0.1836393129770993', 'loudness': '-18.688438931297732', 'speechiness': '0.042370229007633584', 'tempo': '99.82751526717556', 'valence': '0.1936812977099237', 'popularity': '8.400763358778626', 'key': '9', 'mode': '1', 'count': '262'}" />
+        </attvalues>
+      </node>
+      <node id="The Who" label="The Who">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'The Who', 'acousticness': '0.2276237671755725', 'danceability': '0.4742022900763357', 'duration_ms': '239851.14503816798', 'energy': '0.7191832061068704', 'instrumentalness': '0.07077088232824423', 'liveness': '0.2498087786259543', 'loudness': '-8.869530534351142', 'speechiness': '0.06227480916030534', 'tempo': '127.2248091603052', 'valence': '0.5051774809160304', 'popularity': '29.69465648854962', 'key': '2', 'mode': '1', 'count': '262'}" />
+        </attvalues>
+      </node>
+      <node id="Oscar Peterson" label="Oscar Peterson">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Oscar Peterson', 'acousticness': '0.9302862595419852', 'danceability': '0.5523129770992367', 'duration_ms': '213715.81679389317', 'energy': '0.1739843511450382', 'instrumentalness': '0.7653546466793887', 'liveness': '0.12902595419847335', 'loudness': '-19.580038167938934', 'speechiness': '0.047491603053435125', 'tempo': '104.25662213740469', 'valence': '0.39914465648854985', 'popularity': '14.65648854961832', 'key': '0', 'mode': '1', 'count': '262'}" />
+        </attvalues>
+      </node>
+      <node id="Robert Schumann" label="Robert Schumann">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Robert Schumann', 'acousticness': '0.9833346153846164', 'danceability': '0.3584734615384613', 'duration_ms': '219152.88461538465', 'energy': '0.10727257692307693', 'instrumentalness': '0.7843171650384625', 'liveness': '0.15880923076923098', 'loudness': '-22.770450000000025', 'speechiness': '0.047906153846153834', 'tempo': '98.06134230769231', 'valence': '0.27154461538461544', 'popularity': '4.203846153846154', 'key': '5', 'mode': '1', 'count': '260'}" />
+        </attvalues>
+      </node>
+      <node id="Philadelphia Orchestra" label="Philadelphia Orchestra">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Philadelphia Orchestra', 'acousticness': '0.9257674418604652', 'danceability': '0.2784693798449613', 'duration_ms': '425938.7170542636', 'energy': '0.17740550387596893', 'instrumentalness': '0.5985619839147284', 'liveness': '0.16003604651162792', 'loudness': '-19.062403100775207', 'speechiness': '0.040654263565891455', 'tempo': '99.25695348837209', 'valence': '0.19220581395348835', 'popularity': '9.24031007751938', 'key': '2', 'mode': '1', 'count': '258'}" />
+        </attvalues>
+      </node>
+      <node id="Grateful Dead" label="Grateful Dead">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Grateful Dead', 'acousticness': '0.4360137890624999', 'danceability': '0.55906640625', 'duration_ms': '334590.69921875', 'energy': '0.5174304296875', 'instrumentalness': '0.13272762140625', 'liveness': '0.322640625', 'loudness': '-12.114089843749992', 'speechiness': '0.047137109375000014', 'tempo': '120.5033359375', 'valence': '0.6257519531249999', 'popularity': '32.09765625', 'key': '9', 'mode': '1', 'count': '256'}" />
+        </attvalues>
+      </node>
+      <node id="Nina Simone" label="Nina Simone">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Nina Simone', 'acousticness': '0.7783753174603176', 'danceability': '0.4510634920634923', 'duration_ms': '231077.87301587305', 'energy': '0.3370812301587303', 'instrumentalness': '0.040970887063492084', 'liveness': '0.2697654761904762', 'loudness': '-13.144896825396824', 'speechiness': '0.05541706349206354', 'tempo': '113.42333730158728', 'valence': '0.4568043650793653', 'popularity': '28.202380952380953', 'key': '9', 'mode': '1', 'count': '252'}" />
+        </attvalues>
+      </node>
+      <node id="Waylon Jennings" label="Waylon Jennings">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Waylon Jennings', 'acousticness': '0.4876576305220882', 'danceability': '0.5981767068273094', 'duration_ms': '180205.56224899602', 'energy': '0.4896578313253009', 'instrumentalness': '0.0776188223694779', 'liveness': '0.2157381526104418', 'loudness': '-12.410357429718873', 'speechiness': '0.03920763052208838', 'tempo': '115.8480120481928', 'valence': '0.6385429718875504', 'popularity': '31.33333333333333', 'key': '2', 'mode': '1', 'count': '249'}" />
+        </attvalues>
+      </node>
+      <node id="Vicente Fernández" label="Vicente Fernández">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Vicente Fernández', 'acousticness': '0.562235483870968', 'danceability': '0.4675645161290325', 'duration_ms': '186035.4072580645', 'energy': '0.39869758064516175', 'instrumentalness': '0.004536548104838709', 'liveness': '0.2493064516129031', 'loudness': '-7.3143225806451655', 'speechiness': '0.04185040322580647', 'tempo': '116.21796774193552', 'valence': '0.5735766129032255', 'popularity': '37.71370967741935', 'key': '7', 'mode': '1', 'count': '248'}" />
+        </attvalues>
+      </node>
+      <node id="Lil Wayne" label="Lil Wayne">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Lil Wayne', 'acousticness': '0.0914679723577236', 'danceability': '0.6478048780487812', 'duration_ms': '255272.10162601626', 'energy': '0.6921626016260165', 'instrumentalness': '0.0004470223983739837', 'liveness': '0.2184361788617886', 'loudness': '-5.898865853658539', 'speechiness': '0.2261861788617887', 'tempo': '119.43552439024387', 'valence': '0.4928772357723576', 'popularity': '53.80081300813009', 'key': '2', 'mode': '1', 'count': '246'}" />
+        </attvalues>
+      </node>
+      <node id="Claudio Arrau" label="Claudio Arrau">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Claudio Arrau', 'acousticness': '0.992632653061226', 'danceability': '0.4349714285714282', 'duration_ms': '202517.35510204078', 'energy': '0.15667126530612255', 'instrumentalness': '0.8880489795918357', 'liveness': '0.13434122448979585', 'loudness': '-21.769351020408163', 'speechiness': '0.05319510204081631', 'tempo': '101.20597142857127', 'valence': '0.4116379591836734', 'popularity': '0.6775510204081633', 'key': '7', 'mode': '1', 'count': '245'}" />
+        </attvalues>
+      </node>
+      <node id="Sergei Rachmaninoff" label="Sergei Rachmaninoff">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Sergei Rachmaninoff', 'acousticness': '0.9799132231404972', 'danceability': '0.3318578512396693', 'duration_ms': '273918.96694214875', 'energy': '0.16170371900826452', 'instrumentalness': '0.8080061942148766', 'liveness': '0.2310223140495868', 'loudness': '-20.104425619834718', 'speechiness': '0.04096942148760331', 'tempo': '96.53685537190078', 'valence': '0.2712041322314049', 'popularity': '4.355371900826446', 'key': '2', 'mode': '1', 'count': '242'}" />
+        </attvalues>
+      </node>
+      <node id="Metallica" label="Metallica">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Metallica', 'acousticness': '0.019902902083333326', 'danceability': '0.3618250000000002', 'duration_ms': '365372.2875', 'energy': '0.9038500000000002', 'instrumentalness': '0.22886133316666676', 'liveness': '0.34487416666666665', 'loudness': '-6.2884958333333305', 'speechiness': '0.09959708333333334', 'tempo': '124.85005833333337', 'valence': '0.33850791666666663', 'popularity': '39.891666666666666', 'key': '4', 'mode': '1', 'count': '240'}" />
+        </attvalues>
+      </node>
+      <node id="Orchestra Studio 7" label="Orchestra Studio 7">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Orchestra Studio 7', 'acousticness': '0.3423146680672268', 'danceability': '0.5613781512605039', 'duration_ms': '203097.7773109244', 'energy': '0.3924407563025212', 'instrumentalness': '0.4674964084873949', 'liveness': '0.19049033613445385', 'loudness': '-14.332546218487403', 'speechiness': '0.054263865546218516', 'tempo': '116.68431512605049', 'valence': '0.5320222689075629', 'popularity': '0.02100840336134454', 'key': '5', 'mode': '1', 'count': '238'}" />
+        </attvalues>
+      </node>
+      <node id="Ernesto Fama" label="Ernesto Fama">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Ernesto Fama', 'acousticness': '0.982430379746837', 'danceability': '0.6430843881856539', 'duration_ms': '179390.4641350211', 'energy': '0.2933687763713082', 'instrumentalness': '0.2910700852320677', 'liveness': '0.20759451476793256', 'loudness': '-12.262919831223634', 'speechiness': '0.118435864978903', 'tempo': '130.23796624472578', 'valence': '0.7796033755274258', 'popularity': '0.13924050632911392', 'key': '2', 'mode': '1', 'count': '237'}" />
+        </attvalues>
+      </node>
+      <node id="Giorgos Papasideris" label="Giorgos Papasideris">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Giorgos Papasideris', 'acousticness': '0.9679364406779668', 'danceability': '0.4101016949152546', 'duration_ms': '196045.48305084746', 'energy': '0.429292372881356', 'instrumentalness': '0.40200957889830463', 'liveness': '0.21397754237288127', 'loudness': '-9.869656779661018', 'speechiness': '0.04798940677966103', 'tempo': '99.45504237288132', 'valence': '0.6608305084745764', 'popularity': '0.00847457627118644', 'key': '7', 'mode': '1', 'count': '236'}" />
+        </attvalues>
+      </node>
+      <node id="Teddy Wilson" label="Teddy Wilson">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Teddy Wilson', 'acousticness': '0.9205508474576268', 'danceability': '0.6529279661016949', 'duration_ms': '181391.43220338985', 'energy': '0.21899491525423728', 'instrumentalness': '0.1308539568220339', 'liveness': '0.15405932203389824', 'loudness': '-13.171046610169489', 'speechiness': '0.052461864406779635', 'tempo': '112.5820805084745', 'valence': '0.6179788135593218', 'popularity': '12.038135593220339', 'key': '5', 'mode': '1', 'count': '236'}" />
+        </attvalues>
+      </node>
+      <node id="U2" label="U2">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'U2', 'acousticness': '0.12059951452991448', 'danceability': '0.4474786324786324', 'duration_ms': '266492.65811965807', 'energy': '0.6808452991452989', 'instrumentalness': '0.13420847222222218', 'liveness': '0.3020213675213677', 'loudness': '-9.98282478632479', 'speechiness': '0.0445508547008547', 'tempo': '126.28228632478634', 'valence': '0.4408470085470084', 'popularity': '39.94017094017094', 'key': '8', 'mode': '1', 'count': '234'}" />
+        </attvalues>
+      </node>
+      <node id="David Bowie" label="David Bowie">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'David Bowie', 'acousticness': '0.2664491500000001', 'danceability': '0.4962876068376071', 'duration_ms': '240501.62393162394', 'energy': '0.5825465811965811', 'instrumentalness': '0.07982129004273505', 'liveness': '0.20949444444444446', 'loudness': '-11.53967094017094', 'speechiness': '0.0603760683760684', 'tempo': '122.21794017094015', 'valence': '0.5407581196581196', 'popularity': '41.333333333333336', 'key': '0', 'mode': '1', 'count': '234'}" />
+        </attvalues>
+      </node>
+      <node id="Philharmonia Orchestra" label="Philharmonia Orchestra">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Philharmonia Orchestra', 'acousticness': '0.9333234513274336', 'danceability': '0.28209336283185843', 'duration_ms': '270529.19469026546', 'energy': '0.16865115044247792', 'instrumentalness': '0.3111990984070799', 'liveness': '0.2484774336283188', 'loudness': '-18.95503097345134', 'speechiness': '0.08194823008849561', 'tempo': '102.49363274336285', 'valence': '0.1952632743362832', 'popularity': '5.685840707964601', 'key': '7', 'mode': '1', 'count': '226'}" />
+        </attvalues>
+      </node>
+      <node id="The Kinks" label="The Kinks">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'The Kinks', 'acousticness': '0.30242668141592915', 'danceability': '0.5456106194690263', 'duration_ms': '186639.69026548672', 'energy': '0.7032088495575222', 'instrumentalness': '0.021981337964601774', 'liveness': '0.1822340707964602', 'loudness': '-8.200495575221241', 'speechiness': '0.055099115044247776', 'tempo': '122.38225221238942', 'valence': '0.669155309734513', 'popularity': '29.9070796460177', 'key': '7', 'mode': '1', 'count': '226'}" />
+        </attvalues>
+      </node>
+      <node id="Kanye West" label="Kanye West">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Kanye West', 'acousticness': '0.22014151569506726', 'danceability': '0.6203318385650223', 'duration_ms': '242367.8116591928', 'energy': '0.6452475336322876', 'instrumentalness': '0.011282612421524663', 'liveness': '0.2611762331838565', 'loudness': '-6.290345291479817', 'speechiness': '0.225509865470852', 'tempo': '114.9771928251121', 'valence': '0.4588493273542602', 'popularity': '57.99103139013454', 'key': '1', 'mode': '1', 'count': '223'}" />
+        </attvalues>
+      </node>
+      <node id="Red Hot Chili Peppers" label="Red Hot Chili Peppers">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Red Hot Chili Peppers', 'acousticness': '0.06063028687782807', 'danceability': '0.5480271493212671', 'duration_ms': '240032.04977375572', 'energy': '0.8201674208144798', 'instrumentalness': '0.07596799208144796', 'liveness': '0.1815864253393666', 'loudness': '-5.63161990950226', 'speechiness': '0.07771085972850679', 'tempo': '117.46833031674215', 'valence': '0.5100108597285065', 'popularity': '47.647058823529406', 'key': '0', 'mode': '1', 'count': '221'}" />
+        </attvalues>
+      </node>
+      <node id="Orchestra Del Teatro Alla Scala, Milano" label="Orchestra Del Teatro Alla Scala, Milano">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Orchestra Del Teatro Alla Scala, Milano', 'acousticness': '0.9705136363636367', 'danceability': '0.2925186363636365', 'duration_ms': '232407.16818181815', 'energy': '0.16837727272727274', 'instrumentalness': '0.16074168122727278', 'liveness': '0.21531590909090914', 'loudness': '-16.963254545454546', 'speechiness': '0.053447727272727265', 'tempo': '96.84957272727269', 'valence': '0.16199636363636366', 'popularity': '9.095454545454547', 'key': '5', 'mode': '1', 'count': '220'}" />
+        </attvalues>
+      </node>
+      <node id="Aretha Franklin" label="Aretha Franklin">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Aretha Franklin', 'acousticness': '0.6087331192660554', 'danceability': '0.5500229357798163', 'duration_ms': '215227.6146788991', 'energy': '0.42860779816513794', 'instrumentalness': '0.0060934265137614655', 'liveness': '0.2597844036697247', 'loudness': '-10.789600917431192', 'speechiness': '0.05989266055045873', 'tempo': '119.24357339449543', 'valence': '0.5708077981651376', 'popularity': '30.357798165137616', 'key': '0', 'mode': '1', 'count': '218'}" />
+        </attvalues>
+      </node>
+      <node id="Maria Callas" label="Maria Callas">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Maria Callas', 'acousticness': '0.9752027649769588', 'danceability': '0.29382488479262703', 'duration_ms': '231661.5161290323', 'energy': '0.1659914746543779', 'instrumentalness': '0.07295344811059913', 'liveness': '0.22576036866359436', 'loudness': '-16.498161290322585', 'speechiness': '0.05999032258064515', 'tempo': '95.8243364055299', 'valence': '0.14793225806451607', 'popularity': '9.064516129032258', 'key': '2', 'mode': '1', 'count': '217'}" />
+        </attvalues>
+      </node>
+      <node id="George Strait" label="George Strait">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'George Strait', 'acousticness': '0.32784651162790684', 'danceability': '0.6237302325581396', 'duration_ms': '186603.3581395349', 'energy': '0.4822744186046512', 'instrumentalness': '0.004702148558139534', 'liveness': '0.18456232558139526', 'loudness': '-11.691693023255821', 'speechiness': '0.03123767441860465', 'tempo': '122.65140930232555', 'valence': '0.5603209302325581', 'popularity': '40.53953488372093', 'key': '9', 'mode': '1', 'count': '215'}" />
+        </attvalues>
+      </node>
+      <node id="Van Morrison" label="Van Morrison">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Van Morrison', 'acousticness': '0.3995029380281688', 'danceability': '0.5503568075117371', 'duration_ms': '270212.13615023467', 'energy': '0.5066211267605635', 'instrumentalness': '0.02673248333333333', 'liveness': '0.2119835680751173', 'loudness': '-11.252647887323928', 'speechiness': '0.056582159624413174', 'tempo': '118.36180751173715', 'valence': '0.6050000000000002', 'popularity': '35.032863849765256', 'key': '7', 'mode': '1', 'count': '213'}" />
+        </attvalues>
+      </node>
+      <node id="Frank Arnold" label="Frank Arnold">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Frank Arnold', 'acousticness': '0.6911792452830191', 'danceability': '0.6811084905660375', 'duration_ms': '264736.0754716981', 'energy': '0.2089245283018867', 'instrumentalness': '5.389575471698114e-06', 'liveness': '0.2583330188679243', 'loudness': '-19.368523584905663', 'speechiness': '0.9555849056603772', 'tempo': '106.15220283018871', 'valence': '0.4601933962264153', 'popularity': '0.0047169811320754715', 'key': '4', 'mode': '1', 'count': '212'}" />
+        </attvalues>
+      </node>
+      <node id="Sinclair Lewis" label="Sinclair Lewis">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Sinclair Lewis', 'acousticness': '0.6911792452830191', 'danceability': '0.6811084905660375', 'duration_ms': '264736.0754716981', 'energy': '0.2089245283018867', 'instrumentalness': '5.389575471698114e-06', 'liveness': '0.2583330188679243', 'loudness': '-19.368523584905663', 'speechiness': '0.9555849056603772', 'tempo': '106.15220283018871', 'valence': '0.4601933962264153', 'popularity': '0.0047169811320754715', 'key': '4', 'mode': '1', 'count': '212'}" />
+        </attvalues>
+      </node>
+      <node id="Javier Solís" label="Javier Solís">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Javier Solís', 'acousticness': '0.8205876777251181', 'danceability': '0.4465355450236968', 'duration_ms': '168543.672985782', 'energy': '0.3018473933649289', 'instrumentalness': '0.0027539735071090052', 'liveness': '0.2500815165876777', 'loudness': '-11.534521327014215', 'speechiness': '0.03655355450236966', 'tempo': '111.90589573459721', 'valence': '0.5416587677725118', 'popularity': '21.94312796208531', 'key': '0', 'mode': '1', 'count': '211'}" />
+        </attvalues>
+      </node>
+      <node id="Unspecified" label="Unspecified">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Unspecified', 'acousticness': '0.8129283203791468', 'danceability': '0.4624459715639811', 'duration_ms': '141540.14218009482', 'energy': '0.3448513270142182', 'instrumentalness': '0.3777777877725119', 'liveness': '0.2830781990521326', 'loudness': '-18.818298578199048', 'speechiness': '0.1543919431279621', 'tempo': '110.67929383886259', 'valence': '0.4743660857819907', 'popularity': '1.2417061611374407', 'key': '10', 'mode': '1', 'count': '211'}" />
+        </attvalues>
+      </node>
+      <node id="Pink Floyd" label="Pink Floyd">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Pink Floyd', 'acousticness': '0.3883355299516905', 'danceability': '0.3832579710144927', 'duration_ms': '313983.4927536232', 'energy': '0.4155951690821256', 'instrumentalness': '0.2996808681642512', 'liveness': '0.3532768115942029', 'loudness': '-15.177951690821256', 'speechiness': '0.059262801932367125', 'tempo': '116.32540579710134', 'valence': '0.25765845410627997', 'popularity': '45.43478260869565', 'key': '7', 'mode': '1', 'count': '207'}" />
+        </attvalues>
+      </node>
+      <node id="Talking Heads" label="Talking Heads">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Talking Heads', 'acousticness': '0.14547981951219513', 'danceability': '0.6840000000000003', 'duration_ms': '263356.4780487805', 'energy': '0.6914975609756093', 'instrumentalness': '0.1114303036097561', 'liveness': '0.2944868292682927', 'loudness': '-9.176873170731703', 'speechiness': '0.04897463414634149', 'tempo': '120.78200487804871', 'valence': '0.7789273170731706', 'popularity': '35.804878048780495', 'key': '2', 'mode': '1', 'count': '205'}" />
+        </attvalues>
+      </node>
+      <node id="Stan Getz" label="Stan Getz">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Stan Getz', 'acousticness': '0.8612205882352942', 'danceability': '0.5032598039215683', 'duration_ms': '310438.8137254902', 'energy': '0.2451750000000001', 'instrumentalness': '0.2992803861764705', 'liveness': '0.17253382352941174', 'loudness': '-16.713191176470584', 'speechiness': '0.048000000000000015', 'tempo': '113.73776470588234', 'valence': '0.5198514705882357', 'popularity': '23.686274509803926', 'key': '5', 'mode': '1', 'count': '204'}" />
+        </attvalues>
+      </node>
+      <node id="Sarah Vaughan" label="Sarah Vaughan">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Sarah Vaughan', 'acousticness': '0.8727044334975363', 'danceability': '0.39862561576354705', 'duration_ms': '195600.27093596055', 'energy': '0.21738078817733988', 'instrumentalness': '0.0003886408866995076', 'liveness': '0.2329975369458127', 'loudness': '-13.609630541871926', 'speechiness': '0.0517162561576355', 'tempo': '110.05584236453205', 'valence': '0.3015226600985221', 'popularity': '15.561576354679804', 'key': '10', 'mode': '1', 'count': '203'}" />
+        </attvalues>
+      </node>
+      <node id="Herbert von Karajan" label="Herbert von Karajan">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Herbert von Karajan', 'acousticness': '0.940217821782179', 'danceability': '0.26488366336633673', 'duration_ms': '359505.98514851485', 'energy': '0.18198381188118826', 'instrumentalness': '0.42554660470297023', 'liveness': '0.2250995049504951', 'loudness': '-18.017698019801987', 'speechiness': '0.05810544554455445', 'tempo': '97.05156930693069', 'valence': '0.17950940594059409', 'popularity': '15.544554455445544', 'key': '2', 'mode': '1', 'count': '202'}" />
+        </attvalues>
+      </node>
+      <node id="Fritz Reiner" label="Fritz Reiner">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Fritz Reiner', 'acousticness': '0.9345870646766172', 'danceability': '0.32304029850746274', 'duration_ms': '297501.34825870645', 'energy': '0.2060290049751244', 'instrumentalness': '0.6503312162686566', 'liveness': '0.222141791044776', 'loudness': '-18.146089552238795', 'speechiness': '0.047632338308457686', 'tempo': '105.93117412935317', 'valence': '0.299205472636816', 'popularity': '2.0248756218905477', 'key': '2', 'mode': '1', 'count': '201'}" />
+        </attvalues>
+      </node>
+      <node id="Eric Clapton" label="Eric Clapton">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Eric Clapton', 'acousticness': '0.35368517299999996', 'danceability': '0.5743299999999999', 'duration_ms': '277477.48', 'energy': '0.5623115', 'instrumentalness': '0.15442432285000005', 'liveness': '0.3541954999999999', 'loudness': '-11.178385', 'speechiness': '0.052195500000000006', 'tempo': '116.05178000000004', 'valence': '0.6454949999999997', 'popularity': '36.025', 'key': '7', 'mode': '1', 'count': '200'}" />
+        </attvalues>
+      </node>
+      <node id="Billy Joel" label="Billy Joel">
+        <attvalues>
+          <attvalue for="0" value="{'artists': 'Billy Joel', 'acousticness': '0.3645798492462313', 'danceability': '0.5411557788944727', 'duration_ms': '261031.41708542712', 'energy': '0.6143949748743717', 'instrumentalness': '0.02097893251256281', 'liveness': '0.25681407035175885', 'loudness': '-9.266301507537683', 'speechiness': '0.05865527638190955', 'tempo': '121.7258743718594', 'valence': '0.5475467336683421', 'popularity': '40.2462311557789', 'key': '0', 'mode': '1', 'count': '199'}" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges />
+  </graph>
+</gexf>
