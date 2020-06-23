@@ -45,7 +45,7 @@ class Graph:
             "valence" : 1.0,
             "year" : 99.0
         }
-        self.NEIGHBOR_LIMIT = 2
+        self.NEIGHBOR_LIMIT = 6
         self.ATTRIBUTES = {
             "all" : ["", "acousticness", "artists", "danceability","duration_ms",
                         "energy", "explicit", "id", "instrumentalness",
@@ -161,7 +161,11 @@ class Graph:
 
     
     def draw(self):
+        # nx.draw_circular(self.graph, with_labels=True)
+        # nx.draw_shell(self.graph, with_labels=True)
+        # nx.draw_spectral(self.graph, with_labels=True)
         nx.draw_kamada_kawai(self.graph, with_labels=True)
+
         plt.show()
 
     
