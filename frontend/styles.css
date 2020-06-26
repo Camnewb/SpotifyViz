@@ -1,0 +1,33 @@
+ul, #filter-settings {
+list-style-type: none;
+}
+
+#filter-settings {
+margin: 0;
+padding: 0;
+}
+
+.caret {
+cursor: pointer;
+user-select: none;
+}
+
+.caret::before {
+font-family: "Font Awesome 5 Free"; 
+font-weight: 900; 
+content: "\f0da";
+display: inline-block;
+margin-right: 6px;
+}
+
+.caret-down::before {
+transform: rotate(90deg);
+}
+
+.nested {
+display: none;
+}
+
+.active {
+display: block;
+}
