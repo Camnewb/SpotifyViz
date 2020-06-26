@@ -1,0 +1,59 @@
+/* This file provides the theming for the website */
+$theme-colors: (
+  "primary": #616161,
+  "secondary": #ff4136,
+  "dark": #4f4f4f,
+  "light": #696969
+);
+
+$body-bg: #252525;
+$body-color: #ffffff;
+
+$input-bg: #f5f5f5;
+$input-color: #424242;
+$text-muted: #ffffff;
+
+$border-radius: 0.75rem;
+$card-color: #f5f5f5;
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+/*CSS for filter settings list
+shamelessly stolen from w3schools*/
+ul, #filter-settings {
+    list-style-type: none;
+}
+
+.body {
+    background-color: #222;
+}
+
+#filter-settings {
+    margin: 0;
+    padding: 0;
+}
+
+.caret {
+    cursor: pointer;
+    user-select: none;
+}
+
+.caret::before {
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900; 
+    content: "\f0da";
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.caret-down::before {
+    transform: rotate(90deg);
+}
+
+.nested {
+    display: none;
+}
+
+.active {
+    display: block;
+}
