@@ -12,40 +12,210 @@
     <title>SpotifyViz Site</title>
   </head>
   <body>
-    <div class="card bg-light" style="width: min-content;  padding: 12px; margin: 1rem;">
+    <!-- Main Card -->
+    <div class="card bg-light"  style="width: min-content;  padding: 12px; margin: 1rem;">
       <form>
         <div class="form-group">
           <input type="search" class="form-control" id="inputSearch" aria-describedby="searchHelp" placeholder="Enter song title" style="margin-top: 10px;">
           <small id="searchHelp" class="form-text text-muted">Text here will alert user to something</small>
         </div>
       </form>
-      <div class="card-body bg-dark" style="width: 18rem; border-radius: 0.75rem;">
+      <!-- Filter Settings Body -->
+      <div class="card-body bg-dark" style="width: 24rem; border-radius: 0.75rem;">
+        <h4 class="card-title"><b>Filter Settings</b></h4>
+        <hr/>
         <ul id="filter-settings">
-          <li><span class="caret">General</span>
-            <ul class="nested">
-              <li>Popularity</li>
-              <li>Release Date</li>
-              <li>Year</li>
-            </ul>
-          </li>
-          <li><span class="caret">Musical Elements</span>
-            <ul class="nested">
-              <li>Acousticness</li>
-              <li>Danceability</li>
-              <li>Instrumentalness</li>
-              <li>Liveness</li>
-              <li>Loudness</li>
-              <li>Speechiness</li>
-            </ul>
-          </li>
-          <li><span class="caret">Music Stats</span>
-            <ul class="nested">
-              <li>Duration</li>
-              <li>Key</li>
-              <li>Mode</li>
-              <li>Tempo (BPM)</li>
-            </ul>
-          </li>
+          <!-- === General === -->
+          <li><span class="caret">General</span><ul class="nested"><li>
+            <!-- Popularity -->
+            <div class="d-flex justify-content-between">
+              <div class="py-1">
+                <div class="form-check-inline">
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value=""><!--TODO remove excess tags-->
+                  <span>Popularity</span>
+                </div>
+              </div>
+              <div class="py-1">
+                <small class="text-muted">1,000,000 plays</small>
+                <input class="align-middle" type="range" id="pop">
+              </div>
+            </div>
+            <!-- Release Date -->
+            <div class="d-flex justify-content-between">
+              <div class="py-1">
+                <div class="form-check-inline">
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
+                  <span>Release Date</span>
+                </div>  
+              </div>
+              <div class="py-1">
+                <input class="form-control settings-input" style="width: 11rem;" type="date" name="" id="">
+              </div>
+            </div>
+            <!-- Year (This one probably isnt necessary) -->
+            <div class="d-flex justify-content-between">
+              <div class="py-1">
+                <div class="form-check-inline">
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
+                  <span>Year</span>
+                </div>  
+              </div>
+              <div class="py-1">
+                <input class="form-control settings-input" type="text" style="width: 11rem;" name="" id="">
+              </div>
+            </div>
+          </li></ul></li>
+          <!-- === Musical Elements === -->
+          <li><span class="caret">Musical Elements</span><ul class="nested"><li>
+            <!-- Acousticness -->
+            <div class="d-flex justify-content-between">
+              <div class="py-1">
+                <div class="form-check-inline">
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
+                  <span>Acousticness</span>
+                </div>
+              </div>
+              <div class="py-1">
+                <small class="text-muted">0.5</small>
+                <input class="align-middle" type="range" id="pop">
+              </div>
+            </div>
+            <!-- Danceability -->
+            <div class="d-flex justify-content-between">
+              <div class="py-1">
+                <div class="form-check-inline">
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
+                  <span>Danceability</span>
+                </div>
+              </div>
+              <div class="py-1">
+                <small class="text-muted">0.5</small>
+                <input class="align-middle" type="range" id="pop">
+              </div>
+            </div>
+            <!-- Instrumentalness -->
+            <div class="d-flex justify-content-between">
+              <div class="py-1">
+                <div class="form-check-inline">
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
+                  <span>Instrumentalness</span>
+                </div>
+              </div>
+              <div class="py-1">
+                <small class="text-muted">0.5</small>
+                <input class="align-middle" type="range" id="pop">
+              </div>
+            </div>
+            <!-- Liveness -->
+            <div class="d-flex justify-content-between">
+              <div class="py-1">
+                <div class="form-check-inline">
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
+                  <span>Liveness</span>
+                </div>
+              </div>
+              <div class="py-1">
+                <small class="text-muted">0.5</small>
+                <input class="align-middle" type="range" id="pop">
+              </div>
+            </div>
+            <!-- Loudness -->
+            <div class="d-flex justify-content-between">
+              <div class="py-1">
+                <div class="form-check-inline">
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
+                  <span>Loudness</span>
+                </div>
+              </div>
+              <div class="py-1">
+                <small class="text-muted">0.5</small>
+                <input class="align-middle" type="range" id="pop">
+              </div>
+            </div>
+            <!-- Speechiness -->
+            <div class="d-flex justify-content-between">
+              <div class="py-1">
+                <div class="form-check-inline">
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
+                  <span>Speechiness</span>
+                </div>
+              </div>
+              <div class="py-1">
+                <small class="text-muted">0.5</small>
+                <input class="align-middle" type="range" id="pop">
+              </div>
+            </div>
+          </li></ul></li>
+          <!-- === Music Stats === -->
+          <li><span class="caret">Music Stats</span><ul class="nested"><li>
+            <!-- Duration -->
+            <div class="d-flex justify-content-between">
+              <div class="py-1">
+                <div class="form-check-inline">
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
+                  <span>Duration</span>
+                </div>
+              </div>
+              <div class="py-1">
+                <small class="text-muted">0.5</small>
+                <input class="align-middle" type="range" id="pop">
+              </div>
+            </div>
+            <!-- Key -->
+            <div class="d-flex justify-content-between">
+              <div class="py-1">
+                <div class="form-check-inline">
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
+                  <span>Speechiness</span>
+                </div>
+              </div>
+              <div class="py-1">
+                <select class="form-control-sm settings-input" style="width: 11rem;" id="" value="">
+                  <option>A</option>
+                  <option>Select</option>
+                  <option>A</option>
+                  <option>A flat</option>
+                  <option>B</option>
+                  <option>B flat</option>
+                  <option>C</option>
+                  <option>C flat</option>
+                  <option>C sharp</option>
+                  <option>D</option>
+                  <option>D flat</option>
+                  <option>D sharp</option>
+                  <option>E</option>
+                  <option>F flat</option>
+                  <option>F sharp</option>
+                </select>
+              </div>
+            </div>
+            <!-- Mode -->
+            <div class="d-flex justify-content-between">
+              <div class="py-1">
+                <div class="form-check-inline">
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
+                  <span>Mode</span>
+                </div>
+              </div>
+              <div class="py-1">
+                <small class="text-muted">0.5</small>
+                <input class="align-middle" type="range" id="pop">
+              </div>
+            </div>
+            <!-- Tempo -->
+            <div class="d-flex justify-content-between">
+              <div class="py-1">
+                <div class="form-check-inline">
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value=""><!--TODO remove excess tags-->
+                  <span>Tempo (BPM)</span>
+                </div>
+              </div>
+              <div class="py-1">
+                <small class="text-muted">0.5</small>
+                <input class="align-middle" type="range" id="pop">
+              </div>
+            </div>
+          </li></ul></li>
         </ul>
       </div>
     </div>
