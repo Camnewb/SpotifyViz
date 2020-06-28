@@ -31,37 +31,37 @@
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value=""><!--TODO remove excess tags-->
-                  <span>Popularity</span>
+                  <input class="form-check-input mr-2" type="checkbox" id="popularity-checkbox" oninput=""><!--TODO remove excess tags-->
+                  <span id="popularity-checkbox-label">Popularity</span>
                 </div>
               </div>
               <div class="py-1">
-                <small class="text-muted" id="popularity-val">1000000 plays</small><!--TODO This slider is weird, needs tweaking-->
-                <input class="align-middle" type="range" id="popularity-slider" value="10" step="5" oninput="editInnerText(this.value * this.value * this.value * 1000 + ' plays', 'popularity-val')">
+                <small class="text-muted" id="popularity-val">1,049,760 plays</small><!--TODO This slider is weird, needs tweaking-->
+                <input class="align-middle" type="range" id="popularity-slider" value="18" oninput="editInnerText(quarticSliderDisplay(this.value) + ' plays', 'popularity-val')">
               </div>
             </div>
             <!-- Release Date -->
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
-                  <span>Release Date</span>
+                  <input class="form-check-input mr-2" type="checkbox" id="release-date-checkbox">
+                  <span id="release-date-checkbox-label">Release Date</span>
                 </div>  
               </div>
               <div class="py-1">
-                <input class="form-control settings-input" style="width: 11rem;" type="date" name="" id="">
+                <input class="form-control settings-input" style="width: 11rem;" type="date" id="release-date-select">
               </div>
             </div>
             <!-- Year (This one probably isnt necessary) -->
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
-                  <span>Year</span>
+                  <input class="form-check-input mr-2" type="checkbox" id="year-checkbox">
+                  <span id="year-checkbox-label">Year</span>
                 </div>  
               </div>
               <div class="py-1">
-                <input class="form-control settings-input" type="text" style="width: 11rem;" name="" id="">
+                <input class="form-control settings-input" type="text" style="width: 11rem;" id="year-input">
               </div>
             </div>
           </li></ul></li>
@@ -71,8 +71,8 @@
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="">
-                  <span>Acousticness</span>
+                  <input class="form-check-input mr-2" type="checkbox" id="acousticness-checkbox">
+                  <span id="acousticness-checkbox-label">Acousticness</span>
                 </div>
               </div>
               <div class="py-1">
@@ -84,8 +84,8 @@
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
-                  <span>Danceability</span>
+                  <input class="form-check-input mr-2" type="checkbox" id="danceability-checkbox">
+                  <span id="danceability-checkbox-label">Danceability</span>
                 </div>
               </div>
               <div class="py-1">
@@ -97,8 +97,8 @@
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
-                  <span>Instrumentalness</span>
+                  <input class="form-check-input mr-2" type="checkbox" id="instrumentalness-checkbox">
+                  <span id="instrumentalness-checkbox-label">Instrumentalness</span>
                 </div>
               </div>
               <div class="py-1">
@@ -110,8 +110,8 @@
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
-                  <span>Liveness</span>
+                  <input class="form-check-input mr-2" type="checkbox" id="liveness-checkbox">
+                  <span id="liveness-checkbox-label">Liveness</span>
                 </div>
               </div>
               <div class="py-1">
@@ -123,8 +123,8 @@
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
-                  <span>Loudness</span>
+                  <input class="form-check-input mr-2" type="checkbox" id="loudness-checkbox">
+                  <span id="loudness-checkbox-label">Loudness</span>
                 </div>
               </div>
               <div class="py-1">
@@ -136,8 +136,8 @@
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
-                  <span>Speechiness</span>
+                  <input class="form-check-input mr-2" type="checkbox" id="speechiness-checkbox">
+                  <span id="speechiness-checkbox-label">Speechiness</span>
                 </div>
               </div>
               <div class="py-1">
@@ -152,8 +152,8 @@
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
-                  <span>Duration</span>
+                  <input class="form-check-input mr-2" type="checkbox" id="duration-checkbox">
+                  <span id="duration-checkbox-label">Duration</span>
                 </div>
               </div>
               <div class="py-1">
@@ -165,8 +165,8 @@
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
-                  <span>Key</span>
+                  <input class="form-check-input mr-2" type="checkbox" id="key-checkbox">
+                  <span id="key-checkbox-label">Key</span>
                 </div>
               </div>
               <div class="py-1">
@@ -193,8 +193,8 @@
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
-                  <span>Mode</span>
+                  <input class="form-check-input mr-2" type="checkbox" id="mode-checkbox">
+                  <span id="mode-checkbox-label">Mode</span>
                 </div>
               </div>
               <div class="py-1">
@@ -206,8 +206,8 @@
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
-                  <span>Tempo</span>
+                  <input class="form-check-input mr-2" type="checkbox" id="tempo-checkbox">
+                  <span id="tempo-checkbox-label">Tempo</span>
                 </div>
               </div>
               <div class="py-1">
@@ -220,7 +220,7 @@
       </div>
     </div>
     <script>
-      //JavaScript for the filter settings list; Shamelessly stolen from w3schools
+      //JavaScript for the tree list; Shamelessly stolen from w3schools
       var carets = document.getElementsByClassName("caret");//Find all carets
       
       for (var i = 0; i < carets.length; i++) {
@@ -232,10 +232,51 @@
        carets[i].dispatchEvent(new Event("click"));//Open the caret
       }
 
+      //Set the current date for the date select and year input box
+      var d = new Date();
+      document.getElementById("release-date-select").value = getDateDashFormat(d);
+      document.getElementById("year-input").value = d.getFullYear();
+
+      //Set all checkbox labels to change color when the checkbox is checked
+      var checkboxes = document.getElementsByClassName("form-check-input mr-2");//Find all carets
+      for (var i = 0; i < checkboxes.length; i++) {
+       checkboxes[i].addEventListener("click", function() {
+          document.getElementById(this.id + "-label").classList.toggle("label-active");
+        }, );
+      }
+
       //====================================================================
 
+      //Edits the innerText of the document element with an id of target
       function editInnerText(value, target) {
         document.getElementById(target).innerText = value;
+      }
+
+      //Takes a range value (0-100) and returns an easily readable quartic power of the value
+      function quarticSliderDisplay(sliderValue) {
+        var value = Math.pow(sliderValue, 4) * 10;
+        var display = value.toString();
+        if (value < 10000000) {
+          if (value > 999) display = insertAt(display, ",", display.length - 3);
+          if (value > 999999) display = insertAt(display, ",", display.length - 7);
+        } else if (value < 999999999) {
+          display = (value / 1000000).toFixed(1) + " million";
+        } else {
+          display = "1 billion";
+        }
+        return display;
+      }
+
+      function insertAt(str, insert, index) {
+        return str.slice(0, index) + insert + str.slice(index, str.length);
+      }
+
+      function getDateDashFormat(d) {
+        dateString = "";
+        dateString = dateString + d.getFullYear() + "-";
+        dateString = dateString + ((d.getMonth() + 1).toString().length < 2 ? "0" + (d.getMonth() + 1) : (d.getMonth() + 1)) + "-";
+        dateString = dateString + (d.getDate().toString().length < 2 ?  "0" + d.getDate() : d.getDate());
+        return dateString;
       }
     </script>
 
@@ -243,6 +284,6 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
+    <script src="..\node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
   </body>
 </html>
