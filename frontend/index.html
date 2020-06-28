@@ -36,8 +36,8 @@
                 </div>
               </div>
               <div class="py-1">
-                <small class="text-muted">1,000,000 plays</small>
-                <input class="align-middle" type="range" id="pop">
+                <small class="text-muted" id="popularity-val">1000000 plays</small><!--TODO This slider is weird, needs tweaking-->
+                <input class="align-middle" type="range" id="popularity-slider" value="10" step="5" oninput="editInnerText(this.value * this.value * this.value * 1000 + ' plays', 'popularity-val')">
               </div>
             </div>
             <!-- Release Date -->
@@ -71,13 +71,13 @@
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
+                  <input class="form-check-input mr-2" type="checkbox" id="">
                   <span>Acousticness</span>
                 </div>
               </div>
               <div class="py-1">
-                <small class="text-muted">0.5</small>
-                <input class="align-middle" type="range" id="pop">
+                <small class="text-muted" id="acousticness-val">0.5</small>
+                <input class="align-middle" type="range" id="acousticness-slider" oninput="editInnerText(this.value / 100, 'acousticness-val')">
               </div>
             </div>
             <!-- Danceability -->
@@ -89,8 +89,8 @@
                 </div>
               </div>
               <div class="py-1">
-                <small class="text-muted">0.5</small>
-                <input class="align-middle" type="range" id="pop">
+                <small class="text-muted"  id="danceability-val">0.5</small>
+                <input class="align-middle" type="range" id="danceability-slider" oninput="editInnerText(this.value / 100, 'danceability-val')">
               </div>
             </div>
             <!-- Instrumentalness -->
@@ -102,8 +102,8 @@
                 </div>
               </div>
               <div class="py-1">
-                <small class="text-muted">0.5</small>
-                <input class="align-middle" type="range" id="pop">
+                <small class="text-muted" id="instrumentalness-val">0.5</small>
+                <input class="align-middle" type="range" id="instrumentalness-slider" oninput="editInnerText(this.value / 100, 'instrumentalness-val')">
               </div>
             </div>
             <!-- Liveness -->
@@ -115,8 +115,8 @@
                 </div>
               </div>
               <div class="py-1">
-                <small class="text-muted">0.5</small>
-                <input class="align-middle" type="range" id="pop">
+                <small class="text-muted" id="liveness-val">0.5</small>
+                <input class="align-middle" type="range" id="liveness-slider" oninput="editInnerText(this.value / 100, 'liveness-val')">
               </div>
             </div>
             <!-- Loudness -->
@@ -128,8 +128,8 @@
                 </div>
               </div>
               <div class="py-1">
-                <small class="text-muted">0.5</small>
-                <input class="align-middle" type="range" id="pop">
+                <small class="text-muted" id="loudness-val">0.5</small>
+                <input class="align-middle" type="range" id="loudness-slider" oninput="editInnerText(this.value / 100, 'loudness-val')">
               </div>
             </div>
             <!-- Speechiness -->
@@ -141,8 +141,8 @@
                 </div>
               </div>
               <div class="py-1">
-                <small class="text-muted">0.5</small>
-                <input class="align-middle" type="range" id="pop">
+                <small class="text-muted" id="speechiness-val">0.5</small>
+                <input class="align-middle" type="range" id="speechiness-slider" oninput="editInnerText(this.value / 100, 'speechiness-val')">
               </div>
             </div>
           </li></ul></li>
@@ -157,8 +157,8 @@
                 </div>
               </div>
               <div class="py-1">
-                <small class="text-muted">0.5</small>
-                <input class="align-middle" type="range" id="pop">
+                <small class="text-muted" id="duration-val">3 minute(s)</small>
+                <input class="align-middle" type="range" id="duration-slider" value="16" oninput="editInnerText(this.value / 5 + ' minute(s)', 'duration-val')">
               </div>
             </div>
             <!-- Key -->
@@ -166,7 +166,7 @@
               <div class="py-1">
                 <div class="form-check-inline">
                   <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
-                  <span>Speechiness</span>
+                  <span>Key</span>
                 </div>
               </div>
               <div class="py-1">
@@ -198,21 +198,21 @@
                 </div>
               </div>
               <div class="py-1">
-                <small class="text-muted">0.5</small>
-                <input class="align-middle" type="range" id="pop">
+                <small class="text-muted" id="mode-val">Major</small>
+                <input class="align-middle" type="range" id="mode-slider" value="100" step="100" oninput="editInnerText(this.value / 100 < .5 ? 'Minor' : 'Major', 'mode-val')">
               </div>
             </div>
             <!-- Tempo -->
             <div class="d-flex justify-content-between">
               <div class="py-1">
                 <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value=""><!--TODO remove excess tags-->
-                  <span>Tempo (BPM)</span>
+                  <input class="form-check-input mr-2" type="checkbox" name="" id="" value="">
+                  <span>Tempo</span>
                 </div>
               </div>
               <div class="py-1">
-                <small class="text-muted">0.5</small>
-                <input class="align-middle" type="range" id="pop">
+                <small class="text-muted" id="tempo-val">60 BPM</small>
+                <input class="align-middle" type="range" id="tempo-slider" value="25" oninput="editInnerText(Math.floor(this.value * 2.4) + ' BPM', 'tempo-val')">
               </div>
             </div>
           </li></ul></li>
@@ -221,18 +221,21 @@
     </div>
     <script>
       //JavaScript for the filter settings list; Shamelessly stolen from w3schools
-      var toggler = document.getElementsByClassName("caret");//Find all carets
-
-      for (var i = 0; i < toggler.length; i++) {//Open them all
-        toggler[i].parentElement.querySelector(".nested").classList.toggle("active");
-        toggler[i].classList.toggle("caret-down");
-      }
+      var carets = document.getElementsByClassName("caret");//Find all carets
       
-      for (var i = 0; i < toggler.length; i++) {//Add event listener to each caret
-        toggler[i].addEventListener("click", function() {
+      for (var i = 0; i < carets.length; i++) {
+        //Add event listener to each caret
+       carets[i].addEventListener("click", function() {
           this.parentElement.querySelector(".nested").classList.toggle("active");
           this.classList.toggle("caret-down");
-        });
+        }, );
+       carets[i].dispatchEvent(new Event("click"));//Open the caret
+      }
+
+      //====================================================================
+
+      function editInnerText(value, target) {
+        document.getElementById(target).innerText = value;
       }
     </script>
 
