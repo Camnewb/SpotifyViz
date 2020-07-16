@@ -2,7 +2,7 @@ import csv
 import os
 from Graph import Graph
 
-# initialzing reader
+# initialzing path and csv reader object
 folder = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(folder, 'csv', 'test.csv')
 reader = csv.DictReader(open(file_path))

@@ -1,15 +1,22 @@
-import networkx as nx
-import time
-import csv
+# for iterating through lists in neat ways
 from itertools import product, combinations
-import pickle
+# for displaying graph for debugging
 import matplotlib.pyplot as plt 
+# library holds the graph model
+import networkx as nx
+# library serializes and saves python variable to a file
+import pickle
+# time
+import time
+# good for reading in csv files
+import csv
 
 class Graph:
     def __init__(self):
-
-        # Constants
-        self.DEFAULT_WEIGHTS = { # 0's make feature not matter
+    # Constants
+        # These are the coefficients I multiply each feature by before I compare
+        # small coefficient -> feature matters less, large coefficient -> feature matters more
+        self.DEFAULT_WEIGHTS = { 
             "acousticness" : 1.0,
             "artists" : 2.0,
             "danceability" : 1.0,
@@ -27,11 +34,15 @@ class Graph:
             "valence" : 1.0,
             "year" : 1.0
         }
+
+        # These are the constants I have to divide features by to get them in or around the range [0,1]
+        # I put features between [0,1] for the sake of easy and clean math
+        # Most of these values are the min - max for that feature
         self.NORMALIZATIONS = {
             "acousticness" : 1.0,
             "artists" : 1.0,
             "danceability" : 1.0,
-            "duration_ms" : 263000.0, #75 percentile. Dunno if this is good. Oh well.
+            "duration_ms" : 263000.0, #Since duration doesn't have a clean min and max, I chose the 75 percentile. Dunno if this is good. Oh well.
             "energy" : 1.0,
             "explicit" : 1.0,
             "instrumentalness" : 1.0,
@@ -45,8 +56,9 @@ class Graph:
             "valence" : 1.0,
             "year" : 99.0
         }
-        self.NEIGHBOR_LIMIT = 6
-        self.ATTRIBUTES = {
+
+        # All the features sorted and accessible for convenience
+        self.FEATURES = {
             "all" : ["", "acousticness", "artists", "danceability","duration_ms",
                         "energy", "explicit", "id", "instrumentalness",
                         "key", "liveness", "loudness", "mode", "name",
@@ -68,28 +80,34 @@ class Graph:
             }
         }
 
+        # When constructing the graph every node looks for this many nodes most similar to it and creates an edge
+        self.NEIGHBOR_LIMIT = 6
+        
         # initializing networkX graph
         self.graph = nx.Graph()
 
-    # Note: All features are being read in as strings
+    # Takes each row from the CSV file, turns it into a node, and adds it to the graph. (No edges are added)
     def add_all_nodes(self, reader):
+        
         for row in reader:
+            # Note: All features are being read in as strings
             self.graph.add_node(row['name'], **row)
 
-    # 
+    # Goes through each node, finds the most similar, and adds an edge between them
+    # The slowest part of the algorithm, O(V^2)
     def attach_edges(self):
         for node1_name in self.graph.nodes:
             for node2_name in self._get_similar_nodes(node1_name):
                 self.graph.add_edge(node1_name, node2_name)
 
+    # Helper function for attatch_edges. Given a node, it finds the NEIGHBOR_LIMIT most similar
+    # Large potential for code refactoring to make it neater. possibly involving queues.
     def _get_similar_nodes(self, node_name, weights = None):
-        # both following lists will be sorted least similar to most similar
-        # which is greatest score to least score
+        # lists will end up sorted least similar to most similar (greatest score to least score)
         most_similar = ["NONE"] * (self.NEIGHBOR_LIMIT + 1)
         most_similar_dif_scores = [float("inf")] * (self.NEIGHBOR_LIMIT + 1)
 
         for node2_name in self.graph.nodes:
-            # look where to add itself in the list
             dif_score = self._sim_score(node_name, node2_name, weights)
             for i in range(0, self.NEIGHBOR_LIMIT + 1):
                 if dif_score > most_similar_dif_scores[i]: 
@@ -107,19 +125,17 @@ class Graph:
 
         return most_similar[:-1] # last entry will be itself
 
-    # the similarity  score uses all attributes EXCEPT , "", "id", "name", "release_date"
-    # therefore, the similarity score is calculated based on 15 features.
+    # Helper Function for _get_similar_nodes. Calculates similarity score between two nodes.
+    # The similarity score uses all features EXCEPT , "", "id", "name", "release_date".
     # Low score is more similar. 0 should be the exact same.
     def _sim_score(self, node1_name, node2_name, weights = None):
-        score = 0
 
+        score = 0
         node1 = self.graph.nodes[node1_name]
         node2 = self.graph.nodes[node2_name]
-
         squared_dif = dict()
-        
-        # Handling Atypical attributes like key and Artists
 
+    # Handling atypical features like key and artists
         # Handling Artists data. If songs share artist : 1, 0 if they dont.
         node1_artists = node1["artists"].split(",")
         node2_artists = node2["artists"].split(",")
@@ -132,15 +148,13 @@ class Graph:
         else:
             squared_dif["artists"] = 0
 
-        # Handling Key Data. If song share key : 1, 0 if they dont
+        # Handling Key Data. If songs share key then 1, 0 if they dont
         squared_dif["key"] = int(node1["key"] == node2["key"])
 
-        # Handling typical NUMERICAL attributes
-        for attr in self.ATTRIBUTES["useful"]["typical"]:
+        # Handling typical NUMERICAL features
+        for attr in self.FEATURES["useful"]["typical"]:
             dif = float(node1[attr]) - float(node2[attr])
             nomrmalized_dif = (dif) / self.NORMALIZATIONS[attr]
-            # normalized_dif should be value between 0 and 1 (with exception of attr=duration)
-
             squared_dif[attr] = nomrmalized_dif ** 2
 
         # AT THIS POINT squared_dif SHOULD BE FILLED WITH UNWEIGHTED NORMALIZED SQUARED DIFFERENCES
@@ -148,27 +162,24 @@ class Graph:
         if weights is None:
             weights = self.DEFAULT_WEIGHTS
 
-        for attr in self.ATTRIBUTES["useful"]["all"]:
+        for attr in self.FEATURES["useful"]["all"]:
             score += weights[attr] * squared_dif[attr]
         
         return score
-        
+    
+    # helper fucnction to _sim_score. Since artist names are formatted weird in CSV, this cleans that up.
     def _clean_name(self, name):
         bad_chars = ["'", '"', "[", "]"]
         for char in bad_chars:
             name = name.replace(char, "")
         return name
 
-    
+    # function that quickly draws graph for debug purposes
+    # can only handle small graphs of about < 50 nodes or so
     def draw(self):
-        # nx.draw_circular(self.graph, with_labels=True)
-        # nx.draw_shell(self.graph, with_labels=True)
-        # nx.draw_spectral(self.graph, with_labels=True)
         nx.draw_kamada_kawai(self.graph, with_labels=True)
 
         plt.show()
 
-    
-        
     def save_progress(self):
         pass
