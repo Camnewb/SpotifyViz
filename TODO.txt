@@ -1,4 +1,0 @@
-Things to aim for:
-- Make this a website
-- Add images to the artist nodes
-- Monetize it
