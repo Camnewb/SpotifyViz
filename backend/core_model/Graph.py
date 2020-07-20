@@ -106,7 +106,8 @@ class Graph:
         remaining_portion = enumerate(islice(self.graph.nodes, start_index, None), start_index)
         for i, node in remaining_portion:
             print(f"Index is {i}")
-            self.save_progress(i, False)
+            if (i % 10 == 0):
+                self.save_progress(i, False)
 
             similar_nodes = self._get_similar_nodes(node)
             for similar_node in similar_nodes:
@@ -263,4 +264,4 @@ class Graph:
         dump["index"] = index
         dump["graph"] = self
         pickle.dump(dump, open(path, "wb"))
-
+        print("Saved!")

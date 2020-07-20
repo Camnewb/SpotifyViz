@@ -3,12 +3,14 @@ import pickle
 import csv
 import os
 
-# initialzing path and csv reader object
-CORE_MODEL_FOLDER = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(CORE_MODEL_FOLDER, 'csv', 'data.csv')
-reader = csv.DictReader(open(file_path))
+# Constants to change at will
+SELECTED_CSV = 'data.csv'
 
+# initialzing paths and csv reader object
+CORE_MODEL_FOLDER = os.path.dirname(os.path.abspath(__file__))
+csv_path = os.path.join(CORE_MODEL_FOLDER, 'csv', SELECTED_CSV)
 pickle_path = os.path.join(CORE_MODEL_FOLDER, "checkpoints", "newest.p")
+reader = csv.DictReader(open(csv_path))
 
 # Partial or full graph exists
 if os.path.exists(pickle_path):
@@ -16,10 +18,14 @@ if os.path.exists(pickle_path):
     # pulling data from pickle object
     data = pickle.load(open(pickle_path, "rb"))
     if not data["done"]:
-        # pull data from pickle
+        print("Continuing edge attatching")
+        # pull data from pickle file
         start_index = data["index"]
         graph = data["graph"]
         graph.attach_edges(start_index)
+    else:
+        print("Graph is complete and ready for use!")
+        graph = data["graph"]
 else:
     print("Starting construction on a new graph")
     # initialzing Graph
@@ -29,10 +35,11 @@ else:
     graph.add_all_nodes(reader)
     graph.attach_edges()
     
-for v in graph.breadth_first_search('Oh Well', 10):
-    print(v)
+# for v in graph.breadth_first_search('Oh Well', 10):
+#     print(v)
 
-for v in graph.depth_first_search('Oh Well', 10):
-    print(v)
+# for v in graph.depth_first_search('Oh Well', 10):
+#     print(v)
+
 #graph.draw()
 
