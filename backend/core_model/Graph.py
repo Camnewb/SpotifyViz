@@ -1,20 +1,17 @@
 # for iterating through lists in neat ways
-
 from itertools import product, combinations, islice
-
 # for displaying graph for debugging
 import matplotlib.pyplot as plt 
+# queue data structure
+from collections import deque 
 # library holds the graph model
 import networkx as nx
 # library serializes and saves python variable to a file
 import pickle
-# time
+# time functions
 import time
 # good for reading in csv files
 import csv
-
-# queue data structure
-from collections import deque 
 # used for file reading and managing file paths
 import os
 
@@ -114,6 +111,7 @@ class Graph:
             similar_nodes = self._get_similar_nodes(node)
             for similar_node in similar_nodes:
                 self.graph.add_edge(node, similar_node)
+        self.save_progress(-1, True)
 
 
     # Helper function for attatch_edges. Given a node, it finds the NEIGHBOR_LIMIT most similar
