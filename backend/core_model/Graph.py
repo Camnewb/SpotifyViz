@@ -97,6 +97,7 @@ class Graph:
     # The slowest part of the algorithm, O(V^2)
     def attach_edges(self):
         for node1_name in self.graph.nodes:
+            self.save_progress()
             for node2_name in self._get_similar_nodes(node1_name):
                 self.graph.add_edge(node1_name, node2_name)
 
@@ -182,4 +183,5 @@ class Graph:
         plt.show()
 
     def save_progress(self):
-        pass
+        print("getting executed")
+        pickle.dump(self.graph, open("./checkpoints/new.p", "wb"))
