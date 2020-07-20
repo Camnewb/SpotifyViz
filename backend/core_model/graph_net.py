@@ -28,5 +28,11 @@ else:
     # creating graph
     graph.add_all_nodes(reader)
     graph.attach_edges()
+    
+for v in graph.breadth_first_search('Oh Well', 10):
+    print(v)
 
+for v in graph.depth_first_search('Oh Well', 10):
+    print(v)
 #graph.draw()
+

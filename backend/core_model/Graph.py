@@ -1,5 +1,7 @@
 # for iterating through lists in neat ways
+
 from itertools import product, combinations, islice
+
 # for displaying graph for debugging
 import matplotlib.pyplot as plt 
 # library holds the graph model
@@ -10,6 +12,9 @@ import pickle
 import time
 # good for reading in csv files
 import csv
+
+# queue data structure
+from collections import deque 
 # used for file reading and managing file paths
 import os
 
@@ -97,6 +102,7 @@ class Graph:
 
     # Goes through each node, finds the most similar, and adds an edge between them
     # The slowest part of the algorithm, O(V^2)
+
     def attach_edges(self, start_index = 0):
         # number_of_nodes = len(self.graph.nodes)
         # the itertools.islice efficiently skips to an index in the iterable
@@ -108,6 +114,7 @@ class Graph:
             similar_nodes = self._get_similar_nodes(node)
             for similar_node in similar_nodes:
                 self.graph.add_edge(node, similar_node)
+
 
     # Helper function for attatch_edges. Given a node, it finds the NEIGHBOR_LIMIT most similar
     # Large potential for code refactoring to make it neater. possibly involving queues.
@@ -190,6 +197,66 @@ class Graph:
 
         plt.show()
 
+
+    # given a node, this function will perform bfs and return a list of size num_results
+    def breadth_first_search(self, node_name, num_results):
+        print("breadth first search with " + node_name + ":")
+        return_list = []
+
+        q = deque()
+        q.append(node_name)
+
+        visited = []
+        visited.append(node_name)
+        
+        while (len(q) > 0):
+
+            if len(return_list) == num_results + 1:
+                break
+
+            cur_name = q.popleft()
+            return_list.append(cur_name)
+
+            for v in self.graph.neighbors(cur_name):
+                if v not in visited:
+                    visited.append(v)
+                    q.append(v)
+
+        return_list.remove(node_name)
+
+        return return_list
+
+
+# given a node, this function will perform dfs and return a list of size num_results
+    def depth_first_search(self, node_name, num_results):
+        print("depth first search with " + node_name + ":")
+        return_list = []
+
+        stack = deque()
+        stack.append(node_name)
+
+        visited = []
+        visited.append(node_name)
+        
+        while (len(stack) > 0):
+
+            if len(return_list) == num_results + 1:
+                break
+
+            cur_name = stack.pop()
+            return_list.append(cur_name)
+
+            for v in self.graph.neighbors(cur_name):
+                if v not in visited:
+                    visited.append(v)
+                    stack.append(v)
+
+        return_list.remove(node_name)
+
+        return return_list
+
+
+
     def save_progress(self, index, done=False):
         print("Saving!")
         path = os.path.join(os.path.dirname(__file__), "checkpoints", "newest.p")
@@ -198,3 +265,4 @@ class Graph:
         dump["index"] = index
         dump["graph"] = self
         pickle.dump(dump, open(path, "wb"))
+
