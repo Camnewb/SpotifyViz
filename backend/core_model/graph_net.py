@@ -1,17 +1,32 @@
+from Graph import Graph
+import pickle
 import csv
 import os
-from Graph import Graph
 
 # initialzing path and csv reader object
-folder = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(folder, 'csv', 'test.csv')
+CORE_MODEL_FOLDER = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(CORE_MODEL_FOLDER, 'csv', 'data.csv')
 reader = csv.DictReader(open(file_path))
 
-# initialzing Graph
-graph = Graph()
+pickle_path = os.path.join(CORE_MODEL_FOLDER, "checkpoints", "newest.p")
 
-graph.add_all_nodes(reader)
+# Partial or full graph exists
+if os.path.exists(pickle_path):
+    print("Reading in from existant graph model")
+    # pulling data from pickle object
+    data = pickle.load(open(pickle_path, "rb"))
+    if not data["done"]:
+        # pull data from pickle
+        start_index = data["index"]
+        graph = data["graph"]
+        graph.attach_edges(start_index)
+else:
+    print("Starting construction on a new graph")
+    # initialzing Graph
+    graph = Graph()
 
-graph.attach_edges()
+    # creating graph
+    graph.add_all_nodes(reader)
+    graph.attach_edges()
 
-graph.draw()
+#graph.draw()
