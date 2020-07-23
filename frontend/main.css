@@ -9967,8 +9967,52 @@ ul, #filter-settings {
   font-size: 14px;
 }
 
-.label-active {
+.label-active-1 {
   color: #2196f3;
+}
+
+.label-active-2 {
+  color: #e4624c;
+}
+
+.label-active-3 {
+  color: #3a9b37;
+}
+
+.label-active-4 {
+  color: #eff157;
+}
+
+.label-active-5 {
+  color: #e84bf7;
+}
+
+.label-active-6 {
+  color: #f58e49;
+}
+
+.label-active-7 {
+  color: #5cf5f5;
+}
+
+.label-active-8 {
+  color: #ce6294;
+}
+
+.label-active-9 {
+  color: #65e459;
+}
+
+.label-active-10 {
+  color: #ceedff;
+}
+
+.label-active-11 {
+  color: #fddbe3;
+}
+
+.label-active-12 {
+  color: #68a38a;
 }
 
 /*# sourceMappingURL=main.css.map */

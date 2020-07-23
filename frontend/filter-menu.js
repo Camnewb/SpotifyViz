@@ -11,15 +11,27 @@ for (var i = 0; i < carets.length; i++) {
 }
 
 //Set the current date for the date select and year input box
-var d = new Date();
-document.getElementById("release-date-select").value = getDateDashFormat(d);
-document.getElementById("year-input").value = d.getFullYear();
+// var d = new Date();
+// document.getElementById("release-date-select").value = getDateDashFormat(d);
+// document.getElementById("year-input").value = d.getFullYear();
 
 //Set all checkbox labels to change color when the checkbox is checked
 var checkboxes = document.getElementsByClassName("form-check-input mr-2");//Find all carets
+var colors = ["label-active-1", "label-active-2", "label-active-3", 
+"label-active-4", "label-active-5", "label-active-6", 
+"label-active-7", "label-active-8", "label-active-9", 
+"label-active-10", "label-active-11", "label-active-12"];
 for (var i = 0; i < checkboxes.length; i++) {
  checkboxes[i].addEventListener("click", function() {
-    document.getElementById(this.id + "-label").classList.toggle("label-active");
+    //checkboxLabel refers to the id of the checkbox label
+    var checkboxLabel = this.id + "-label";
+    if (document.getElementById(this.id).checked) {
+      document.getElementById(checkboxLabel).className = colors.shift(checkboxLabel);
+    } else {
+      colors.unshift(document.getElementById(checkboxLabel).className);//Remove the label from the list of active labels
+      document.getElementById(checkboxLabel).className = "";
+    }
+    //colors.sort();
   }, );
 }
 
@@ -55,4 +67,20 @@ function getDateDashFormat(d) {
   dateString = dateString + ((d.getMonth() + 1).toString().length < 2 ? "0" + (d.getMonth() + 1) : (d.getMonth() + 1)) + "-";
   dateString = dateString + (d.getDate().toString().length < 2 ?  "0" + d.getDate() : d.getDate());
   return dateString;
+}
+
+function getColor(neighbors) {
+  switch (neighbors) {
+    case 1:
+      return "red";
+    case 2:
+      return "yeellow";
+    case 3:     
+      return "green";
+    case 4:
+      return "blue";
+    case 5:
+      return "purple";
+
+  }
 }
