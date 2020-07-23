@@ -61,26 +61,10 @@ function insertAt(str, insert, index) {
   return str.slice(0, index) + insert + str.slice(index, str.length);
 }
 
-function getDateDashFormat(d) {
-  dateString = "";
-  dateString = dateString + d.getFullYear() + "-";
-  dateString = dateString + ((d.getMonth() + 1).toString().length < 2 ? "0" + (d.getMonth() + 1) : (d.getMonth() + 1)) + "-";
-  dateString = dateString + (d.getDate().toString().length < 2 ?  "0" + d.getDate() : d.getDate());
-  return dateString;
-}
-
-function getColor(neighbors) {
-  switch (neighbors) {
-    case 1:
-      return "red";
-    case 2:
-      return "yeellow";
-    case 3:     
-      return "green";
-    case 4:
-      return "blue";
-    case 5:
-      return "purple";
-
-  }
-}
+// function getDateDashFormat(d) {
+//   dateString = "";
+//   dateString = dateString + d.getFullYear() + "-";
+//   dateString = dateString + ((d.getMonth() + 1).toString().length < 2 ? "0" + (d.getMonth() + 1) : (d.getMonth() + 1)) + "-";
+//   dateString = dateString + (d.getDate().toString().length < 2 ?  "0" + d.getDate() : d.getDate());
+//   return dateString;
+// }

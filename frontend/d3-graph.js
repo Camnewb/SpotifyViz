@@ -1,5 +1,5 @@
 //This code was stolen from https://bl.ocks.org/jodyphelan/5dc989637045a0f48418101423378fbd
-var radius = 5;
+var radius = 10;
 
 var defaultNodeCol = "white",
     highlightCol = "yellow";
@@ -18,24 +18,23 @@ var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-
+//Define parameters for the "forces" between nodes
 var simulation = d3.forceSimulation()
-              .force("center", d3.forceCenter(graphWidth / 2, height / 2))
-              .force("x", d3.forceX(graphWidth / 2).strength(0.1))
-              .force("y", d3.forceY(height / 2).strength(0.1))
-              .force("charge", d3.forceManyBody().strength(-50))
-              .force("link", d3.forceLink().strength(1).id(function(d) { return d.id; }))
+              .force("center", d3.forceCenter(graphCanvas.width / 2, graphCanvas.height / 2))
+              //.force("x", d3.forceX(graphCanvas.width / 2).strength(0.1))
+              //.force("y", d3.forceY(graphCanvas.height / 2).strength(0.1))
+              .force("charge", d3.forceManyBody())
+              .force("link", d3.forceLink().id(function(d) { return d.id; }))
               .alphaTarget(0)
-              .alphaDecay(0.05)
+              .alphaDecay(0.05);
 
 var transform = d3.zoomIdentity;
 
+var dataFile = 'data.json';
 
-d3.json("data.json",function(error,data){
+d3.json(dataFile, function(error,data){
   console.log(data)
-
   initGraph(data)
-
   function initGraph(tempData){
 
 
@@ -45,12 +44,13 @@ d3.json("data.json",function(error,data){
       simulationUpdate();
     }
 
+    //Add drag and zoom functions to the canvas
     d3.select(graphCanvas)
         .call(d3.drag().subject(dragsubject).on("start", dragstarted).on("drag", dragged).on("end",dragended))
-        .call(d3.zoom().scaleExtent([1 / 10, 8]).on("zoom", zoomed))
+        .call(d3.zoom().scaleExtent([1/2, 10]).on("zoom", zoomed))
 
 
-
+  //Drag function
   function dragsubject() {
     var i,
     x = transform.invertX(d3.event.x),
@@ -82,7 +82,7 @@ d3.json("data.json",function(error,data){
   function dragged() {
     d3.event.subject.fx = transform.invertX(d3.event.x);
     d3.event.subject.fy = transform.invertY(d3.event.y);
-
+    console.log("dragged " + d3.event.subject.id + " to x= " + d3.event.x + ", y: " + d3.event.y)
   }
 
   function dragended() {
@@ -97,36 +97,40 @@ d3.json("data.json",function(error,data){
     simulation.force("link")
               .links(tempData.edges);
 
-
-
-    function render(){
-
-    }
-
-    function simulationUpdate(){
+    //Draws the nodes and edges using canvas every update
+    function simulationUpdate() {
       context.save();
 
-      context.clearRect(0, 0, graphWidth, height);
+      context.clearRect(0, 0, graphCanvas.width, graphCanvas.height);
       context.translate(transform.x, transform.y);
       context.scale(transform.k, transform.k);
 
       tempData.edges.forEach(function(d) {
-            context.beginPath();
-            context.moveTo(d.source.x, d.source.y);
-            context.lineTo(d.target.x, d.target.y);
-            context.stroke();
-        });
+        //Draw the edges between nodes
+        context.beginPath();
+        context.moveTo(d.source.x, d.source.y);
+        context.lineTo(d.target.x, d.target.y);
+        context.strokeStyle = defaultNodeCol;
+        context.lineWidth = 3;
+        context.globalAlpha = 0.75;
+        context.stroke();
+      });
 
-        // Draw the nodes
-        tempData.nodes.forEach(function(d, i) {
+      // Draw the nodes
+      tempData.nodes.forEach(function(d, i) {
+        context.beginPath();
+        context.arc(d.x, d.y, radius * 1.2, 0, 2 * Math.PI, true);
+        context.fillStyle = "blue";
+        context.fill();
+        context.closePath();
+        context.beginPath();
+        context.arc(d.x, d.y, radius, 0, 2 * Math.PI, true);
+        context.fillStyle = d.col ? highlightCol : defaultNodeCol;
+        context.globalAlpha = 1;
+        context.fill();
+      });
 
-            context.beginPath();
-            context.arc(d.x, d.y, radius, 0, 2 * Math.PI, true);
-            context.fillStyle = d.col ? "red":"black"
-            context.fill();
-        });
-
-        context.restore();
+      context.restore();
 //        transform = d3.zoomIdentity;
     }
   }
