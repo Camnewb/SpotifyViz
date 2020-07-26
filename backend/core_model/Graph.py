@@ -15,6 +15,18 @@ import csv
 # used for file reading and managing file paths
 import os
 
+from heapq import nlargest, nsmallest
+
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+# firebase stuffs
+cred = credentials.Certificate("./core_model/spotifyviz-68e56-firebase-adminsdk-gqzp8-0e7479645a.json")
+firebase_admin.initialize_app(cred)
+store = firestore.client()
+
+# WOREKD !!!!!!!
+
 class Graph:
     def __init__(self):
     # Constants
@@ -85,10 +97,12 @@ class Graph:
         }
 
         # When constructing the graph every node looks for this many nodes most similar to it and creates an edge
-        self.NEIGHBOR_LIMIT = 6
+        self.NEIGHBOR_LIMIT = 2
         
         # initializing networkX graph
         self.graph = nx.Graph()
+
+        self.ref_dict = dict()
 
     # Takes each row from the CSV file, turns it into a node, and adds it to the graph. (No edges are added)
     def add_all_nodes(self, reader):
@@ -98,47 +112,111 @@ class Graph:
             self.graph.add_node(row['name'], **row)
 
     # Goes through each node, finds the most similar, and adds an edge between them
-    # The slowest part of the algorithm, O(V^2)
-
     def attach_edges(self, start_index = 0):
         # number_of_nodes = len(self.graph.nodes)
         # the itertools.islice efficiently skips to an index in the iterable
         remaining_portion = enumerate(islice(self.graph.nodes, start_index, None), start_index)
         for i, node in remaining_portion:
             print(f"Index is {i}")
-            if (i % 10 == 0):
+            
+            if (i % 25 == 0):
                 self.save_progress(i, False)
+            
 
             similar_nodes = self._get_similar_nodes(node)
-            for similar_node in similar_nodes:
-                self.graph.add_edge(node, similar_node)
+            
+            self.push_to_firebase(node, similar_nodes)
         self.save_progress(-1, True)
 
+    def push_to_firebase(self, node, sim_nodes):
+        collection_ref = store.collection('songs')
+
+        nodeDict = dict(self.graph.nodes[node]).copy()
+        nodeDict.pop("")
+
+        augmented_sim_nodes = list()
+        for sim_node in sim_nodes:
+            sim_node_dict = dict(self.graph.nodes[sim_node])
+            spot_id = sim_node_dict["id"]
+            augmented_sim_nodes.append(sim_node + f"|{spot_id}")
+
+        nodeDict["connected_to"] = augmented_sim_nodes
+        artists = nodeDict["artists"]
+        cleaned_artists = list()
+        for artist in artists.split(", "):            
+            cleaned_artists.append(artist.strip("'[]"))
+        nodeDict["artists"] = list(cleaned_artists)
+        nodeDict["acousticness"] = float(nodeDict["acousticness"])
+        nodeDict["danceability"] = float(nodeDict["danceability"])
+        nodeDict["duration_ms"] = int(nodeDict["duration_ms"])
+        nodeDict["energy"] = float(nodeDict["energy"])
+        nodeDict["explicit"] = int(nodeDict["explicit"])
+        nodeDict["instrumentalness"] = float(nodeDict["instrumentalness"])
+        nodeDict["key"] = int(nodeDict["key"])
+        nodeDict["liveness"] = float(nodeDict["liveness"])
+        nodeDict["loudness"] = float(nodeDict["loudness"])
+        nodeDict["mode"] = int(nodeDict["mode"])
+        nodeDict["popularity"] = float(nodeDict["popularity"])
+        nodeDict["speechiness"] = float(nodeDict["speechiness"])
+        nodeDict["tempo"] = float(nodeDict["tempo"])
+        nodeDict["valence"] = float(nodeDict["valence"])
+        nodeDict["year"] = int(nodeDict["year"])
+        
+        keyNode = frozenset( self.graph.nodes[node].values() )
+        # print(f"\nkey node: {node}\n")
+        # if exists, add core information. Don't overwrite adjacency
+        if (keyNode in self.ref_dict):
+            existing_doc_ref_path = self.ref_dict[ keyNode ]
+            # print(f"loaded in {node}, with doc_ref: {existing_doc_ref_path}")
+            
+            existing_doc_ref = store.document(existing_doc_ref_path)
+            connected_to = nodeDict.pop("connected_to")
+
+            existing_doc_ref.set(nodeDict, merge=True)
+
+            existing_doc_ref.update({"connected_to": firestore.firestore.ArrayUnion(connected_to) } )
+
+            nodeDict["connected_to"] = connected_to
+            
+        else:
+            # if it doesn't exist, create with core information
+            _, returned_doc_ref = collection_ref.add(nodeDict)
+            
+            self.ref_dict[ keyNode ] = returned_doc_ref.path
+            # print(f"Just created {node}, with doc_ref: {returned_doc_ref.path}")
+
+        # update other nodes adjacency list
+        for sim_node in sim_nodes:
+            keySimNode = frozenset( self.graph.nodes[sim_node].values() )
+            # print(f"\nkey sim_node: {sim_node}\n")
+            # print(f"SAME?: {keySimNode == keyNode}")
+            
+            if (keySimNode in self.ref_dict):
+                # if it does exist, add to its adjacency only
+                existing_sim_doc_ref_path = self.ref_dict[ keySimNode ]
+                # print(f"loaded in sim node, {sim_node}, with doc_ref : {existing_sim_doc_ref_path}")                
+                existing_sim_doc_ref = store.document(existing_sim_doc_ref_path)
+                
+                node_spot_id = nodeDict["id"]
+                existing_sim_doc_ref.update( { "connected_to": firestore.firestore.ArrayUnion([ node + f"|{node_spot_id}" ]) } )
+                # store.ArrayUnion
+
+            else:
+                # if it doesnt exist, create it with adjacency
+                sim_dict = dict()
+                node_spot_id = nodeDict["id"]
+                sim_dict["connected_to"] = [node + f"|{node_spot_id}" ]
+                sim_dict["name"] = sim_node
+                _, returned_sim_doc_ref = collection_ref.add(sim_dict)
+                # print(f"just created sim_node {sim_node}, with doc_ref: {returned_sim_doc_ref.path}")
+                self.ref_dict[ keySimNode ] = returned_sim_doc_ref.path
 
     # Helper function for attatch_edges. Given a node, it finds the NEIGHBOR_LIMIT most similar
     # Large potential for code refactoring to make it neater. possibly involving queues.
     def _get_similar_nodes(self, node_name, weights = None):
-        # lists will end up sorted least similar to most similar (greatest score to least score)
-        most_similar = ["NONE"] * (self.NEIGHBOR_LIMIT + 1)
-        most_similar_dif_scores = [float("inf")] * (self.NEIGHBOR_LIMIT + 1)
-
-        for node2_name in self.graph.nodes:
-            dif_score = self._sim_score(node_name, node2_name, weights)
-            for i in range(0, self.NEIGHBOR_LIMIT + 1):
-                if dif_score > most_similar_dif_scores[i]: 
-                    if i == 0:
-                        break
-                    most_similar_dif_scores.insert(i, dif_score)
-                    most_similar.insert(i, node2_name)
-                    most_similar_dif_scores.pop(0)
-                    most_similar.pop(0)
-            else:
-                most_similar_dif_scores.append(dif_score)
-                most_similar.append(node2_name)
-                most_similar_dif_scores.pop(0)
-                most_similar.pop(0)
-
-        return most_similar[:-1] # last entry will be itself
+        most_similar = nsmallest(self.NEIGHBOR_LIMIT + 1, self.graph.nodes, key=lambda n2: self._sim_score(node_name,n2,weights))
+        # print(f"{node_name} is most similar to {most_similar}")
+        return most_similar[1:] # last entry will be itself
 
     # Helper Function for _get_similar_nodes. Calculates similarity score between two nodes.
     # The similarity score uses all features EXCEPT , "", "id", "name", "release_date".
@@ -150,7 +228,7 @@ class Graph:
         node2 = self.graph.nodes[node2_name]
         squared_dif = dict()
 
-    # Handling atypical features like key and artists
+        # Handling atypical features like key and artists
         # Handling Artists data. If songs share artist : 1, 0 if they dont.
         node1_artists = node1["artists"].split(",")
         node2_artists = node2["artists"].split(",")
@@ -184,10 +262,7 @@ class Graph:
     
     # helper fucnction to _sim_score. Since artist names are formatted weird in CSV, this cleans that up.
     def _clean_name(self, name):
-        bad_chars = ["'", '"', "[", "]"]
-        for char in bad_chars:
-            name = name.replace(char, "")
-        return name
+        return name.strip("[]").strip("'")
 
     # function that quickly draws graph for debug purposes
     # can only handle small graphs of about < 50 nodes or so
@@ -195,7 +270,6 @@ class Graph:
         nx.draw_kamada_kawai(self.graph, with_labels=True)
 
         plt.show()
-
 
     # given a node, this function will perform bfs and return a list of size num_results
     def breadth_first_search(self, node_name, num_results):
@@ -225,8 +299,7 @@ class Graph:
 
         return return_list
 
-
-# given a node, this function will perform dfs and return a list of size num_results
+    # given a node, this function will perform dfs and return a list of size num_results
     def depth_first_search(self, node_name, num_results):
         print("depth first search with " + node_name + ":")
         return_list = []
@@ -253,8 +326,6 @@ class Graph:
         return_list.remove(node_name)
 
         return return_list
-
-
 
     def save_progress(self, index, done=False):
         print("Saving!")

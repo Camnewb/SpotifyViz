@@ -1,0 +1,5 @@
+,acousticness,artists,danceability,duration_ms,energy,explicit,id,instrumentalness,key,liveness,loudness,mode,name,popularity,release_date,speechiness,tempo,valence,year
+0,0.732,['Dennis Day'],0.8190000000000001,180533,0.341,0,7xPhfUan2yNtyFG0cUWkt8,0.0,7,0.16,-12.440999999999999,1,Clancy Lowered the Boom,8,1921,0.415,60.93600000000001,0.963,1921
+1,0.982,"['Sergei Rachmaninoff', 'James Levine', 'Berliner Philharmoniker']",0.27899999999999997,831667,0.21100000000000002,0,4BJqT0PrAfrxzMOxytFOIz,0.878,10,0.665,-20.096,1,"Piano Concerto No. 3 in D Minor, Op. 30: III. Finale. Alla breve",5,1921,0.0366,80.954,0.0594,1921
+2,0.996,['John McCormack'],0.518,159507,0.203,0,5uNZnElqOS3W4fRmRYPk4T,0.0,0,0.115,-10.589,1,The Wearing of the Green,6,1921,0.0615,66.221,0.406,1921
+3,0.982,"['Sergei Rachmaninoff', 'James Levine', 'Berliner Philharmoniker']",0.27899999999999997,831667,0.21100000000000002,0,1SCWBjhk5WmXPxhDduD3HM,0.878,10,0.665,-20.096,1,"Piano Concerto No. 3 in D Minor, Op. 30: III. Finale. Alla breve",4,1921,0.0366,80.954,0.0594,1921

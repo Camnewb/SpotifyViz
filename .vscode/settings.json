@@ -1,5 +1,15 @@
 {
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
-    "python.pythonPath": "/opt/miniconda3/bin/python"
+    "python.pythonPath": "/opt/miniconda3/bin/python",
+    "files.associations": {
+        "__split_buffer": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "iosfwd": "cpp",
+        "utility": "cpp",
+        "ios": "cpp",
+        "__config": "cpp"
+    }
 }

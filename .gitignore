@@ -130,3 +130,5 @@ dmypy.json
 
 # VSCOde stuff
 .vscode
+
+/backend/core_model/spotifyviz-68e56-firebase-adminsdk-gqzp8-0e7479645a.json
