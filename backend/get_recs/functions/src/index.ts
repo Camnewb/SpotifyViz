@@ -4,6 +4,8 @@ import * as admin from 'firebase-admin';
 admin.initializeApp();
 const db = admin.firestore()
 
+// TODO: Implement JSON making of nodes
+
 export const getLocalGraph = functions.https.onRequest(async (request, response) => {
     try{
         // Pulling in query variables
@@ -25,23 +27,27 @@ export const getLocalGraph = functions.https.onRequest(async (request, response)
         }
         const songDoc = docsWithSongName.docs[0];
         
-        console.log(`songDoc: ${songDoc.get("name")}`);
-
+        
+        const songNameIDCombo : string = songDoc.get("name") + "|" + songDoc.get("id");
+        console.log(`songDoc combo: ${songNameIDCombo}`);
         let traversal : string = "";
         const queue : Array<string> = [];
         const visited : Set<string> = new Set();
+        let popped : number = 0;
 
         // Initialzing queue and set with connected from original song
-        (songDoc.get("connected_to")).forEach( (connectedSong : string) => {
-            queue.push(connectedSong);
-            visited.add(connectedSong);
-        });
-
-
+        queue.push(songNameIDCombo);
+        visited.add(songNameIDCombo);
         
-        while ((visited.size <= queryLimit) && queue.length !== 0){
+        while ((popped <= queryLimit) && queue.length !== 0){
             const curSong : string = queue.shift() as string;
+            popped += 1
             const [curSongName, curSongSpotifyID] : Array<string> = getSpotifyID(curSong);
+
+            if (curSongSpotifyID === undefined){
+                continue;
+            }
+
             traversal += `name: ${curSongName}, spotID: ${curSongSpotifyID}\n`
             
             const doc = await getRelated(curSongSpotifyID);
