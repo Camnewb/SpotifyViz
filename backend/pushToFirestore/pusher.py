@@ -47,7 +47,7 @@ for row in reader:
     songDict["year"] = int(songDict["year"])
 
     # assigning artist as an array
-    songDict["artists"] = [artist.strip('[]').strip("'") for artist in songDict["artists"].split(',')]
+    songDict["artists"] = [artist.strip('[]').strip("'") for artist in songDict["artists"].split(', ')]
     
     collection_ref = db.collection("raw_songs").document(songDict["id"]).set(songDict)
 
