@@ -1,38 +1,42 @@
-//This code was stolen from https://bl.ocks.org/jodyphelan/5dc989637045a0f48418101423378fbd
-var radius = 5;
+//This code is based off of https://bl.ocks.org/jodyphelan/5dc989637045a0f48418101423378fbd
 
-var defaultNodeCol = "white",
-    highlightCol = "yellow";
+//========================
+//   Defining variables
+//========================
 
-var height = window.innerHeight - 100;
-var graphWidth =  window.innerWidth;
+var radius = 5;//Radius of the nodes
 
-var graphCanvas = d3.select('#graph-window').append('canvas')
-.attr('width', graphWidth - 500 + 'px')
-.attr('height', height + 'px')
+//Creating the canvas
+var height = d3.select("#graph-window").node().getBoundingClientRect().height;
+var width =  d3.select("#graph-window").node().getBoundingClientRect().width;
+
+//Canvas element where the graph will be drawn
+var graphCanvas = d3.select("#graph-window").append("canvas")
+.attr("height", height + "px")
+.attr("width", width + "px")
 .node();
 
-var context = graphCanvas.getContext('2d');
+var context = graphCanvas.getContext("2d");//Context for drawing the graph
 
-var div = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
-
-//Define parameters for the "forces" between nodes
+//Defining parameters for the "forces" between nodes
 var simulation = d3.forceSimulation()
-              .force("center", d3.forceCenter(graphCanvas.width / 2, graphCanvas.height / 2))
-              .force("charge", d3.forceManyBody())
-              .force("link", d3.forceLink().id(function(d) { return d.id; }))
-              .alphaTarget(0)
-              .alphaDecay(0.05);
+              .force("center", d3.forceCenter(graphCanvas.width / 2, graphCanvas.height / 2))//Forcing the graph towards the center of the screen
+              .force("charge", d3.forceManyBody())//Force from noeds
+              .force("link", d3.forceLink().id(function(d) { return d.id; }))//Force from links
+              .alphaTarget(0)//idk
+              .alphaDecay(0.05);//Movement after releasing drag
 
-var transform = d3.zoomIdentity;
+var transform = d3.zoomIdentity;//For zooming functionality
+
+//========================
+//      Loading Data
+//========================
 
 updateFile();
 
 function updateFile() {
 
-  var dataFile = 'data.json';
+  var dataFile = "reformatted_sample_graph.json";
 
   d3.json(dataFile, function(error,data){
     console.log(data);
@@ -44,7 +48,10 @@ function updateFile() {
         tick();
       }
 
-      //Add drag and zoom functions to the canvas
+      //========================
+      // Zoom and Drag Functions
+      //========================
+      //Add the functions to the canvas
       d3.select(graphCanvas)
           .call(d3.drag().subject(dragsubject)
           .on("start", dragstarted)
@@ -54,7 +61,7 @@ function updateFile() {
           .scaleExtent([1/2, 10])
           .on("zoom", zoomed)); 
 
-      //Drag function
+      //Determines which node to drag
       function dragsubject() {
         var i,
         x = transform.invertX(d3.event.x),
@@ -73,7 +80,7 @@ function updateFile() {
         }
       }
 
-      //Update graph while node is being dragged
+      //Drag functions
       function dragstarted() {
         if (!d3.event.active) simulation.alphaTarget(0.7).restart();
         d3.event.subject.fx = transform.invertX(d3.event.x);
@@ -83,7 +90,7 @@ function updateFile() {
       function dragged() {
         d3.event.subject.fx = transform.invertX(d3.event.x);
         d3.event.subject.fy = transform.invertY(d3.event.y);
-        console.log("dragged " + d3.event.subject.id + " to x= " + d3.event.x + ", y: " + d3.event.y)
+        //console.log("dragged " + d3.event.subject.id + " to x= " + d3.event.x + ", y: " + d3.event.y)
       }
 
       function dragended() {
@@ -92,32 +99,38 @@ function updateFile() {
         d3.event.subject.fy = null;
       }
 
-      //Add the nodes and links to the simulation
+      //Adding nodes and links to the simulation
+      //The tick function that draws nodes will execute every tick
       simulation.nodes(jsonData.nodes).on("tick", tick);
       simulation.force("link").links(jsonData.edges);
 
+      //Adds mouseover functionality to the nodes
       //Stolen from this stackoverflow thread: https://stackoverflow.com/questions/38271595/tooltips-with-canvas-networks
       var closeNode;
       d3.select("canvas").on("mousemove", function(d){
         var mouse = transform.invert(d3.mouse(this));
-        console.log("Mouse is at x = " + mouse[0] + ", y = " + mouse[1])
+        //console.log("Mouse is at x = " + mouse[0] + ", y = " + mouse[1])
         closeNode = simulation.find(mouse[0], mouse[1], radius);
         tick();
       })
 
-      //Draws the nodes and edges using canvas every update
+      //========================
+      //  Drawing the Graph
+      //========================
+      //Draws the nodes and edges of the graph every tick
       function tick() {
+        //Start up the next drawing tick
         context.save();
         context.clearRect(0, 0, graphCanvas.width, graphCanvas.height);
         context.translate(transform.x, transform.y);
         context.scale(transform.k, transform.k);
 
+        //Drawing the linke between nodes
         jsonData.edges.forEach(function(d) {
-          //Draw the edges between nodes
           context.beginPath();
           context.moveTo(d.source.x, d.source.y);
           context.lineTo(d.target.x, d.target.y);
-          context.strokeStyle = defaultNodeCol;
+          context.strokeStyle = "#ffffff";
           context.lineWidth = 2;
           context.globalAlpha = 0.75;
           context.stroke();
@@ -125,11 +138,13 @@ function updateFile() {
 
         // Draw the nodes
         jsonData.nodes.forEach(function(d) {
+          //White border
           context.beginPath();
           context.arc(d.x, d.y, radius * 1.2, 0, 2 * Math.PI, true);
           context.fillStyle = "white";
           context.fill();
           context.closePath();
+          //Blue fill
           context.beginPath();
           context.arc(d.x, d.y, radius, 0, 2 * Math.PI, true);
           context.fillStyle = "#3ca0f3";
@@ -137,17 +152,24 @@ function updateFile() {
           context.fill();
         });
 
+        //If the mouse is over a node
         if (closeNode) {
           //console.log("Node x = " + closeNode.x + ", y = " + closeNode.y)
+          //Fill with red
           context.beginPath();
           context.arc(closeNode.x, closeNode.y, radius, 0, 2 * Math.PI, true);
           context.fillStyle = "#9e2c2c";
-          context.globalAlpha = 1;
           context.fill();
-        }
+          //Display the song's name
+          context.fillStyle = "#ffffff"
+          context.font = "12px sans-serif";
+          context.fillText(closeNode.name, closeNode.x - closeNode.name.length * 6 / 2, closeNode.y - 12);
+          context.globalAlpha = 1;
 
+        }
+        
+        //End drawing
         context.restore();
-  //        transform = d3.zoomIdentity;
       }
     }
   })
