@@ -21,8 +21,6 @@ var div = d3.select("body").append("div")
 //Define parameters for the "forces" between nodes
 var simulation = d3.forceSimulation()
               .force("center", d3.forceCenter(graphCanvas.width / 2, graphCanvas.height / 2))
-              //.force("x", d3.forceX(graphCanvas.width / 2).strength(0.1))
-              //.force("y", d3.forceY(graphCanvas.height / 2).strength(0.1))
               .force("charge", d3.forceManyBody())
               .force("link", d3.forceLink().id(function(d) { return d.id; }))
               .alphaTarget(0)
@@ -67,8 +65,8 @@ function updateFile() {
           dx = x - node.x;
           dy = y - node.y;
 
-          if (dx * dx + dy * dy < radius * radius) {
-            node.x =  transform.applyX(node.x);
+          if (dx*dx + dy*dy < radius*radius) {
+            node.x = transform.applyX(node.x);
             node.y = transform.applyY(node.y);
             return node;
           }
@@ -94,11 +92,18 @@ function updateFile() {
         d3.event.subject.fy = null;
       }
 
-      simulation.nodes(jsonData.nodes)
-                .on("tick", tick);
+      //Add the nodes and links to the simulation
+      simulation.nodes(jsonData.nodes).on("tick", tick);
+      simulation.force("link").links(jsonData.edges);
 
-      simulation.force("link")
-                .links(jsonData.edges);
+      //Stolen from this stackoverflow thread: https://stackoverflow.com/questions/38271595/tooltips-with-canvas-networks
+      var closeNode;
+      d3.select("canvas").on("mousemove", function(d){
+        var mouse = transform.invert(d3.mouse(this));
+        console.log("Mouse is at x = " + mouse[0] + ", y = " + mouse[1])
+        closeNode = simulation.find(mouse[0], mouse[1], radius);
+        tick();
+      })
 
       //Draws the nodes and edges using canvas every update
       function tick() {
@@ -119,7 +124,7 @@ function updateFile() {
         });
 
         // Draw the nodes
-        jsonData.nodes.forEach(function(d, i) {
+        jsonData.nodes.forEach(function(d) {
           context.beginPath();
           context.arc(d.x, d.y, radius * 1.2, 0, 2 * Math.PI, true);
           context.fillStyle = "white";
@@ -131,6 +136,15 @@ function updateFile() {
           context.globalAlpha = 1;
           context.fill();
         });
+
+        if (closeNode) {
+          //console.log("Node x = " + closeNode.x + ", y = " + closeNode.y)
+          context.beginPath();
+          context.arc(closeNode.x, closeNode.y, radius, 0, 2 * Math.PI, true);
+          context.fillStyle = "#9e2c2c";
+          context.globalAlpha = 1;
+          context.fill();
+        }
 
         context.restore();
   //        transform = d3.zoomIdentity;
