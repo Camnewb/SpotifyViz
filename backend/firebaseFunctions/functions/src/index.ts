@@ -5,7 +5,6 @@ admin.initializeApp();
 const db = admin.firestore()
 
 class Edge {
-    
     source : string = "";
     target : string = "";
     constructor(source : string, target : string){
@@ -36,19 +35,34 @@ export const getGraphFromRawSongs = functions.https.onRequest(async (request, re
         // getting songs naively similar to that
         const similarQuery = db.collection('raw_songs')
             .where('year', '==', songDoc.get('year') )
-            .where('energy', '>=', songDoc.get('energy') - 0.05)
-            .where('energy', '<=', songDoc.get('energy') + 0.05)
+            .where('energy', '>=', songDoc.get('energy') - 0.04)
+            .where('energy', '<=', songDoc.get('energy') + 0.04)
             .limit(50);
         const docsSimilar = await similarQuery.get();
         
-        
         const docList : Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>> = new Array<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>>();
         const nodeList : Array<Object> = new Array<Object>();
+        nodeList.push( songDoc.data() );
 
+        let includesRoot : Boolean = false;
         docsSimilar.forEach(document => {
             docList.push( document )
             nodeList.push( document.data() )
+
+            if (document["id"] === (songDoc["id"])){
+                includesRoot = true;
+            }
         });
+        
+        // Test this out
+        if (includesRoot === false){
+            // mainting 50
+            docList.pop()
+            nodeList.pop()
+            // adding original song
+            docList.push( songDoc )
+            nodeList.push( songDoc.data() )
+        }
         
         const edgeList : Array<Edge> = constructEdgeList(docList);
 
