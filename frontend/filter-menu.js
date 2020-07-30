@@ -36,6 +36,13 @@ for (var i = 0; i < checkboxes.length; i++) {
 }
 
 //====================================================================
+//Check if enter key is pressed, then query a song
+function search(value) {
+  if (event.key === 'Enter') {
+      event.preventDefault();
+      query(value);
+  }
+}
 
 //Edits the innerText of the document element with an id of target
 function editInnerText(value, target) {
