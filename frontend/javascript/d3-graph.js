@@ -1,3 +1,10 @@
+//-----------------------------------
+//         d3-graph.js
+//
+//  Handles the graph-drawing and
+// server requests for song searching
+//-----------------------------------
+
 //This code was based off of https://bl.ocks.org/jodyphelan/5dc989637045a0f48418101423378fbd
 
 //=================================
@@ -42,16 +49,22 @@ var transform = d3.zoomIdentity;//For zooming functionality
 //getDataAsynchronus does the GET request in the background, initializing the graph once the request is ready
 function getDataAsynchronous(url, song) {
   console.log("Sending request...");
-  showLoader();
+  showLoader();//Show loading bar
+  searchAlert(200);
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function (e) {
     //On request state change, check if the request is ready
-    if (this.readyState == 4 && this.status == 200) {
-      //If it's ready, parse the JSON and call initGraph()
-      console.log("Data Recieved: " + xhr.responseText);
-      var jsonData = JSON.parse(xhr.responseText);
-      initgraph(jsonData, song);//Initialize the graph
-      hideLoader();
+    if (this.readyState == 4) {
+      searchAlert(this.status);
+      if (this.status == 200) {
+        //If it's ready, parse the JSON and call initGraph()
+        console.log("Data recieved.");
+        var jsonData = JSON.parse(xhr.responseText);
+        initgraph(jsonData, song);//Initialize the graph
+      } else {
+        console.error("Error: " + this.status);
+      }
+      hideLoader();//Hide loading bar
     }
   };
   xhr.open("GET", url, true);
@@ -62,10 +75,10 @@ function getDataAsynchronous(url, song) {
 
 //Processes a query from search(), gives the GET request URL to getDataAsynchronus()
 function query(song) {
-  console.log("Starting query for " + song);
+  console.log("Starting query for \"" + song + "\"");
   var songQuery = song.replace(/\ /g, "%20");//Replace spaces with %20
-  var url = /*"https://cors-anywhere.herokuapp.com/" + */"https://us-central1-spotifyviz-68e56.cloudfunctions.net/getGraphFromRawSongs?song=" + songQuery;
-  console.log("GET Request url: " + url);
+  var url = "https://us-central1-spotifyviz-68e56.cloudfunctions.net/getGraphFromRawSongs?song=" + songQuery;
+  //console.log("GET Request url: " + url);
   getDataAsynchronous(url, song);
 }
 
@@ -75,7 +88,7 @@ function query(song) {
 
 function initgraph(jsonData, song) {
 
-  console.log("Drawing Graph...");
+  console.log("Drawing graph...");
 
   //========================
   // Zoom and Drag Functions
@@ -214,4 +227,6 @@ function initgraph(jsonData, song) {
     //End drawing
     context.restore();
   }
+
+  console.log("Done drawing graph.")
 }

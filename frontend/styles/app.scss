@@ -7,6 +7,7 @@ Must have sass installed
 */
 //Main theme colors
 $theme-colors: (
+  "danger": #ff5d5d,
   "dark": #4f4f4f,
   "light": #616161
 );
@@ -78,7 +79,7 @@ ul, #filter-settings {
 }
 
 .progress-bar-animated {
-    animation: progress-bar-stripes 1s linear infinite !important;
+    animation: progress-bar-stripes 0.5s linear infinite !important;
 }
 
 #loading-bar {

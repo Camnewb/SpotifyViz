@@ -1,3 +1,11 @@
+//-----------------------------------
+//           filter-menu.js
+//
+//  Javacsript dedicated to the
+// functionality of the front-end
+//          HTML elements.
+//-----------------------------------
+
 //JavaScript for the tree list; Shamelessly stolen from w3schools
 var carets = document.getElementsByClassName("caret");//Find all carets
       
@@ -34,6 +42,27 @@ for (var i = 0; i < checkboxes.length; i++) {
 //==========================
 //      Functions
 //==========================
+
+//Changes the text below the search bar for the request status
+function searchAlert(status) {
+  var alertText = document.getElementById("searchHelp");
+  switch (status) {
+    case 200:
+      alertText.innerText = "";
+      alertText.classList.remove("text-danger");
+      break;
+    case 500:
+      alertText.innerText = "Error: Could not find a song with that name. Remember search requests are case-sensitive.";
+      alertText.classList.add("text-danger")
+      break;
+    default:
+      alertText.innerText = "Unknown Error: Try again or reload the page.";
+      alertText.classList.add("text-danger")
+      break;
+  }
+}
+
+//Toggle functions for the loading bar
 function showLoader() {
   document.getElementById("loading-bar").style["display"] = "block";
 }
@@ -48,11 +77,6 @@ function search(value) {
       event.preventDefault();//Stops the page from reloading
       query(value);
   }
-}
-
-//Utilty function - edits the innerText of the document element with an id of target
-function editInnerText(value, target) {
-  document.getElementById(target).innerText = value;
 }
 
 //Takes a range value (0-100) and returns an easily readable quartic power of the value
