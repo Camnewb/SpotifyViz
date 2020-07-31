@@ -1,0 +1,10 @@
+## Compiled JavaScript files
+**/*.js
+**/*.js.map
+
+# Typescript v1 declaration files
+typings/
+
+node_modules/
+
+src/spotifyviz-68e56-firebase-adminsdk-gqzp8-7b17adc781.json
