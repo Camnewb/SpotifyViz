@@ -13,7 +13,8 @@
   </head>
   <body class="d-flex" style="pointer-events: none;" onresize="resize()">
     <!-- Main Card -->
-    <div class="card bg-light m-3" id="outer-card" style="pointer-events: auto; padding: 12px; width: min-content;">
+    <div class="card bg-light m-3" id="outer-card" style="pointer-events: auto; padding: 12px; width: min-content; overflow: hidden; border: none;">
+      <div id="loading-bar" class="progress-bar progress-bar-striped progress-bar-primary progress-bar-animated"></div>
       <form>
         <div class="form-group">
           <input type="search" class="form-control" id="inputSearch" aria-describedby="searchHelp" placeholder="Enter song title" style="margin-top: 10px;" onkeydown="search(this.value)">

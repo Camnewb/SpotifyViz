@@ -77,6 +77,20 @@ ul, #filter-settings {
     font-size: 14px;
 }
 
+.progress-bar-animated {
+    animation: progress-bar-stripes 1s linear infinite !important;
+}
+
+#loading-bar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 110%; 
+    height: 10px;
+    transition: all;
+    display: none;
+}
+
 .label-active-1 {
     color: #3ca0f3;
 }

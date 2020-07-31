@@ -34,6 +34,13 @@ for (var i = 0; i < checkboxes.length; i++) {
 //==========================
 //      Functions
 //==========================
+function showLoader() {
+  document.getElementById("loading-bar").style["display"] = "block";
+}
+
+function hideLoader() {
+  document.getElementById("loading-bar").style["display"] = "none";
+}
 
 //Check if enter key is pressed, then query a song
 function search(value) {
@@ -68,3 +75,4 @@ function quarticSliderDisplay(sliderValue) {
 function insertAt(str, insert, index) {
   return str.slice(0, index) + insert + str.slice(index, str.length);
 }
+

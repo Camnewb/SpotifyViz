@@ -42,6 +42,7 @@ var transform = d3.zoomIdentity;//For zooming functionality
 //getDataAsynchronus does the GET request in the background, initializing the graph once the request is ready
 function getDataAsynchronous(url, song) {
   console.log("Sending request...");
+  showLoader();
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function (e) {
     //On request state change, check if the request is ready
@@ -50,6 +51,7 @@ function getDataAsynchronous(url, song) {
       console.log("Data Recieved: " + xhr.responseText);
       var jsonData = JSON.parse(xhr.responseText);
       initgraph(jsonData, song);//Initialize the graph
+      hideLoader();
     }
   };
   xhr.open("GET", url, true);
