@@ -40,25 +40,28 @@ for (var i = 0; i < checkboxes.length; i++) {
 }
 
 //==========================
-//      Functions
+//    Element Functions
 //==========================
 
 //Changes the text below the search bar for the request status
 function searchAlert(status) {
   var alertText = document.getElementById("searchHelp");
-  switch (status) {
-    case 200:
-      alertText.innerText = "";
+  if (status >= 200 && status < 300) {//Successful responses
+    if (status == 200) {
+      alertText.innerText = "Success";
       alertText.classList.remove("text-danger");
-      break;
-    case 500:
+    }
+  } else if (status >= 500 && status < 600) {//Server error responses
+    alertText.classList.add("text-danger");
+    if (status == 500) {
       alertText.innerText = "Error: Could not find a song with that name. Remember search requests are case-sensitive.";
-      alertText.classList.add("text-danger")
-      break;
-    default:
-      alertText.innerText = "Unknown Error: Try again or reload the page.";
-      alertText.classList.add("text-danger")
-      break;
+      
+    } else {
+      alertText.innerText = "Unknown Server Error - " + status + ": Try again or reload the page."
+    }
+  } else {//Other error responses
+      alertText.innerText = "Unknown Error - " + status + "Try again or reload the page.";
+      
   }
 }
 
@@ -95,8 +98,17 @@ function quarticSliderDisplay(sliderValue) {
   return display;
 }
 
-//Utility function - inserts a string at the desired index
+//==========================
+//    Utility Functions
+//==========================
+
+//Inserts a string at the desired index
 function insertAt(str, insert, index) {
   return str.slice(0, index) + insert + str.slice(index, str.length);
+}
+
+//Changes the inner text of the target element
+function editInnerText(target, text) {
+  document.getElementById(target).innerText = text;
 }
 
