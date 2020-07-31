@@ -51,7 +51,7 @@ function editInnerText(value, target) {
 //Takes a range value (0-100) and returns an easily readable quartic power of the value
 function quarticSliderDisplay(sliderValue) {
   var value = Math.pow(sliderValue, 4) * 10;//This is the new value to be represented
-  //Add commas or prefices to make it readable
+  //Add commas or prefixes to make it readable
   var display = value.toString();
   if (value < 10000000) {
     if (value > 999) display = insertAt(display, ",", display.length - 3);

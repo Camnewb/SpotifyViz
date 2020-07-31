@@ -1,40 +1,46 @@
 //This code was based off of https://bl.ocks.org/jodyphelan/5dc989637045a0f48418101423378fbd
 
-//========================
-// Initializing variables
-//========================
+//=================================
+//Initializing Canvas and Variables
+//=================================
 
 var radius = 5;//Radius of the nodes
 
-//Canvas size constraints
-var height = d3.select("#graph-window").node().getBoundingClientRect().height;
-var width =  d3.select("#graph-window").node().getBoundingClientRect().width;
+var graphCanvas = d3.select("canvas").node();  //Canvas element where the graph will be drawn
 
-//Canvas element where the graph will be drawn
-var graphCanvas = d3.select("#graph-window").append("canvas")
-.attr("height", height + "px")
-.attr("width", width + "px")
-.node();
+//When the web page size changes, change the size of the canvas to match
+function resize() {
+  //Canvas size constraints
+  var height = window.innerHeight;
+  var width =  window.innerWidth;
+
+  graphCanvas = d3.select("canvas")
+    .attr("height", height + "px")
+    .attr("width", width + "px")
+    .node();
+}
+
+resize();
 
 var context = graphCanvas.getContext("2d");//Context for drawing the graph
 
 //Defining parameters for the "forces" between nodes
 var simulation = d3.forceSimulation()
-              .force("center", d3.forceCenter(graphCanvas.width / 2, graphCanvas.height / 2))//Forcing the graph towards the center of the screen
-              .force("charge", d3.forceManyBody())//Force from noeds
-              .force("link", d3.forceLink().id(function(d) { return d.id; }))//Force from links
+              .force("center", d3.forceCenter(window.innerWidth - (graphCanvas.width - 384) / 2, graphCanvas.height / 2))//Forcing the graph towards the center of the screen
+              .force("charge", d3.forceManyBody())//Forces from nodes
+              .force("link", d3.forceLink().id(function(d) { return d.id; }))//Forces from links
               .alphaTarget(0.5)//Initial graph movement
-              .alphaDecay(0.05);//Physics slow down after releasing drag
+              .alphaDecay(0.05);//Physics slowdown after releasing drag
 
 var transform = d3.zoomIdentity;//For zooming functionality
 
 //========================
 //      HTTP Request
 //========================
-//Send an HTTP get request to the server to retrieve the JSON data
+//Send an HTTP GET request to the server to retrieve the JSON data
 
-//getDataAsynchronus does the server request in the background, initializing the graph once the request is ready
-function getDataAsynchronous(url) {
+//getDataAsynchronus does the GET request in the background, initializing the graph once the request is ready
+function getDataAsynchronous(url, song) {
   console.log("Sending request...");
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function (e) {
@@ -43,7 +49,7 @@ function getDataAsynchronous(url) {
       //If it's ready, parse the JSON and call initGraph()
       console.log("Data Recieved: " + xhr.responseText);
       var jsonData = JSON.parse(xhr.responseText);
-      initgraph(jsonData);//Initialize the graph
+      initgraph(jsonData, song);//Initialize the graph
     }
   };
   xhr.open("GET", url, true);
@@ -52,20 +58,20 @@ function getDataAsynchronous(url) {
   
 }
 
-//Processes a query from search()
+//Processes a query from search(), gives the GET request URL to getDataAsynchronus()
 function query(song) {
   console.log("Starting query for " + song);
-  song = song.replace(/\ /g, "%20");//Replace spaces with %20
-  var url = /*"https://cors-anywhere.herokuapp.com/" + */"https://us-central1-spotifyviz-68e56.cloudfunctions.net/getGraphFromRawSongs?song=" + song;
+  var songQuery = song.replace(/\ /g, "%20");//Replace spaces with %20
+  var url = /*"https://cors-anywhere.herokuapp.com/" + */"https://us-central1-spotifyviz-68e56.cloudfunctions.net/getGraphFromRawSongs?song=" + songQuery;
   console.log("GET Request url: " + url);
-  getDataAsynchronous(url);
+  getDataAsynchronous(url, song);
 }
 
 //========================
 // Graph Initialization
 //========================
 
-function initgraph(jsonData) {
+function initgraph(jsonData, song) {
 
   console.log("Drawing Graph...");
 
@@ -79,8 +85,9 @@ function initgraph(jsonData) {
       .on("drag", dragged)
       .on("end",dragended))
       .call(d3.zoom()
-      .scaleExtent([1/2, 10])
-      .on("zoom", zoomed)); 
+        .scaleExtent([1/2, 10])
+        .on("zoom", zoomed)
+      ); 
 
   //Determines which node to drag
   function dragsubject() {
@@ -169,17 +176,20 @@ function initgraph(jsonData) {
       context.stroke();
     });
 
+    //console.log(song);
+
     //Draw the nodes
     jsonData.nodes.forEach(function(d) {
       //White border
       context.beginPath();
-      context.arc(d.x, d.y, radius * 1.2, 0, 2 * Math.PI, true);
+      //If the current node is the searched/root node, make it bigger
+      context.arc(d.x, d.y, d.name == song ? radius * 1.8 : radius * 1.2, 0, 2 * Math.PI, true);
       context.fillStyle = "white";
       context.fill();
       context.closePath();
       //Blue fill
       context.beginPath();
-      context.arc(d.x, d.y, radius, 0, 2 * Math.PI, true);
+      context.arc(d.x, d.y, d.name == song ? radius * 1.5 : radius, 0, 2 * Math.PI, true);
       context.fillStyle = "#3ca0f3";
       context.globalAlpha = 1;
       context.fill();
@@ -189,7 +199,7 @@ function initgraph(jsonData) {
     if (closeNode) {
       //Fill with red
       context.beginPath();
-      context.arc(closeNode.x, closeNode.y, radius, 0, 2 * Math.PI, true);
+      context.arc(closeNode.x, closeNode.y, closeNode.name == song ? radius * 1.5 : radius, 0, 2 * Math.PI, true);
       context.fillStyle = "#9e2c2c";
       context.fill();
       //Display the song's name over the node

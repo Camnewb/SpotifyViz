@@ -3,7 +3,7 @@
 This file provides the theming for the website
 Must be compiled into CSS to show changes to the site
 In the terminal, use the command:
-    sass frontend/app.scss frontend/main.css
+    sass frontend/styles/app.scss frontend/styles/main.css
 Must have sass installed
 */
 /*!
