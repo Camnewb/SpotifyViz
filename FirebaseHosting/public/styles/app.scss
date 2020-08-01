@@ -2,11 +2,12 @@
 This file provides the theming for the website
 Must be compiled into CSS to show changes to the site
 In the terminal, use the command:
-    sass frontend/app.scss frontend/main.css
+    sass frontend/styles/app.scss frontend/styles/main.css
 Must have sass installed
 */
 //Main theme colors
 $theme-colors: (
+  "danger": #ff5d5d,
   "dark": #4f4f4f,
   "light": #616161
 );
@@ -25,7 +26,7 @@ $border-radius: 0.75rem;
 $font-size-base: 0.9375rem;
 // $font-family-base: "SourceSansPro";
 
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/bootstrap/scss/bootstrap";
 
 /*CSS for filter settings list
 shamelessly stolen from w3schools*/
@@ -75,6 +76,20 @@ ul, #filter-settings {
     background-color: #616161;
     color: #fafafa;
     font-size: 14px;
+}
+
+.progress-bar-animated {
+    animation: progress-bar-stripes 0.5s linear infinite !important;
+}
+
+#loading-bar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 110%; 
+    height: 10px;
+    transition: all;
+    display: none;
 }
 
 .label-active-1 {
