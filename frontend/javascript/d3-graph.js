@@ -60,7 +60,9 @@ function getDataAsynchronous(url, song) {
         //If it's ready, parse the JSON and call initGraph()
         console.log("Data recieved.");
         var jsonData = JSON.parse(xhr.responseText);
-        initgraph(jsonData, song);//Initialize the graph
+        var breadth = breadthFS(getSong(jsonData, song), 50)
+        initgraph(breadth, song)
+        //initgraph(jsonData, song);//Initialize the graph
       } else {
         console.error("Error: " + this.status);
       }
@@ -86,7 +88,7 @@ function query(song) {
 // Graph Initialization
 //========================
 
-function initgraph(jsonData, song) {
+function initgraph(data, song) {
 
   console.log("Drawing graph...");
 
@@ -110,8 +112,11 @@ function initgraph(jsonData, song) {
     x = transform.invertX(d3.event.x),
     y = transform.invertY(d3.event.y),
     dx, dy;
-    for (i = jsonData.nodes.length - 1; i >= 0; --i) {
-      node = jsonData.nodes[i];
+    for (i = data.length - 1; i >= 0; --i) {
+      node = data
+
+
+[i];
       dx = x - node.x;
       dy = y - node.y;
 
@@ -148,7 +153,7 @@ function initgraph(jsonData, song) {
   
   //Adding nodes and links to the simulation
   //The tick function that draws nodes will execute every tick
-  simulation.nodes(jsonData.nodes).on("tick", tick);
+  simulation.nodes(data).on("tick", tick);
   simulation.force("link").links(jsonData.edges);
 
   //Adds mouseover functionality to the nodes
@@ -194,7 +199,7 @@ function initgraph(jsonData, song) {
     //console.log(song);
 
     //Draw the nodes
-    jsonData.nodes.forEach(function(d) {
+    data.forEach(function(d) {
       //White border
       context.beginPath();
       //If the current node is the searched/root node, make it bigger
