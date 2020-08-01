@@ -10,212 +10,234 @@
     <link rel="stylesheet" href="styles/main.css">
 
     <title>SpotifyViz Site</title>
+
+    <style>
+      
+      </style>
   </head>
-  <body class="d-flex" style="pointer-events: none;" onresize="resize()">
+  <body class="d-flex" style="pointer-events: none;" onresize="resizeCanvas(); resizeMenu()">
     <!-- Main Card -->
     <div class="card bg-light m-3" id="outer-card" style="pointer-events: auto; padding: 12px; width: min-content; overflow: hidden; border: none;">
       <div id="loading-bar" class="progress-bar progress-bar-striped progress-bar-primary progress-bar-animated"></div>
       <form>
         <div class="form-group">
-          <input type="search" class="form-control" id="inputSearch" aria-describedby="searchHelp" placeholder="Enter song title" style="margin-top: 10px;" autocomplete="off" onkeydown="search(this.value)">
+          <input type="search" class="form-control" id="inputSearch" aria-describedby="searchHelp"
+          placeholder="Enter song title" style="margin-top: 10px;" autocomplete="off" onkeydown="search(this.value)">
           <small id="searchHelp" class="form-text"></small>
         </div>
       </form>
-      <!-- Filter Settings Body -->
-      <div class="card-body bg-dark" style="width: 24rem; border-radius: 0.75rem;">
-        <h4 class="card-title"><b>Filter Settings</b></h4>
-        <hr/>
-        <ul id="filter-settings">
-          <!-- === General === -->
-          <li><span class="caret">General</span><ul class="nested"><li>
-            <!-- Popularity -->
-            <div class="d-flex justify-content-between">
-              <div class="py-1">
-                <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="popularity-checkbox" oninput=""><!--TODO remove excess tags-->
-                  <span id="popularity-checkbox-label">Popularity</span>
+      <div id="scroll-container" style="width: min-content; overflow-y: scroll;">
+        <!-- Filter Settings Body -->
+        <div id="filter-settings" class="card-body bg-dark p-3" style="width: 24rem; border-radius: 0.75rem;">
+          <h4 class="card-title"><b>Filter Settings</b></h4>
+          <hr/>
+          <ul id="filter-settings">
+            <!-- === General === -->
+            <li><span class="caret">General</span><ul class="nested"><li>
+              <!-- Popularity -->
+              <div class="d-flex justify-content-between">
+                <div class="py-1">
+                  <div class="form-check-inline">
+                    <input class="form-check-input mr-2" type="checkbox" id="popularity-checkbox" oninput=""><!--TODO remove excess tags-->
+                    <span id="popularity-checkbox-label">Popularity</span>
+                  </div>
+                </div>
+                <div class="py-1">
+                  <small class="text-muted" id="popularity-val">1,049,760 plays</small><!--TODO This slider is weird, needs tweaking-->
+                  <input class="align-middle" type="range" id="popularity-slider" value="18" oninput="editInnerText(quarticSliderDisplay(this.value) + ' plays', 'popularity-val')">
                 </div>
               </div>
-              <div class="py-1">
-                <small class="text-muted" id="popularity-val">1,049,760 plays</small><!--TODO This slider is weird, needs tweaking-->
-                <input class="align-middle" type="range" id="popularity-slider" value="18" oninput="editInnerText(quarticSliderDisplay(this.value) + ' plays', 'popularity-val')">
-              </div>
-            </div>
-            <!-- Release Date -->
-            <!--<div class="d-flex justify-content-between">
-              <div class="py-1">
-                <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="release-date-checkbox">
-                  <span id="release-date-checkbox-label">Release Date</span>
-                </div>  
-              </div>
-              <div class="py-1">
-                <input class="form-control settings-input" style="width: 11rem;" type="date" id="release-date-select">
-              </div>
-            </div>-->
-            <!-- Year -->
-            <div class="d-flex justify-content-between">
-              <div class="py-1">
-                <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="year-checkbox">
-                  <span id="year-checkbox-label">Year</span>
-                </div>  
-              </div>
-              <div class="py-1">
-                <input class="form-control settings-input" type="text" style="width: 11rem;" id="year-input">
-              </div>
-            </div>
-          </li></ul></li>
-          <!-- === Musical Elements === -->
-          <li><span class="caret">Musical Elements</span><ul class="nested"><li>
-            <!-- Acousticness -->
-            <div class="d-flex justify-content-between">
-              <div class="py-1">
-                <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="acousticness-checkbox">
-                  <span id="acousticness-checkbox-label">Acousticness</span>
+              <!-- Release Date -->
+              <!--<div class="d-flex justify-content-between">
+                <div class="py-1">
+                  <div class="form-check-inline">
+                    <input class="form-check-input mr-2" type="checkbox" id="release-date-checkbox">
+                    <span id="release-date-checkbox-label">Release Date</span>
+                  </div>  
+                </div>
+                <div class="py-1">
+                  <input class="form-control settings-input" style="width: 11rem;" type="date" id="release-date-select">
+                </div>
+              </div>-->
+              <!-- Year -->
+              <div class="d-flex justify-content-between">
+                <div class="py-1">
+                  <div class="form-check-inline">
+                    <input class="form-check-input mr-2" type="checkbox" id="year-checkbox">
+                    <span id="year-checkbox-label">Year</span>
+                  </div>  
+                </div>
+                <div class="py-1">
+                  <input class="form-control settings-input" type="text" style="width: 11rem;" id="year-input">
                 </div>
               </div>
-              <div class="py-1">
-                <small class="text-muted" id="acousticness-val">0.5</small>
-                <input class="align-middle" type="range" id="acousticness-slider" oninput="editInnerText(this.value / 100, 'acousticness-val')">
-              </div>
-            </div>
-            <!-- Danceability -->
-            <div class="d-flex justify-content-between">
-              <div class="py-1">
-                <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="danceability-checkbox">
-                  <span id="danceability-checkbox-label">Danceability</span>
+            </li></ul></li>
+            <!-- === Musical Elements === -->
+            <li><span class="caret">Musical Elements</span><ul class="nested"><li>
+              <!-- Acousticness -->
+              <div class="d-flex justify-content-between">
+                <div class="py-1">
+                  <div class="form-check-inline">
+                    <input class="form-check-input mr-2" type="checkbox" id="acousticness-checkbox">
+                    <span id="acousticness-checkbox-label">Acousticness</span>
+                  </div>
+                </div>
+                <div class="py-1">
+                  <small class="text-muted" id="acousticness-val">0.5</small>
+                  <input class="align-middle" type="range" id="acousticness-slider" oninput="editInnerText(this.value / 100, 'acousticness-val')">
                 </div>
               </div>
-              <div class="py-1">
-                <small class="text-muted"  id="danceability-val">0.5</small>
-                <input class="align-middle" type="range" id="danceability-slider" oninput="editInnerText(this.value / 100, 'danceability-val')">
-              </div>
-            </div>
-            <!-- Instrumentalness -->
-            <div class="d-flex justify-content-between">
-              <div class="py-1">
-                <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="instrumentalness-checkbox">
-                  <span id="instrumentalness-checkbox-label">Instrumentalness</span>
+              <!-- Danceability -->
+              <div class="d-flex justify-content-between">
+                <div class="py-1">
+                  <div class="form-check-inline">
+                    <input class="form-check-input mr-2" type="checkbox" id="danceability-checkbox">
+                    <span id="danceability-checkbox-label">Danceability</span>
+                  </div>
+                </div>
+                <div class="py-1">
+                  <small class="text-muted"  id="danceability-val">0.5</small>
+                  <input class="align-middle" type="range" id="danceability-slider" oninput="editInnerText(this.value / 100, 'danceability-val')">
                 </div>
               </div>
-              <div class="py-1">
-                <small class="text-muted" id="instrumentalness-val">0.5</small>
-                <input class="align-middle" type="range" id="instrumentalness-slider" oninput="editInnerText(this.value / 100, 'instrumentalness-val')">
-              </div>
-            </div>
-            <!-- Liveness -->
-            <div class="d-flex justify-content-between">
-              <div class="py-1">
-                <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="liveness-checkbox">
-                  <span id="liveness-checkbox-label">Liveness</span>
+              <!-- Instrumentalness -->
+              <div class="d-flex justify-content-between">
+                <div class="py-1">
+                  <div class="form-check-inline">
+                    <input class="form-check-input mr-2" type="checkbox" id="instrumentalness-checkbox">
+                    <span id="instrumentalness-checkbox-label">Instrumentalness</span>
+                  </div>
+                </div>
+                <div class="py-1">
+                  <small class="text-muted" id="instrumentalness-val">0.5</small>
+                  <input class="align-middle" type="range" id="instrumentalness-slider" oninput="editInnerText(this.value / 100, 'instrumentalness-val')">
                 </div>
               </div>
-              <div class="py-1">
-                <small class="text-muted" id="liveness-val">0.5</small>
-                <input class="align-middle" type="range" id="liveness-slider" oninput="editInnerText(this.value / 100, 'liveness-val')">
-              </div>
-            </div>
-            <!-- Loudness -->
-            <div class="d-flex justify-content-between">
-              <div class="py-1">
-                <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="loudness-checkbox">
-                  <span id="loudness-checkbox-label">Loudness</span>
+              <!-- Liveness -->
+              <div class="d-flex justify-content-between">
+                <div class="py-1">
+                  <div class="form-check-inline">
+                    <input class="form-check-input mr-2" type="checkbox" id="liveness-checkbox">
+                    <span id="liveness-checkbox-label">Liveness</span>
+                  </div>
+                </div>
+                <div class="py-1">
+                  <small class="text-muted" id="liveness-val">0.5</small>
+                  <input class="align-middle" type="range" id="liveness-slider" oninput="editInnerText(this.value / 100, 'liveness-val')">
                 </div>
               </div>
-              <div class="py-1">
-                <small class="text-muted" id="loudness-val">0.5</small>
-                <input class="align-middle" type="range" id="loudness-slider" oninput="editInnerText(this.value / 100, 'loudness-val')">
-              </div>
-            </div>
-            <!-- Speechiness -->
-            <div class="d-flex justify-content-between">
-              <div class="py-1">
-                <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="speechiness-checkbox">
-                  <span id="speechiness-checkbox-label">Speechiness</span>
+              <!-- Loudness -->
+              <div class="d-flex justify-content-between">
+                <div class="py-1">
+                  <div class="form-check-inline">
+                    <input class="form-check-input mr-2" type="checkbox" id="loudness-checkbox">
+                    <span id="loudness-checkbox-label">Loudness</span>
+                  </div>
+                </div>
+                <div class="py-1">
+                  <small class="text-muted" id="loudness-val">0.5</small>
+                  <input class="align-middle" type="range" id="loudness-slider" oninput="editInnerText(this.value / 100, 'loudness-val')">
                 </div>
               </div>
-              <div class="py-1">
-                <small class="text-muted" id="speechiness-val">0.5</small>
-                <input class="align-middle" type="range" id="speechiness-slider" oninput="editInnerText(this.value / 100, 'speechiness-val')">
-              </div>
-            </div>
-          </li></ul></li>
-          <!-- === Music Stats === -->
-          <li><span class="caret">Music Stats</span><ul class="nested"><li>
-            <!-- Duration -->
-            <div class="d-flex justify-content-between">
-              <div class="py-1">
-                <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="duration-checkbox">
-                  <span id="duration-checkbox-label">Duration</span>
+              <!-- Speechiness -->
+              <div class="d-flex justify-content-between">
+                <div class="py-1">
+                  <div class="form-check-inline">
+                    <input class="form-check-input mr-2" type="checkbox" id="speechiness-checkbox">
+                    <span id="speechiness-checkbox-label">Speechiness</span>
+                  </div>
+                </div>
+                <div class="py-1">
+                  <small class="text-muted" id="speechiness-val">0.5</small>
+                  <input class="align-middle" type="range" id="speechiness-slider" oninput="editInnerText(this.value / 100, 'speechiness-val')">
                 </div>
               </div>
-              <div class="py-1">
-                <small class="text-muted" id="duration-val">3 minute(s)</small>
-                <input class="align-middle" type="range" id="duration-slider" value="16" oninput="editInnerText(this.value / 5 + ' minute(s)', 'duration-val')">
-              </div>
-            </div>
-            <!-- Key -->
-            <div class="d-flex justify-content-between">
-              <div class="py-1">
-                <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="key-checkbox">
-                  <span id="key-checkbox-label">Key</span>
+            </li></ul></li>
+            <!-- === Music Stats === -->
+            <li><span class="caret">Music Stats</span><ul class="nested"><li>
+              <!-- Duration -->
+              <div class="d-flex justify-content-between">
+                <div class="py-1">
+                  <div class="form-check-inline">
+                    <input class="form-check-input mr-2" type="checkbox" id="duration-checkbox">
+                    <span id="duration-checkbox-label">Duration</span>
+                  </div>
+                </div>
+                <div class="py-1">
+                  <small class="text-muted" id="duration-val">3 minute(s)</small>
+                  <input class="align-middle" type="range" id="duration-slider" value="16" oninput="editInnerText(this.value / 5 + ' minute(s)', 'duration-val')">
                 </div>
               </div>
-              <div class="py-1">
-                <select class="form-control-sm settings-input" style="width: 11rem;" id="" value="">
-                  <option>A</option>
-                  <option>A flat</option>
-                  <option>B</option>
-                  <option>B flat</option>
-                  <option>C</option>
-                  <option>C flat</option>
-                  <option>C sharp</option>
-                  <option>D</option>
-                  <option>D flat</option>
-                  <option>D sharp</option>
-                  <option>E</option>
-                  <option>F flat</option>
-                  <option>F sharp</option>
-                </select>
-              </div>
-            </div>
-            <!-- Mode -->
-            <div class="d-flex justify-content-between">
-              <div class="py-1">
-                <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="mode-checkbox">
-                  <span id="mode-checkbox-label">Mode</span>
+              <!-- Key -->
+              <div class="d-flex justify-content-between">
+                <div class="py-1">
+                  <div class="form-check-inline">
+                    <input class="form-check-input mr-2" type="checkbox" id="key-checkbox">
+                    <span id="key-checkbox-label">Key</span>
+                  </div>
+                </div>
+                <div class="py-1">
+                  <select class="form-control-sm settings-input" style="width: 11rem;" id="" value="">
+                    <option>A</option>
+                    <option>A flat</option>
+                    <option>B</option>
+                    <option>B flat</option>
+                    <option>C</option>
+                    <option>C flat</option>
+                    <option>C sharp</option>
+                    <option>D</option>
+                    <option>D flat</option>
+                    <option>D sharp</option>
+                    <option>E</option>
+                    <option>F flat</option>
+                    <option>F sharp</option>
+                  </select>
                 </div>
               </div>
-              <div class="py-1">
-                <small class="text-muted" id="mode-val">Major</small>
-                <input class="align-middle" type="range" id="mode-slider" value="100" step="100" oninput="editInnerText(this.value / 100 < .5 ? 'Minor' : 'Major', 'mode-val')">
-              </div>
-            </div>
-            <!-- Tempo -->
-            <div class="d-flex justify-content-between">
-              <div class="py-1">
-                <div class="form-check-inline">
-                  <input class="form-check-input mr-2" type="checkbox" id="tempo-checkbox">
-                  <span id="tempo-checkbox-label">Tempo</span>
+              <!-- Mode -->
+              <div class="d-flex justify-content-between">
+                <div class="py-1">
+                  <div class="form-check-inline">
+                    <input class="form-check-input mr-2" type="checkbox" id="mode-checkbox">
+                    <span id="mode-checkbox-label">Mode</span>
+                  </div>
+                </div>
+                <div class="py-1">
+                  <small class="text-muted" id="mode-val">Major</small>
+                  <input class="align-middle" type="range" id="mode-slider" value="100" step="100" oninput="editInnerText(this.value / 100 < .5 ? 'Minor' : 'Major', 'mode-val')">
                 </div>
               </div>
-              <div class="py-1">
-                <small class="text-muted" id="tempo-val">60 BPM</small>
-                <input class="align-middle" type="range" id="tempo-slider" value="25" oninput="editInnerText(Math.floor(this.value * 2.4) + ' BPM', 'tempo-val')">
+              <!-- Tempo -->
+              <div class="d-flex justify-content-between">
+                <div class="py-1">
+                  <div class="form-check-inline">
+                    <input class="form-check-input mr-2" type="checkbox" id="tempo-checkbox">
+                    <span id="tempo-checkbox-label">Tempo</span>
+                  </div>
+                </div>
+                <div class="py-1">
+                  <small class="text-muted" id="tempo-val">60 BPM</small>
+                  <input class="align-middle" type="range" id="tempo-slider" value="25" oninput="editInnerText(Math.floor(this.value * 2.4) + ' BPM', 'tempo-val')">
+                </div>
               </div>
-            </div>
-          </li></ul></li>
-        </ul>
+            </li></ul></li>
+          </ul>
+        </div>
+        <!-- Song Search Body -->
+        <div id="search-algo" class="card-body bg-dark mt-3" style="width: 24rem; border-radius: 0.75rem;">
+          <h4 class="card-title"><b>Search</b></h4>
+          <!--<small class="text-muted text-body m-0 p-0" style="line-height: 0rem">
+            Use a depth-first or breadth-first to retrieve a list of song recommendations.
+          </small>-->
+          <hr/>
+          <div id="btn-group-search-algo" class="d-flex btn-group" role="group">
+            <button id="btn-depth" type="button" class="btn btn-secondary flex-fill" onclick="toggleButton(1)">Depth-First</button>
+            <button id="btn-breadth" type="button" class="btn btn-secondary flex-fill" onclick="toggleButton(2)">Breadth-First</button>
+          </div>
+          <div id="search-list" class="card bg-light mt-3 p-2">
+            <span id="pre-list" class="text-muted">Select a search method</span>
+          </div>
+        </div>
       </div>
     </div>
     <canvas id="graph-window" style="pointer-events: auto; position: absolute; z-index: -1;"></canvas>
