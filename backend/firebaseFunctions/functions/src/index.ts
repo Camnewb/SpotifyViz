@@ -1,12 +1,20 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-// import * as cors from 'cors'
-const cors = require('cors');
 
+const cors = require('cors');
 const corsHandler = cors({origin : true});
+
+
+// const algoliasearch = require('algoliasearch');
+// import algoliasearch from "algoliasearch";
+// const ALGOLIA_APP_ID = '';
+// const ALGOLIA_ADMIN_KEY = '';
+// const ALOGOLIA_INDEX_NAME = 'raw_songs';
+
 
 admin.initializeApp();
 const db = admin.firestore()
+
 
 class Edge {
     source : string = "";
