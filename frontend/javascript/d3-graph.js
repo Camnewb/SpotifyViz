@@ -51,7 +51,7 @@ function getData() {return jsonData;}
 //Send an HTTP GET request to the server to retrieve the JSON data
 
 //getDataAsynchronus does the GET request in the background, initializing the graph once the request is ready
-function getDataAsynchronous(url, song) {
+function getDataAsynchronous(url, songName) {
   console.log("Sending request...");
   showLoader();//Show loading bar
   searchAlert(200);//Clear any alert text
@@ -66,7 +66,12 @@ function getDataAsynchronous(url, song) {
         console.log("Data recieved.");
         jsonData = JSON.parse(xhr.responseText);
         console.log(jsonData);
-        initgraph(jsonData, song);//Initialize the graph
+        let songData = getSongByName(songName);
+        console.log(songData);
+        let breadthFirstSearch = breadthFS(songData, 50);
+        console.log(breadthFirstSearch);
+        breadthFirstSearch.forEach(function(a){console.log(a)});
+        //initgraph(breadthFirstSearch, songName);//Initialize the graph
       } else {
         console.error("Error: " + this.status);
       }
