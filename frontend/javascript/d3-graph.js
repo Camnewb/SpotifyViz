@@ -46,12 +46,18 @@ var jsonData;
 function getData() {return jsonData;}
 
 var searchResults;
-function getSearchResultsAsList()
-{
+function getSearchResultsAsList() {
   let list = []
-  for (song of searchResults)
+  let songs
+  if (searchType == 0)
   {
-    list.push(song.name + " - " + song.artists[0])
+    songs = jsonData.nodes
+  }
+
+  else songs = searchResults;
+  for (song of songs)
+  {
+    list.push(song)
   }
   return list
 }
