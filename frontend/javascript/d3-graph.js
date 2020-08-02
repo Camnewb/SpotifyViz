@@ -57,6 +57,31 @@ function getSearchResultsAsList() {
 
   else return jsonData.nodes;
 }
+
+//This function is from http://js-bits.blogspot.com/2010/07/canvas-rounded-corner-rectangles.html
+//Draws a rounded rectangle in the canvas with the specified properties
+function roundRect(ctx, x, y, width, height, radius) {
+  //Draw the rounded rectangle
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+  ctx.fill();
+
+  //Draw a small triangle that points to the node
+  ctx.moveTo(x + width / 2 - 10, y + height);
+  ctx.lineTo(x + width / 2, y + height + 10);
+  ctx.lineTo(x + width / 2 + 10, y + height);
+  ctx.fill();
+}
+
 //========================
 //      HTTP Request
 //========================
@@ -242,21 +267,26 @@ function initgraph(results, song) {
       //If the node is selected or moused-over, fill with red
       if (selectedNodes.includes(node) || node == closeNode) {
         context.fillStyle = "#9e2c2c";
-        context.globalAlpha = 1;
-        context.fill();
-        if (node == closeNode) {
-          //Display the song's name over the node if it is moused-over
-          context.fillStyle = "#ffffff";
-          context.font = "24px sans-serif";
-          context.fillText(node.name, node.x - node.name.length * 12 / 2, node.y - 24);
-        }
       //Otherwise fill with blue
       } else {
         context.fillStyle = "#3ca0f3";
-        context.globalAlpha = 1;
-        context.fill();
       }
-    });    
+      context.globalAlpha = 1;
+        context.fill();
+    });   
+    
+    nodes.forEach(function(node) {
+      if (node == closeNode) {
+        //Display the song's name over the node if it is moused-over
+        //Draw a dark box behind the text
+        context.font = "24px sans-serif";
+        context.fillStyle = "#4f4f4f";
+        roundRect(context, node.x - (context.measureText(node.name).width / 2) - 8, node.y - 48, context.measureText(node.name).width + 16, 32, 8);
+        //Draw the text
+        context.fillStyle = "#ffffff";
+        context.fillText(node.name, node.x - context.measureText(node.name).width / 2, node.y - 24);
+      }
+    });
     //End drawing
     context.restore();
   }

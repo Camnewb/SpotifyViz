@@ -134,6 +134,7 @@ function loadList(nodes) {
 
       var ul = document.createElement("ul");
       ul.classList.add("nested");
+      ul.classList.add("ml-2");
       li.appendChild(ul);
 
         for (var key in node) {
@@ -144,9 +145,8 @@ function loadList(nodes) {
           key == "vx" || 
           key == "vy" || 
           key == "index") continue;
-          var property = document.createTextNode(key + ": " + node[key]);
+          var property = document.createTextNode("- " + key + ": " + node[key]);
           ul.appendChild(property);
-          //property.setAttribute("style", "textIndent: 5px;")
 
           var br = document.createElement("br");
           ul.appendChild(br);
