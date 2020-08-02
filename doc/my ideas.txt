@@ -1,0 +1,43 @@
+when trying to implement with existing backend function: some songs don't have neighbors
+
+user searches for song
+
+frontend searching algorithm (breadth/depth):
+	
+backend generates neighbors for searched song.
+backend generates neighbors for every song that is similar to every neighbor
+	how so?: for every song, frontend serializes the song into an object with its different attributes, including their neighbors ->parseJSON may handle this already :)
+
+and so, searching algorithm will end when 50/25 songs have been added to queue/list
+
+potential issues:
+	generating neighbors for a will send a http request, doing this for many songs might make the process more lengthy
+		then again, a limit of 50 won't make it too lengthy :D
+	how will the graph (the edges) be drawn?
+		the resultant search data will be in the form of a list (of songs)
+		a graph edge is defined as (from, to)
+			possibly using the same _forEach system?:
+				if (nextSong != null)
+					makeEdge(thisSong, nextSong)
+
+
+
+{"duration_ms":174320,
+"speechiness":0.0638,
+"mode":1,
+"key":1,
+"explicit":1,
+"tempo":186.081,
+"liveness":0.27,
+"energy":0.9840000000000001,
+"year":2004,
+"acousticness":0.000025300000000000002,
+"id":"45zvStEMsXp8z45OQRhWFJ",
+"loudness":-2.42,
+"artists":["Green Day"],
+"instrumentalness":0.0000691,
+"name":"American Idiot",
+"valence":0.81,
+"popularity":61,
+"release_date":"2004-09-21",
+"danceability":0.381},
