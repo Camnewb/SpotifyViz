@@ -65,3 +65,5 @@ node_modules/
 .env
 
 functions/src/spotifyviz-68e56-9d288ed2b8ee.json
+
+node_modules/*
