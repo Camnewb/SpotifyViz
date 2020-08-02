@@ -46,24 +46,27 @@ export const getGraphFromRawSongs = functions.https.onRequest(async (request, re
             const docList : Array<QueryDocSnap> = new Array<QueryDocSnap>();
             const nodeList : Array<Object> = new Array<Object>();
             
+            // putting songDoc in list 
+            docList.push( songDoc )
+            nodeList.push( songDoc.data() )
+
             // adding documents to docList and nodeList
-            let includesRoot : Boolean = false;
+            let resultsHadSongDoc : Boolean = false;
             docsSimilar.forEach(document => {
+                if (document["id"] === (songDoc["id"])){
+                    resultsHadSongDoc = true;
+                    return;
+                }
                 docList.push( document )
                 nodeList.push( document.data() )
 
-                if (document["id"] === (songDoc["id"])){
-                    includesRoot = true;
-                }
+                
             });
             
-            // if root was not in docs, add it.
-            if (includesRoot === false){
-                // mainting 50
+            // if song doc was not included then there were 51 nodes total, so we prune 
+            if (resultsHadSongDoc === false){
                 docList.pop()
                 nodeList.pop()
-                docList.push( songDoc )
-                nodeList.push( songDoc.data() )
             }
             
             const edgeList : Array<Edge> = constructEdgeList(docList);
@@ -110,11 +113,16 @@ async function getSimilarQuery(songDoc : QueryDocSnap) : Promise< QuerySnap > {
 
 function constructEdgeList(nodeList : Array<QueryDocSnap>) : Array<Edge> {
     const edgeList : Array<Edge> = new Array<Edge>();
-    nodeList.forEach(doc => {
-        nodeList.sort( function (doc1 : Object, doc2: Object) : number {
+    const nodeListToIterate : Array<QueryDocSnap> = new Array<QueryDocSnap>();
+
+    // copying nodeList into nodeListToIterate
+    nodeList.forEach(el => nodeListToIterate.push(el) );
+
+    nodeListToIterate.forEach(doc => {
+        nodeList.sort( function (doc1 : QueryDocSnap, doc2: QueryDocSnap) : number {
             return compareSongs(doc, doc1) - compareSongs(doc, doc2);    
         });
-        (nodeList.slice(0, 2)).forEach(simDoc => {
+        (nodeList.slice(0, 4)).forEach(simDoc => {
             const edge = new Edge( doc["id"], simDoc["id"] );
             edgeList.push(edge);
         });
@@ -123,7 +131,14 @@ function constructEdgeList(nodeList : Array<QueryDocSnap>) : Array<Edge> {
     return edgeList;
 }
 
-// TODO: implement actual logic
-function compareSongs(song1 : Object, song2: Object) : number{
-    return 0;
+function compareSongs(song1 : QueryDocSnap, song2: QueryDocSnap) : number{
+    const simScore = 
+    ((song1.get("acousticness")     -   song2.get("acousticness")) ** 2 ) +
+    ((song1.get("danceability")     -   song2.get("danceability")) ** 2 ) +
+    ((song1.get("energy")           -   song2.get("energy")) ** 2 ) + 
+    ((song1.get("instrumentalness") -   song2.get("instrumentalness")) ** 2 ) + 
+    ((song1.get("liveness")         -   song2.get("liveness")) ** 2 ) + 
+    ((song1.get("speechiness")      -   song2.get("speechiness")) ** 2 );
+    
+    return simScore;
 }

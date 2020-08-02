@@ -11,12 +11,12 @@
 //Initializing Canvas and Variables
 //=================================
 
-var radius = 5;//Radius of the nodes
+var radius = 10;//Radius of the nodes
 
 var graphCanvas = d3.select("canvas").node();  //Canvas element where the graph will be drawn
 
 //When the web page size changes, change the size of the canvas to match
-function resize() {
+function resizeCanvas() {
   //Canvas size constraints
   var height = window.innerHeight;
   var width =  window.innerWidth;
@@ -27,7 +27,7 @@ function resize() {
     .node();
 }
 
-resize();
+resizeCanvas();
 
 var context = graphCanvas.getContext("2d");//Context for drawing the graph
 
@@ -36,10 +36,14 @@ var simulation = d3.forceSimulation()
               .force("center", d3.forceCenter(window.innerWidth - (graphCanvas.width - 384) / 2, graphCanvas.height / 2))//Forcing the graph towards the center of the screen
               .force("charge", d3.forceManyBody())//Forces from nodes
               .force("link", d3.forceLink().id(function(d) { return d.id; }))//Forces from links
-              .alphaTarget(0.5)//Initial graph movement
+              .alphaTarget(0.25)//Initial graph movement
               .alphaDecay(0.05);//Physics slowdown after releasing drag
 
 var transform = d3.zoomIdentity;//For zooming functionality
+
+//For external access
+var jsonData;
+function getData() {return jsonData;}
 
 //========================
 //      HTTP Request
@@ -50,16 +54,18 @@ var transform = d3.zoomIdentity;//For zooming functionality
 function getDataAsynchronous(url, song) {
   console.log("Sending request...");
   showLoader();//Show loading bar
-  searchAlert(200);
+  searchAlert(200);//Clear any alert text
+  //Create the request object
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function (e) {
-    //On request state change, check if the request is ready
+    //On state change, check if the request is ready
     if (this.readyState == 4) {
       searchAlert(this.status);
       if (this.status == 200) {
         //If it's ready, parse the JSON and call initGraph()
         console.log("Data recieved.");
-        var jsonData = JSON.parse(xhr.responseText);
+        jsonData = JSON.parse(xhr.responseText);
+        console.log(jsonData);
         initgraph(jsonData, song);//Initialize the graph
       } else {
         console.error("Error: " + this.status);
@@ -70,16 +76,18 @@ function getDataAsynchronous(url, song) {
   xhr.open("GET", url, true);
   xhr.send();
   console.log("Request sent. Waiting for response...");
-  
 }
 
 //Processes a query from search(), gives the GET request URL to getDataAsynchronus()
 function query(song) {
-  console.log("Starting query for \"" + song + "\"");
-  var songQuery = song.replace(/\ /g, "%20");//Replace spaces with %20
-  var url = "https://us-central1-spotifyviz-68e56.cloudfunctions.net/getGraphFromRawSongs?song=" + songQuery;
-  //console.log("GET Request url: " + url);
-  getDataAsynchronous(url, song);
+  if (event.key === 'Enter') {
+    event.preventDefault();//Stops the page from reloading
+    console.log("Starting query for \"" + song + "\"");
+    var songQuery = song.replace(/\ /g, "%20");//Replace spaces with %20
+    var url = "https://us-central1-spotifyviz-68e56.cloudfunctions.net/getGraphFromRawSongs?song=" + songQuery;
+    //console.log("GET Request url: " + url);
+    getDataAsynchronous(url, song);
+  }
 }
 
 //========================
@@ -159,14 +167,14 @@ function initgraph(jsonData, song) {
     //Finds the node closest to the mouse coordinates. Returns undefined if the mouse is not within the node's radius
     closeNode = simulation.find(mouse[0], mouse[1], radius);
     tick();//Update the graph to show the highlighted node
-  })
+  });
   //On mouse click of a node, open a google search for the song and artist
   d3.select("canvas").on("click", function(){
     if (closeNode) {
       var q = closeNode.name + " " + closeNode.artists[0];
       window.open('http://google.com/search?q=' + q);
     }
-  })
+  });
 
   //========================
   //  Drawing the Graph
@@ -219,8 +227,8 @@ function initgraph(jsonData, song) {
       context.fill();
       //Display the song's name over the node
       context.fillStyle = "#ffffff"
-      context.font = "12px sans-serif";
-      context.fillText(closeNode.name, closeNode.x - closeNode.name.length * 6 / 2, closeNode.y - 12);
+      context.font = "24px sans-serif";
+      context.fillText(closeNode.name, closeNode.x - closeNode.name.length * 12 / 2, closeNode.y - 24);
       context.globalAlpha = 1;
     }
     

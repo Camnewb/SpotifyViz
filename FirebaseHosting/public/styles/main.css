@@ -9981,6 +9981,28 @@ ul, #filter-settings {
   display: none;
 }
 
+.btn-active {
+  background-color: #5a6268;
+  box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #aaaaaa;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #747474;
+}
+
 .label-active-1 {
   color: #3ca0f3;
 }
