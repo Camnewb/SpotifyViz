@@ -1,5 +1,9 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+// import * as cors from 'cors'
+const cors = require('cors');
+
+const corsHandler = cors({origin : true});
 
 const cors = require('cors');
 const corsHandler = cors({origin : true});
