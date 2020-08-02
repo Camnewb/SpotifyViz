@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# VSCOde stuff
+.vscode
+
+backend/pushToFirestore/spotifyviz-68e56-firebase-adminsdk-gqzp8-0e7479645a.json
+backend/firebaseFunctions/functions/src/spotifyviz-68e56-9d288ed2b8ee.json
