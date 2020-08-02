@@ -43,23 +43,19 @@ var transform = d3.zoomIdentity;//For zooming functionality
 
 //For external access
 var jsonData;
+var songData;
 function getData() {return jsonData;}
 
-var searchResults;
 function getSearchResultsAsList() {
-  let list = []
-  let songs
-  if (searchType == 0)
-  {
-    songs = jsonData.nodes
+  if (searchType == 1) {
+    return depthFS(songData, 50);
+  }
+  
+  else if (searchType == 2) {
+    return breadthFS(songData, 50);
   }
 
-  else songs = searchResults;
-  for (song of songs)
-  {
-    list.push(song)
-  }
-  return list
+  else return jsonData.nodes;
 }
 //========================
 //      HTTP Request
@@ -82,17 +78,10 @@ function getDataAsynchronous(url, songName) {
         console.log("Data recieved.");
         jsonData = JSON.parse(xhr.responseText);
         console.log(jsonData);
-        let songData = getSongByName(songName);
-        console.log(songData);
-        if (searchType == 1) {}
-        if (searchType == 2) {
-          searchResults = breadthFS(songData, 50)
-        }
-        else searchResults = jsonData;
-        console.log(searchResults);
-        algoSearch(); // Makes results into a list and displays it
+        songData = getSongByName(songName);
+        //console.log(songData);
         //breadthFirstSearch.forEach(function(a){console.log(a)});
-        initgraph(searchResults, songName);//Initialize the graph
+        initgraph(jsonData, songName);//Initialize the graph
       } else {
         console.error("Error: " + this.status);
       }
@@ -118,17 +107,9 @@ function query(song) {
 //========================
 
 function initgraph(results, song) {
-  let nodes
-  let edges
-  // If no explicit search is selected by the user
-  if (searchType == 0) {
-    nodes = results.nodes;
-    edges = results.edges;
-  }
-  else {
-    nodes = results;
-    edges = generateEdges(results);
-  }
+    let nodes = results.nodes;
+    let edges = results.edges;
+ 
 
   console.log("Drawing graph...");
 

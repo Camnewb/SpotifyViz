@@ -117,22 +117,24 @@ function toggleButton(btn) {
     //document.getElementById("pre-list").innerText = "Selected Depth-First Search";
     // ^ After the graph is drawn, This line gives me an error: "Uncaught TypeError: Cannot set property 'innerText' of null"
     searchType = 1;
+    algoSearch()
   } else if (btn == 2 && !btnBreadth.classList.contains("btn-active")) {
     btnBreadth.classList.add("btn-active");
     btnDepth.classList.remove("btn-active");
     //document.getElementById("pre-list").innerText = "Selected Breadth-First Search";
     searchType = 2;
+    algoSearch()
   }
 }
 
 var searchType = 0;
 //Invoke the search algorithms and give the data to the loadList function
 function algoSearch() {
-  if (searchResults == undefined) {
+  if (getData() == undefined) {
     document.getElementById("pre-list").innerText = "No data to list";
     return;
   }
-  loadList(getSearchResultsAsList());
+  else loadList(getSearchResultsAsList());
 }
 
 //Create a list of songs with dropdowns revealing the json properties
