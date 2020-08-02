@@ -6,16 +6,6 @@
 //          HTML elements.
 //-----------------------------------
 
-//JavaScript for the tree list; Shamelessly stolen from w3schools
-var carets = document.getElementsByClassName("caret");//Find all carets
-      
-//Add event listener to each caret
-[...carets].forEach(e => e.addEventListener("click", function() {
-  this.parentElement.querySelector(".nested").classList.toggle("active");
-  this.classList.toggle("caret-down");
-}, ));
-[...carets].forEach(e => e.dispatchEvent(new Event("click")));//Open the caret
-
 //Set all checkbox labels to change color when the checkbox is checked
 //Uses a stack of all the colors and pops each off to give them to a checkbox label when checked
 var checkboxes = document.getElementsByClassName("form-check-input mr-2");//Find all carets
@@ -34,6 +24,16 @@ var colors = ["label-active-1", "label-active-2", "label-active-3",
     document.getElementById(checkboxLabel).className = "";//Remove the color from the checkbox label
   }
 }, ));
+
+//JavaScript for the tree list; Shamelessly stolen from w3schools
+var carets = document.getElementsByClassName("caret");//Find all carets
+      
+//Add event listener to each caret
+[...carets].forEach(e => e.addEventListener("click", function() {
+  this.parentElement.querySelector(".nested").classList.toggle("active");
+  this.classList.toggle("caret-down");
+}, ));
+[...carets].forEach(e => e.dispatchEvent(new Event("click")));//Open the caret
 
 resizeMenu();//Size the menu on page initialization
 
@@ -83,30 +83,6 @@ function hideLoader() {
   document.getElementById("loading-bar").style["display"] = "none";
 }
 
-//Check if enter key is pressed, then query a song
-function search(value) {
-  if (event.key === 'Enter') {
-      event.preventDefault();//Stops the page from reloading
-      query(value);
-  }
-}
-
-//Takes a range value (0-100) and returns an easily readable quartic power of the value
-function quarticSliderDisplay(sliderValue) {
-  var value = Math.pow(sliderValue, 4) * 10;//This is the new value to be represented
-  //Add commas or prefixes to make it readable
-  var display = value.toString();
-  if (value < 10000000) {
-    if (value > 999) display = insertAt(display, ",", display.length - 3);
-    if (value > 999999) display = insertAt(display, ",", display.length - 7);
-  } else if (value < 999999999) {
-    display = (value / 1000000).toFixed(1) + " million";
-  } else {
-    display = "1 billion";
-  }
-  return display;
-}
-
 //Functionality for the search button group
 function toggleButton(btn) {
   var btnDepth = document.getElementById("btn-depth");
@@ -120,6 +96,7 @@ function toggleButton(btn) {
     btnDepth.classList.remove("btn-active");
     algoSearch(2);
   }
+  resizeMenu();
 }
 
 //Invoke the search algorithms and give the data to the loadList function
@@ -164,7 +141,8 @@ function loadList(nodes) {
           key == "x" || 
           key == "y" || 
           key == "vx" || 
-          key == "vy") continue;
+          key == "vy" || 
+          key == "index") continue;
           var property = document.createTextNode(key + ": " + node[key]);
           ul.appendChild(property);
           //property.setAttribute("style", "textIndent: 5px;")
@@ -181,19 +159,5 @@ function loadList(nodes) {
     this.parentElement.querySelector(".nested").classList.toggle("active");
     this.classList.toggle("caret-down");
   }, ));
-}
-
-//==========================
-//    Utility Functions
-//==========================
-
-//Inserts a string at the desired index
-function insertAt(str, insert, index) {
-  return str.slice(0, index) + insert + str.slice(index, str.length);
-}
-
-//Changes the inner text of the target element
-function editInnerText(text, target) {
-  document.getElementById(target).innerText = text;
 }
 
