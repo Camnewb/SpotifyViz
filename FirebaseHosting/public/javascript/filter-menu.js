@@ -64,7 +64,6 @@ function searchAlert(status) {
     alertText.classList.add("text-danger");
     if (status == 500) {
       alertText.innerText = "Error: Could not find a song with that name. Remember search requests are case-sensitive.";
-      
     } else {
       alertText.innerText = "Unknown Server Error - " + status + ": Try again or reload the page."
     }
@@ -84,6 +83,7 @@ function hideLoader() {
 }
 
 //Functionality for the search button group
+var searchType = 0;
 function toggleButton(btn) {
   var btnDepth = document.getElementById("btn-depth");
   var btnBreadth = document.getElementById("btn-breadth");
@@ -93,25 +93,32 @@ function toggleButton(btn) {
     //document.getElementById("pre-list").innerText = "Selected Depth-First Search";
     // ^ After the graph is drawn, This line gives me an error: "Uncaught TypeError: Cannot set property 'innerText' of null"
     searchType = 1;
-    algoSearch()
+    algoSearch();
   } else if (btn == 2 && !btnBreadth.classList.contains("btn-active")) {
     btnBreadth.classList.add("btn-active");
     btnDepth.classList.remove("btn-active");
     //document.getElementById("pre-list").innerText = "Selected Breadth-First Search";
     searchType = 2;
-    algoSearch()
+    algoSearch();
+  } else if (btn == 0) {
+    btnBreadth.classList.remove("btn-active");
+    btnDepth.classList.remove("btn-active");
   }
   resizeMenu();
 }
 
-var searchType = 0;
+var searchResults;
 //Invoke the search algorithms and give the data to the loadList function
 function algoSearch() {
   if (getData() == undefined) {
     document.getElementById("pre-list").innerText = "No data to list";
     return;
   }
-  else loadList(getSearchResultsAsList());
+  else {
+    searchResults = getSearchResultsAsList();
+    loadList(searchResults);
+    document.getElementById("btn-animate").style.display = "block";
+  }
 }
 
 //Create a list of songs with dropdowns revealing the json properties
@@ -135,6 +142,7 @@ function loadList(nodes) {
 
       var ul = document.createElement("ul");
       ul.classList.add("nested");
+      ul.classList.add("ml-2");
       li.appendChild(ul);
 
         for (var key in node) {
@@ -145,21 +153,76 @@ function loadList(nodes) {
           key == "vx" || 
           key == "vy" || 
           key == "index") continue;
-          var property = document.createTextNode(key + ": " + node[key]);
+          var property = document.createTextNode("- " + key + ": " + node[key]);
           ul.appendChild(property);
-          //property.setAttribute("style", "textIndent: 5px;")
 
           var br = document.createElement("br");
           ul.appendChild(br);
         }
+
         var br = document.createElement("br");
-          ul.appendChild(br);
+        ul.appendChild(br);
+
+        span.addEventListener("click", function() {
+          this.parentElement.querySelector(".nested").classList.toggle("active-list");
+          this.classList.toggle("caret-down");
+          //Toggle the color of the song dropdown and toggle the node selected
+          if (this.style.color == "rgb(245, 245, 245)" || this.style.color == "") {
+            this.style.color = "rgb(255, 92, 92)"; 
+            selectNode(node);
+          } else {
+            this.style.color = "rgb(245, 245, 245)";
+            deselectNode(node);
+          }
+        }, );
   });
-  //Attach event listeners to all the dropdown songs
-  var carets = document.getElementsByClassName("caret");//Find all carets
-  [...carets].forEach(e => e.addEventListener("click", function() {
-    this.parentElement.querySelector(".nested").classList.toggle("active");
-    this.classList.toggle("caret-down");
-  }, ));
 }
 
+function clearSearchDisplay() {
+  var searchDisplay = document.getElementById("search-list");
+  //Clear the search window
+  searchDisplay.innerHTML = "";
+  //Add the select search method text
+  var span = document.createElement("span");
+  span.innerText = "Select a search method";
+  span.classList.add("text-muted");
+  searchDisplay.appendChild(span);
+}
+
+//Highlights successive nodes after a short delay, demonstrating the search methods in real-time
+function animateSearch() {
+  console.log("Starting animation");
+  var searchList = document.getElementById("search-list");
+  var songDropdowns = searchList.children[0].children;
+  //console.log(searchedSongs);
+  //Animate each node by openening each dropdown and selecting each node
+  for (let index = 0; index < songDropdowns.length; index++) {
+    animationFrame(songDropdowns[index], searchResults[index], index);
+  }
+
+  //Finish the animation by closing the dropdowns and deselecting the songs
+  cleanUpAnimation(songDropdowns);
+}
+
+//Javascript is a strange language, so all 50 animationFrame() calls actually happen (mostly) concurrently.
+//To get around this, the timeout for each frame is set at 200 * index, which adds an extra 0.2s of delay per frame index.
+//So even though they execute concurrently, they are still spaced out with a delay of 0.2s
+//Credit to the website below for helping me understand this 
+//https://www.freecodecamp.org/news/thrown-for-a-loop-understanding-for-loops-and-timeouts-in-javascript-558d8255d8a4/ 
+function animationFrame(songDropdown, node, index) {
+  setTimeout(function() {
+    songDropdown.style.color = "rgb(255, 92, 92)";
+    selectNode(node);
+  }, index * 200);
+}
+
+//Reclose all the dropdowns and deselect the nodes
+function cleanUpAnimation(songDropdowns) {
+  setTimeout(function() {
+    console.log("Animation done.");
+    for (let index = 0; index < songDropdowns.length; index++) {
+      songDropdowns[index].style.color = "rgb(245, 245, 245)";
+    }
+    deselectAll();
+  }, songDropdowns.length * 200 + 100);
+}
