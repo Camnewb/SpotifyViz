@@ -114,24 +114,28 @@ function toggleButton(btn) {
   if (btn == 1 && !btnDepth.classList.contains("btn-active")) {
     btnDepth.classList.add("btn-active");
     btnBreadth.classList.remove("btn-active");
-    algoSearch(1);
+    document.getElementById("pre-list").innerText = "Selected Depth-First Search";
+    // ^ After the graph is drawn, This line gives me an error: "Uncaught TypeError: Cannot set property 'innerText' of null"
+    searchType = 1;
   } else if (btn == 2 && !btnBreadth.classList.contains("btn-active")) {
     btnBreadth.classList.add("btn-active");
     btnDepth.classList.remove("btn-active");
-    algoSearch(2);
+    document.getElementById("pre-list").innerText = "Selected Breadth-First Search";
+    searchType = 2;
   }
 }
 
+var searchType = 0;
 //Invoke the search algorithms and give the data to the loadList function
-function algoSearch(searchType) {
+function algoSearch() {
   if (getData() == undefined) {
     document.getElementById("pre-list").innerText = "No data to list";
     return;
   }
   if (searchType == 1) {
-    loadList(getData().nodes);
+    loadList(searchResults);
   } else if (searchType == 2) {
-    loadList(getData().nodes);
+    loadList(searchResults);
   }
 }
 

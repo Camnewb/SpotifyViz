@@ -45,6 +45,16 @@ var transform = d3.zoomIdentity;//For zooming functionality
 var jsonData;
 function getData() {return jsonData;}
 
+var searchResults;
+function getSearchResultsAsList()
+{
+  let list = []
+  for (song of searchResults)
+  {
+    list.push(song.name + " - " + song.artists[0])
+  }
+  return list
+}
 //========================
 //      HTTP Request
 //========================
@@ -68,10 +78,15 @@ function getDataAsynchronous(url, songName) {
         console.log(jsonData);
         let songData = getSongByName(songName);
         console.log(songData);
-        let breadthFirstSearch = breadthFS(songData, 50);
-        console.log(breadthFirstSearch);
-        breadthFirstSearch.forEach(function(a){console.log(a)});
-        //initgraph(breadthFirstSearch, songName);//Initialize the graph
+        if (searchType == 1) {}
+        if (searchType == 2) {
+          searchResults = breadthFS(songData, 50)
+        }
+        else searchResults = jsonData;
+        console.log(searchResults);
+        algoSearch(); // Makes results into a list and displays it
+        //breadthFirstSearch.forEach(function(a){console.log(a)});
+        initgraph(searchResults, songName);//Initialize the graph
       } else {
         console.error("Error: " + this.status);
       }
@@ -96,7 +111,18 @@ function query(song) {
 // Graph Initialization
 //========================
 
-function initgraph(data, song) {
+function initgraph(results, song) {
+  let nodes
+  let edges
+  // If no explicit search is selected by the user
+  if (searchType == 0) {
+    nodes = results.nodes;
+    edges = results.edges;
+  }
+  else {
+    nodes = results;
+    edges = generateEdges(results);
+  }
 
   console.log("Drawing graph...");
 
@@ -120,11 +146,8 @@ function initgraph(data, song) {
     x = transform.invertX(d3.event.x),
     y = transform.invertY(d3.event.y),
     dx, dy;
-    for (i = data.length - 1; i >= 0; --i) {
-      node = data
-
-
-[i];
+    for (i = nodes.length - 1; i >= 0; --i) {
+      node = nodes[i];
       dx = x - node.x;
       dy = y - node.y;
 
@@ -161,8 +184,8 @@ function initgraph(data, song) {
   
   //Adding nodes and links to the simulation
   //The tick function that draws nodes will execute every tick
-  simulation.nodes(data).on("tick", tick);
-  simulation.force("link").links(jsonData.edges);
+  simulation.nodes(nodes).on("tick", tick);
+  simulation.force("link").links(edges);
 
   //Adds mouseover functionality to the nodes
   //Stolen from this stackoverflow thread: https://stackoverflow.com/questions/38271595/tooltips-with-canvas-networks
@@ -192,8 +215,8 @@ function initgraph(data, song) {
     context.translate(transform.x, transform.y);//Pan the camera to the last state
     context.scale(transform.k, transform.k);//Zoom the camera to the last state
 
-    //Draw the linke between nodes
-    jsonData.edges.forEach(function(d) {
+    //Draw the links between nodes
+    edges.forEach(function(d) {
       //White line
       context.beginPath();
       context.moveTo(d.source.x, d.source.y);
@@ -207,7 +230,7 @@ function initgraph(data, song) {
     //console.log(song);
 
     //Draw the nodes
-    data.forEach(function(d) {
+    nodes.forEach(function(d) {
       //White border
       context.beginPath();
       //If the current node is the searched/root node, make it bigger
