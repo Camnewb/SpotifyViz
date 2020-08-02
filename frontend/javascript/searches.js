@@ -1,6 +1,5 @@
 // From JSON file's nodes, get song data by name
 function getSongByName(songName) {
-    //console.log("searching for " + songName)
     let data = getData()
 
     for (node of data.nodes) {
@@ -25,17 +24,17 @@ function getNeighbors(songID) {
     // pull the edge list to see what neighbors the song has.
     var neighbors = []
 
+    
     data.edges.forEach(function(edge) {
         if (edge.source === songID)
             neighbors.push(getSongByID(edge.target))
+        else if (edge.target === songID) // Bi-directional
+        neighbors.push(getSongByID(edge.source))
 
     })
 
     return neighbors
 }
-
-// var breadth = breadthFS(getSong(jsonData, song), 50)
-// initgraph(breadth, song)
 
 function breadthFS(parent, numResults) {
     var returnList = []
@@ -60,7 +59,6 @@ function breadthFS(parent, numResults) {
             }
         })
     }
-    //returnList.shift() // Remove parent
     return returnList
 }
 
@@ -72,18 +70,21 @@ function generateEdges(searchResult) {
             this.target = target;
         }
     }
-
     edges = []
-    visited = []
+    
+    function getNextSong(songID) {
+        let index = searchResult.indexOf(getSongByID(songID));
+        if (index >= searchResult.length - 1 || index < 0)
+            return null;
+        else return searchResult[index + 1];
+    }
+
     for (song of searchResult) {
-        //https://stackoverflow.com/questions/12433604/how-can-i-find-matching-values-in-two-arrays/12433654
-       let validNeighbors = getNeighbors(song.id).filter(element => searchResult.includes(element));
-        for (n of validNeighbors) {
-            if (!visited.includes(n)) {
-                let newEdge = new Edge(song, n)
+        let nextSong = getNextSong(song.id)
+        if (nextSong != null) {
+                let newEdge = new Edge(song, nextSong)
                 edges.push(newEdge)
             }
         }
-    }
     return edges
 }
