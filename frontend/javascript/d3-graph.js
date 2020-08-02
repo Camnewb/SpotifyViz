@@ -57,6 +57,31 @@ function getSearchResultsAsList() {
 
   else return jsonData.nodes;
 }
+
+//This function is from http://js-bits.blogspot.com/2010/07/canvas-rounded-corner-rectangles.html
+//Draws a rounded rectangle in the canvas with the specified properties
+function roundRect(ctx, x, y, width, height, radius) {
+  //Draw the rounded rectangle
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+  ctx.fill();
+
+  //Draw a small triangle that points to the node
+  ctx.moveTo(x + width / 2 - 10, y + height);
+  ctx.lineTo(x + width / 2, y + height + 10);
+  ctx.lineTo(x + width / 2 + 10, y + height);
+  ctx.fill();
+}
+
 //========================
 //      HTTP Request
 //========================
@@ -102,7 +127,38 @@ function query(song) {
     var url = "https://us-central1-spotifyviz-68e56.cloudfunctions.net/getGraphFromRawSongs?song=" + songQuery;
     //console.log("GET Request url: " + url);
     getDataAsynchronous(url, song);
+
+    //Reset the frontend to before the last query was made
+    //Clear the search window
+    var searchDisplay = document.getElementById("search-list");
+    searchDisplay.innerHTML = "";
+    //Add the select search method text
+    var span = document.createElement("span");
+    span.innerText = "Select a search method";
+    span.classList.add("text-muted");
+    searchDisplay.appendChild(span);
+    //Reset the toggle buttons
+    document.getElementById("btn-depth").classList.remove("btn-active");
+    document.getElementById("btn-breadth").classList.remove("btn-active");
+    //Hide the animate search button
+    document.getElementById("btn-animate").style.display = "none";
+    //Finally, esize the menu
+    resizeMenu();
   }
+
+}
+
+var selectedNodes = new Array();
+function selectNode(node) {
+  selectedNodes.push(node);
+}
+
+function deselectNode(node) {
+  selectedNodes.splice(selectedNodes.indexOf(node), 1);
+}
+
+function deselectAll() {
+  selectedNodes = new Array();
 }
 
 //========================
@@ -217,42 +273,44 @@ function initgraph(results, song) {
       context.stroke();
     });
 
-    //console.log(song);
-
     //Draw the nodes
-    nodes.forEach(function(d) {
+    nodes.forEach(function(node) {
       //White border
       context.beginPath();
+      context.globalAlpha = 1;
       //If the current node is the searched/root node, make it bigger
-      context.arc(d.x, d.y, d.name == song ? radius * 1.8 : radius * 1.2, 0, 2 * Math.PI, true);
+      context.arc(node.x, node.y, node.name == song ? radius * 1.8 : radius * 1.2, 0, 2 * Math.PI, true);
       context.fillStyle = "white";
       context.fill();
       context.closePath();
-      //Blue fill
+      //Center fill
       context.beginPath();
-      context.arc(d.x, d.y, d.name == song ? radius * 1.5 : radius, 0, 2 * Math.PI, true);
-      context.fillStyle = "#3ca0f3";
+      context.arc(node.x, node.y, node.name == song ? radius * 1.5 : radius, 0, 2 * Math.PI, true);
+      //If the node is selected or moused-over, fill with red
+      if (selectedNodes.includes(node) || node == closeNode) {
+        context.fillStyle = "#9e2c2c";
+      //Otherwise fill with blue
+      } else {
+        context.fillStyle = "#3ca0f3";
+      }
       context.globalAlpha = 1;
-      context.fill();
-    });
-
-    //If the mouse is over a node, same as (closeNode != undefined)
-    if (closeNode) {
-      //Fill with red
-      context.beginPath();
-      context.arc(closeNode.x, closeNode.y, closeNode.name == song ? radius * 1.5 : radius, 0, 2 * Math.PI, true);
-      context.fillStyle = "#9e2c2c";
-      context.fill();
-      //Display the song's name over the node
-      context.fillStyle = "#ffffff"
-      context.font = "24px sans-serif";
-      context.fillText(closeNode.name, closeNode.x - closeNode.name.length * 12 / 2, closeNode.y - 24);
-      context.globalAlpha = 1;
-    }
+        context.fill();
+    });   
     
+    nodes.forEach(function(node) {
+      if (node == closeNode) {
+        //Display the song's name over the node if it is moused-over
+        //Draw a dark box behind the text
+        context.font = "24px sans-serif";
+        context.fillStyle = "#4f4f4f";
+        roundRect(context, node.x - (context.measureText(node.name).width / 2) - 8, node.y - 48, context.measureText(node.name).width + 16, 32, 8);
+        //Draw the text
+        context.fillStyle = "#ffffff";
+        context.fillText(node.name, node.x - context.measureText(node.name).width / 2, node.y - 24);
+      }
+    });
     //End drawing
     context.restore();
   }
-
   console.log("Done drawing graph.")
 }

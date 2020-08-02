@@ -9954,7 +9954,7 @@ ul, #filter-settings {
   display: none;
 }
 
-.active {
+.active-list {
   display: block;
 }
 
@@ -10000,7 +10000,7 @@ ul, #filter-settings {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #747474;
+  background: #8a8a8a;
 }
 
 .label-active-1 {
