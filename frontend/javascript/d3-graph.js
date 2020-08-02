@@ -127,16 +127,38 @@ function query(song) {
     var url = "https://us-central1-spotifyviz-68e56.cloudfunctions.net/getGraphFromRawSongs?song=" + songQuery;
     //console.log("GET Request url: " + url);
     getDataAsynchronous(url, song);
+
+    //Reset the frontend to before the last query was made
+    //Clear the search window
+    var searchDisplay = document.getElementById("search-list");
+    searchDisplay.innerHTML = "";
+    //Add the select search method text
+    var span = document.createElement("span");
+    span.innerText = "Select a search method";
+    span.classList.add("text-muted");
+    searchDisplay.appendChild(span);
+    //Reset the toggle buttons
+    document.getElementById("btn-depth").classList.remove("btn-active");
+    document.getElementById("btn-breadth").classList.remove("btn-active");
+    //Hide the animate search button
+    document.getElementById("btn-animate").style.display = "none";
+    //Finally, esize the menu
+    resizeMenu();
   }
+
 }
 
 var selectedNodes = new Array();
 function selectNode(node) {
-  if (selectedNodes.includes(node)) {
-    selectedNodes.splice(selectedNodes.indexOf(node), 1);
-  } else {
-    selectedNodes.push(node);
-  }
+  selectedNodes.push(node);
+}
+
+function deselectNode(node) {
+  selectedNodes.splice(selectedNodes.indexOf(node), 1);
+}
+
+function deselectAll() {
+  selectedNodes = new Array();
 }
 
 //========================
