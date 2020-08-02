@@ -105,6 +105,15 @@ function query(song) {
   }
 }
 
+var selectedNodes = new Array();
+function selectNode(node) {
+  if (selectedNodes.includes(node)) {
+    selectedNodes.splice(selectedNodes.indexOf(node), 1);
+  } else {
+    selectedNodes.push(node);
+  }
+}
+
 //========================
 // Graph Initialization
 //========================
@@ -217,42 +226,39 @@ function initgraph(results, song) {
       context.stroke();
     });
 
-    //console.log(song);
-
     //Draw the nodes
-    nodes.forEach(function(d) {
+    nodes.forEach(function(node) {
       //White border
       context.beginPath();
+      context.globalAlpha = 1;
       //If the current node is the searched/root node, make it bigger
-      context.arc(d.x, d.y, d.name == song ? radius * 1.8 : radius * 1.2, 0, 2 * Math.PI, true);
+      context.arc(node.x, node.y, node.name == song ? radius * 1.8 : radius * 1.2, 0, 2 * Math.PI, true);
       context.fillStyle = "white";
       context.fill();
       context.closePath();
-      //Blue fill
+      //Center fill
       context.beginPath();
-      context.arc(d.x, d.y, d.name == song ? radius * 1.5 : radius, 0, 2 * Math.PI, true);
-      context.fillStyle = "#3ca0f3";
-      context.globalAlpha = 1;
-      context.fill();
-    });
-
-    //If the mouse is over a node, same as (closeNode != undefined)
-    if (closeNode) {
-      //Fill with red
-      context.beginPath();
-      context.arc(closeNode.x, closeNode.y, closeNode.name == song ? radius * 1.5 : radius, 0, 2 * Math.PI, true);
-      context.fillStyle = "#9e2c2c";
-      context.fill();
-      //Display the song's name over the node
-      context.fillStyle = "#ffffff"
-      context.font = "24px sans-serif";
-      context.fillText(closeNode.name, closeNode.x - closeNode.name.length * 12 / 2, closeNode.y - 24);
-      context.globalAlpha = 1;
-    }
-    
+      context.arc(node.x, node.y, node.name == song ? radius * 1.5 : radius, 0, 2 * Math.PI, true);
+      //If the node is selected or moused-over, fill with red
+      if (selectedNodes.includes(node) || node == closeNode) {
+        context.fillStyle = "#9e2c2c";
+        context.globalAlpha = 1;
+        context.fill();
+        if (node == closeNode) {
+          //Display the song's name over the node if it is moused-over
+          context.fillStyle = "#ffffff";
+          context.font = "24px sans-serif";
+          context.fillText(node.name, node.x - node.name.length * 12 / 2, node.y - 24);
+        }
+      //Otherwise fill with blue
+      } else {
+        context.fillStyle = "#3ca0f3";
+        context.globalAlpha = 1;
+        context.fill();
+      }
+    });    
     //End drawing
     context.restore();
   }
-
   console.log("Done drawing graph.")
 }

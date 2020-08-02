@@ -64,7 +64,6 @@ function searchAlert(status) {
     alertText.classList.add("text-danger");
     if (status == 500) {
       alertText.innerText = "Error: Could not find a song with that name. Remember search requests are case-sensitive.";
-      
     } else {
       alertText.innerText = "Unknown Server Error - " + status + ": Try again or reload the page."
     }
@@ -93,13 +92,13 @@ function toggleButton(btn) {
     //document.getElementById("pre-list").innerText = "Selected Depth-First Search";
     // ^ After the graph is drawn, This line gives me an error: "Uncaught TypeError: Cannot set property 'innerText' of null"
     searchType = 1;
-    algoSearch()
+    algoSearch();
   } else if (btn == 2 && !btnBreadth.classList.contains("btn-active")) {
     btnBreadth.classList.add("btn-active");
     btnDepth.classList.remove("btn-active");
     //document.getElementById("pre-list").innerText = "Selected Breadth-First Search";
     searchType = 2;
-    algoSearch()
+    algoSearch();
   }
   resizeMenu();
 }
@@ -152,14 +151,17 @@ function loadList(nodes) {
           var br = document.createElement("br");
           ul.appendChild(br);
         }
+
         var br = document.createElement("br");
-          ul.appendChild(br);
+        ul.appendChild(br);
+
+        span.addEventListener("click", function() {
+          this.parentElement.querySelector(".nested").classList.toggle("active-list");
+          this.classList.toggle("caret-down");
+          //Toggle the color of the song dropdown
+          this.style.color = (this.style.color == "rgb(245, 245, 245)" || this.style.color == "" ? "rgb(255, 92, 92)" : "rgb(245, 245, 245)");
+          selectNode(node);
+        }, );
   });
-  //Attach event listeners to all the dropdown songs
-  var carets = document.getElementsByClassName("caret");//Find all carets
-  [...carets].forEach(e => e.addEventListener("click", function() {
-    this.parentElement.querySelector(".nested").classList.toggle("active");
-    this.classList.toggle("caret-down");
-  }, ));
 }
 
