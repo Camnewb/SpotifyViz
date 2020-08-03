@@ -1,5 +1,5 @@
 // Authentication token (v) Should create a function that generates it live instead. Oh well.
-var auth_token = "BQBzcJ_NTkAEH40xfpY0GG0hwO5Zqm6AXFGjphStHATzFL0Lb0PhDQXm4PcCUFNZZbCFWI5_uXe2uFzztoo"
+var auth_token = "BQBAQA-YmONygk-an9Ti1FwB_knHZMo7aMUaR3zU41K49djoJDMQci6_OvMIDNWOohWnk0pdkottFq8U6nw";
 // Uses spotify api to grab the album cover of a song.
 
 function getSpotifyAuthToken() {
@@ -20,11 +20,12 @@ function getSpotifyAuthToken() {
   xhr.open("GET", url, true);
   xhr.send();
   console.log("Request sent. Waiting for response...");
+  }
 }
 
 async function getAlbumCoverURL(songID) {
  // Used https://stackoverflow.com/questions/61817528/vscode-no-debug-adapter-can-not-send-variables
-  
+ 
   var xhr = new XMLHttpRequest();
   return new Promise(function(resolve, reject) {
     xhr.onreadystatechange = function() {
@@ -60,6 +61,4 @@ async function albumURL(songID) {
   } catch (err) {
   }
 }
-
-
 
