@@ -104,10 +104,9 @@ function getDataAsynchronous(url, songName) {
         jsonData = JSON.parse(xhr.responseText);
         console.log(jsonData);
         songData = getSongByName(songName);
-        getSpotifyAuthToken();
-        
-        for (node of jsonData.nodes) {
 
+        // Write album_cover data for every song (produces 404 errors because graph is init before this completes)
+        for (node of jsonData.nodes) {
           node.album_cover = albumURL(node.id);
         }
 
@@ -133,6 +132,7 @@ function query(song) {
     var songQuery = song.replace(/\ /g, "%20");//Replace spaces with %20
     var url = "https://us-central1-spotifyviz-68e56.cloudfunctions.net/getGraphFromRawSongs?song=" + songQuery;
     //console.log("GET Request url: " + url);
+    //getSpotifyAuthToken();
     getDataAsynchronous(url, song);
 
     //Reset the frontend to before the last query was made
@@ -285,34 +285,40 @@ function initgraph(results, song) {
     nodes.forEach(function(node) {
       let localRadiusBorder = node.name == song ? radius * 1.8 : radius * 1.2;
       let localRadiusFill = node.name == song ? radius * 1.5 : radius;
-      localRadiusBorder = 0; // no border test 8)
+      //localRadiusBorder = 0; // no border test 8)
+
       //White border
+      
       context.beginPath();
       context.globalAlpha = 1;
       //If the current node is the searched/root node, make it bigger
       context.arc(node.x, node.y, localRadiusBorder, 0, 2 * Math.PI, true);
       context.fillStyle = "white";
-      context.fill();
+      context.fill();  
       context.closePath();
-      //Center fill
+      
+      //If the node is selected or moused-over, fill with red
+      context.save();
       context.beginPath();
       context.arc(node.x, node.y, localRadiusFill, 0, 2 * Math.PI, true);
-      //If the node is selected or moused-over, fill with red
-      if (selectedNodes.includes(node) || node == closeNode) {
-        context.fillStyle = "#9e2c2c";
-      //Otherwise fill with blue
-      } else {
-        context.fillStyle = "#3ca0f3";
-      }
+      context.fillStyle = "#9e2c2c";
       context.globalAlpha = 1;
-        context.fill();
+      context.fill();
+      context.closePath();
+      context.clip();
 
-      let image = new Image();
-      let length = localRadiusFill * 2;
-      image.src = node.album_cover; 
-      // This creates some 404 errors, because the graph is drawn before all album covers have been grabbed. 
-      //Maybe wait until all have been grabbed before drawing the graph?
-      context.drawImage(image, node.x - length/2, node.y - length/2, length, length);
+      
+      if (!selectedNodes.includes(node) && node != closeNode) {
+        context.clip();
+        let image = new Image();
+        let length = localRadiusFill * 2.4;
+        image.src = node.album_cover; 
+        // //This creates some 404 errors, because the graph is drawn before all album covers have been grabbed. 
+        // //Maybe wait until all have been grabbed before drawing the graph?
+        context.drawImage(image, node.x - length/2, node.y - length/2, length, length);
+      }
+
+      context.restore();
     });   
     
     nodes.forEach(function(node) {
