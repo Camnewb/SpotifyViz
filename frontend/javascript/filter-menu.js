@@ -41,6 +41,13 @@ resizeMenu();//Size the menu on page initialization
 //    Element Functions
 //==========================
 
+function searchBarInput(song) {
+  if (event.key === 'Enter') {
+    event.preventDefault();//Stops the page from reloading
+    query(song)
+  }
+}
+
 function resizeMenu() {
   var topDivHeight = document.getElementById("filter-settings").getBoundingClientRect().height;
   var bottomDivHeight = document.getElementById("search-algo").getBoundingClientRect().height;
@@ -160,9 +167,6 @@ function loadList(nodes) {
           ul.appendChild(br);
         }
 
-        var br = document.createElement("br");
-        ul.appendChild(br);
-
         span.addEventListener("click", function() {
           this.parentElement.querySelector(".nested").classList.toggle("active-list");
           this.classList.toggle("caret-down");
@@ -175,6 +179,17 @@ function loadList(nodes) {
             deselectNode(node);
           }
         }, );
+
+        var link = document.createElement("a");
+        link.innerText = "Search this song";
+        link.href = "javascript:query(\"" + node.name + "\");";
+        link.style.color = "#72c0ff";
+        link.classList.add("ml-2");
+        ul.appendChild(link);
+
+        var br = document.createElement("br");
+        ul.appendChild(br);
+        ul.appendChild(br);
   });
 }
 
@@ -190,7 +205,10 @@ function clearSearchDisplay() {
 }
 
 //Highlights successive nodes after a short delay, demonstrating the search methods in real-time
+var isAnimationActive
 function animateSearch() {
+  if (isAnimationActive) return;
+  else isAnimationActive = true;
   console.log("Starting animation");
   var searchList = document.getElementById("search-list");
   var songDropdowns = searchList.children[0].children;
@@ -224,5 +242,6 @@ function cleanUpAnimation(songDropdowns) {
       songDropdowns[index].style.color = "rgb(245, 245, 245)";
     }
     deselectAll();
+    isAnimationActive = false;
   }, songDropdowns.length * 200 + 100);
 }

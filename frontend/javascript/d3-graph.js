@@ -36,7 +36,7 @@ var simulation = d3.forceSimulation()
               .force("center", d3.forceCenter(window.innerWidth - (graphCanvas.width - 384) / 2, graphCanvas.height / 2))//Forcing the graph towards the center of the screen
               .force("charge", d3.forceManyBody())//Forces from nodes
               .force("link", d3.forceLink().id(function(d) { return d.id; }))//Forces from links
-              .alphaTarget(0.25)//Initial graph movement
+              .alphaTarget(0.5)//Initial graph movement
               .alphaDecay(0.05);//Physics slowdown after releasing drag
 
 var transform = d3.zoomIdentity;//For zooming functionality
@@ -120,32 +120,33 @@ function getDataAsynchronous(url, songName) {
 
 //Processes a query from search(), gives the GET request URL to getDataAsynchronus()
 function query(song) {
-  if (event.key === 'Enter') {
-    event.preventDefault();//Stops the page from reloading
-    console.log("Starting query for \"" + song + "\"");
-    var songQuery = song.replace(/\ /g, "%20");//Replace spaces with %20
-    var url = "https://us-central1-spotifyviz-68e56.cloudfunctions.net/getGraphFromRawSongs?song=" + songQuery;
-    //console.log("GET Request url: " + url);
-    getDataAsynchronous(url, song);
+  console.log("Starting query for \"" + song + "\"");
+  var songQuery = song.replace(/\ /g, "%20");//Replace spaces with %20
+  var url = "https://us-central1-spotifyviz-68e56.cloudfunctions.net/getGraphFromRawSongs?song=" + songQuery;
+  //console.log("GET Request url: " + url);
+  getDataAsynchronous(url, song);
 
-    //Reset the frontend to before the last query was made
-    //Clear the search window
-    var searchDisplay = document.getElementById("search-list");
-    searchDisplay.innerHTML = "";
-    //Add the select search method text
-    var span = document.createElement("span");
-    span.innerText = "Select a search method";
-    span.classList.add("text-muted");
-    searchDisplay.appendChild(span);
-    //Reset the toggle buttons
-    document.getElementById("btn-depth").classList.remove("btn-active");
-    document.getElementById("btn-breadth").classList.remove("btn-active");
-    //Hide the animate search button
-    document.getElementById("btn-animate").style.display = "none";
-    //Finally, esize the menu
-    resizeMenu();
-  }
+  //Restart the simulation so the nodes move after a query
+  simulation.alphaTarget(0.5).restart();
 
+  //Reset the frontend to before the last query was made
+  //Clear the search window
+  var searchDisplay = document.getElementById("search-list");
+  searchDisplay.innerHTML = "";
+  //Add the select search method text
+  var span = document.createElement("span");
+  span.innerText = "Select a search method";
+  span.classList.add("text-muted");
+  searchDisplay.appendChild(span);
+  //Reset the toggle buttons
+  document.getElementById("btn-depth").classList.remove("btn-active");
+  document.getElementById("btn-breadth").classList.remove("btn-active");
+  //Hide the animate search button
+  document.getElementById("btn-animate").style.display = "none";
+  //Make sure the search bar text is our new query
+  document.getElementById("search-input").value = song;
+  //Finally, resize the menu
+  resizeMenu();
 }
 
 var selectedNodes = new Array();
@@ -166,10 +167,9 @@ function deselectAll() {
 //========================
 
 function initgraph(results, song) {
-    let nodes = results.nodes;
-    let edges = results.edges;
+  let nodes = results.nodes;
+  let edges = results.edges;
  
-
   console.log("Drawing graph...");
 
   //========================
@@ -207,7 +207,7 @@ function initgraph(results, song) {
 
   //Drag functions. This is boilerplate code
   function dragstarted() {
-    if (!d3.event.active) simulation.alphaTarget(0.7).restart();
+    if (!d3.event.active) simulation.alphaTarget(1).restart();
     d3.event.subject.fx = transform.invertX(d3.event.x);
     d3.event.subject.fy = transform.invertY(d3.event.y);
   }
@@ -218,7 +218,7 @@ function initgraph(results, song) {
   }
 
   function dragended() {
-    if (!d3.event.active) simulation.alphaTarget(0.01);
+    if (!d3.event.active) simulation.alphaTarget(0.05);
     d3.event.subject.fx = null;
     d3.event.subject.fy = null;
   }
@@ -239,7 +239,7 @@ function initgraph(results, song) {
   d3.select("canvas").on("mousemove", function(){
     var mouse = transform.invert(d3.mouse(this));//Coordinates of the mouse must be inverted
     //Finds the node closest to the mouse coordinates. Returns undefined if the mouse is not within the node's radius
-    closeNode = simulation.find(mouse[0], mouse[1], radius);
+    closeNode = simulation.find(mouse[0], mouse[1], radius * 1.2);
     tick();//Update the graph to show the highlighted node
   });
   //On mouse click of a node, open a google search for the song and artist
@@ -303,14 +303,23 @@ function initgraph(results, song) {
         //Draw a dark box behind the text
         context.font = "24px sans-serif";
         context.fillStyle = "#4f4f4f";
-        roundRect(context, node.x - (context.measureText(node.name).width / 2) - 8, node.y - 48, context.measureText(node.name).width + 16, 32, 8);
+        var maxWidth = context.measureText(node.name).width > context.measureText(node.artists[0]).width ? context.measureText(node.name).width : context.measureText(node.artists[0]).width;
+        roundRect(context, node.x - (maxWidth / 2) - 8, node.y - 80, maxWidth + 16, 74, 8);
         //Draw the text
         context.fillStyle = "#ffffff";
-        context.fillText(node.name, node.x - context.measureText(node.name).width / 2, node.y - 24);
+        context.fillText(node.name, node.x - context.measureText(node.name).width / 2, node.y - 54);
+        context.fillText(node.artists[0], node.x - context.measureText(node.artists[0]).width / 2, node.y - 16);
+        context.closePath();
+        //Line in-between
+        context.beginPath();
+        context.strokeStyle = "#ffffff"
+        context.moveTo(node.x - 10, node.y - 42);
+        context.lineTo(node.x + 10, node.y - 42);
+        context.stroke();
       }
     });
     //End drawing
     context.restore();
   }
-  console.log("Done drawing graph.")
+  console.log("Done drawing graph.");
 }
