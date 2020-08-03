@@ -105,13 +105,14 @@ function getDataAsynchronous(url, songName) {
         console.log(jsonData);
         songData = getSongByName(songName);
         getSpotifyAuthToken();
+        
         for (node of jsonData.nodes) {
 
           node.album_cover = albumURL(node.id);
         }
-        console.log()
+
         //console.log(songData);
-        //breadthFirstSearch.forEach(function(a){console.log(a)});
+       
         initgraph(jsonData, songName);//Initialize the graph
       } else {
         console.error("Error: " + this.status);
@@ -283,7 +284,8 @@ function initgraph(results, song) {
     //Draw the nodes
     nodes.forEach(function(node) {
       let localRadiusBorder = node.name == song ? radius * 1.8 : radius * 1.2;
-      let localRadiusFill = node.name == song ? radius * 1.5 : radius
+      let localRadiusFill = node.name == song ? radius * 1.5 : radius;
+      localRadiusBorder = 0; // no border test 8)
       //White border
       context.beginPath();
       context.globalAlpha = 1;
@@ -307,7 +309,9 @@ function initgraph(results, song) {
 
       let image = new Image();
       let length = localRadiusFill * 2;
-      image.src = node.album_cover;
+      image.src = node.album_cover; 
+      // This creates some 404 errors, because the graph is drawn before all album covers have been grabbed. 
+      //Maybe wait until all have been grabbed before drawing the graph?
       context.drawImage(image, node.x - length/2, node.y - length/2, length, length);
     });   
     
