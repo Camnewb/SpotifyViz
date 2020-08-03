@@ -8,7 +8,7 @@ We wanted to make an interactive Spotify song recommendation system with a stron
 
 ## Results
 
-[spotifyviz.com](http://www.spotifyviz.com)
+[spotifyviz.com](http://spotifyviz.com)
 
 ![Walkthrough](/media/spotifyVizWalkthrough.gif)
 
