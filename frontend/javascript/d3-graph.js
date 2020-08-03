@@ -60,7 +60,7 @@ function getSearchResultsAsList() {
 
 //This function is from http://js-bits.blogspot.com/2010/07/canvas-rounded-corner-rectangles.html
 //Draws a rounded rectangle in the canvas with the specified properties
-function roundRect(ctx, x, y, width, height, radius) {
+function roundRect(ctx, x, y, width, height, radius, pointerSize) {
   //Draw the rounded rectangle
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
@@ -76,9 +76,9 @@ function roundRect(ctx, x, y, width, height, radius) {
   ctx.fill();
 
   //Draw a small triangle that points to the node
-  ctx.moveTo(x + width / 2 - 10, y + height);
-  ctx.lineTo(x + width / 2, y + height + 10);
-  ctx.lineTo(x + width / 2 + 10, y + height);
+  ctx.moveTo(x + width / 2 - 10 * pointerSize, y + height);
+  ctx.lineTo(x + width / 2, y + height + 10 * pointerSize);
+  ctx.lineTo(x + width / 2 + 10 * pointerSize, y + height);
   ctx.fill();
 }
 
@@ -107,6 +107,7 @@ function getDataAsynchronous(url, songName) {
         //console.log(songData);
         //breadthFirstSearch.forEach(function(a){console.log(a)});
         initgraph(jsonData, songName);//Initialize the graph
+        similarity("none");
       } else {
         console.error("Error: " + this.status);
       }
@@ -149,35 +150,42 @@ function query(song) {
   resizeMenu();
 }
 
+//Array of selected nodes. If a node is found in this array, it is highlighted in the graph
 var selectedNodes = new Array();
+//Adds a node to the highlight list
 function selectNode(node) {
   selectedNodes.push(node);
 }
-
+//Removes a node from the highlight list
 function deselectNode(node) {
   selectedNodes.splice(selectedNodes.indexOf(node), 1);
 }
-
+//Removes all nodes from the list
 function deselectAll() {
   selectedNodes = new Array();
 }
 
+//Determines the percent difference between the propery of a song to the original song
+//node.sim = -1 when no radio button is selected
 function similarity(property) {
   if (jsonData == undefined) return;
+  if (property == "Duration") property = "duration_ms";
   if (property == "none") {
     jsonData.nodes.forEach(node => node.sim = -1);
   } else {
     jsonData.nodes.forEach(function(node) {
       var actual = node[property.toLowerCase()];
       var current = songNode[property.toLowerCase()];
-      if (actual == 0) {
-        if (actual == current) {
-          node.sim = 1;
-        } else {
-          node.sim = 0;
-        }
-      } else {
-        node.sim = 1 - Math.abs(Math.abs(actual - current) / actual);
+      if (actual == current) {
+        node.sim = 1;
+        //console.log(node.sim + " = " + 1);
+      } else if (actual == 0 || current == 0) {
+        node.sim = 0;
+      } else if (Math.abs(actual) < Math.abs(current)) {
+        node.sim = Math.abs(actual / current);
+        //console.log(node.sim + " = " + actual + " / (" + actual + " - " + current + ")");
+      } else {    
+        node.sim = Math.abs(current / actual);
       }
     });
   }
@@ -311,34 +319,70 @@ function initgraph(results, song) {
       //If the node is selected or moused-over, fill with red
       if (selectedNodes.includes(node) || node == closeNode) {
         context.fillStyle = "#9e2c2c";
-      //Otherwise fill with blue
-      } else {
+      //If similarities are shown, fill with a shade of green corresponding to node.sim
+      } else if (node.sim >= 0) {
+        let r = 255 - 255 * (node.sim ** 2);
+        let g = 255;
+        let b = 255 - 255 * (node.sim ** 2);
+        context.fillStyle = "rgb(" + r + ", " + g + ", " + b + ")";
+      }
+      else {
         context.fillStyle = "#3ca0f3";
       }
       context.globalAlpha = 1;
-        context.fill();
-    });   
+      context.fill();
+    });
+
+    nodes.forEach(function(node) {
+      
+    });
     
     nodes.forEach(function(node) {
-      if (node == closeNode) {
+      //Mouseover 
+      if (node == closeNode && node.sim < 0) {
         //Display the song's name over the node if it is moused-over
         //Draw a dark box behind the text
         context.font = "24px sans-serif";
         context.fillStyle = "#4f4f4f";
-        var maxWidth = context.measureText(node.name).width > context.measureText(node.artists[0]).width ? context.measureText(node.name).width : context.measureText(node.artists[0]).width;
-        roundRect(context, node.x - (maxWidth / 2) - 8, node.y - 80, maxWidth + 16, 74, 8);
+        var nameWidth = context.measureText(node.name).width;
+        var artistWidth = context.measureText(node.artists[0]).width;
+        var maxWidth = nameWidth > artistWidth ? nameWidth : artistWidth;
+        roundRect(context, node.x - (maxWidth / 2) - 8, node.y - 88, maxWidth + 16, 74, 8, 1);
         //Draw the text
         context.fillStyle = "#ffffff";
-        context.fillText(node.name, node.x - context.measureText(node.name).width / 2, node.y - 54);
-        context.fillText(node.artists[0], node.x - context.measureText(node.artists[0]).width / 2, node.y - 16);
+        context.fillText(node.name, node.x - nameWidth / 2, node.y - 62);
+        context.fillText(node.artists[0], node.x - artistWidth / 2, node.y - 24);
         context.closePath();
         //Line in-between
         context.beginPath();
         context.strokeStyle = "#ffffff"
-        context.moveTo(node.x - 10, node.y - 42);
-        context.lineTo(node.x + 10, node.y - 42);
+        context.moveTo(node.x - 10, node.y - 50);
+        context.lineTo(node.x + 10, node.y - 50);
         context.stroke();
-      }
+      } else if (node == closeNode && node.sim >= 0) {//If a similarity score exists, display the percentage
+        //Display the song's name over the node if it is moused-over
+        //Draw a dark box behind the text
+        context.font = "24px sans-serif";
+        context.fillStyle = "#4f4f4f";
+        var percentage = (node.sim * 100).toPrecision(3) + "%";
+        var nameWidth = context.measureText(node.name).width;
+        var artistWidth = context.measureText(node.artists[0]).width;
+        var maxWidth = nameWidth > artistWidth ? nameWidth : artistWidth;
+        roundRect(context, node.x - (maxWidth / 2) - 8, node.y - 112, maxWidth + 16, 106, 8, 1);
+        //Draw the text
+        context.fillStyle = "#ffffff";
+        context.fillText(node.name, node.x - nameWidth / 2, node.y - 86);
+        context.fillText(node.artists[0], node.x - artistWidth / 2, node.y - 48);
+        context.fillText(percentage, node.x - context.measureText(percentage).width / 2, node.y - 16);
+        context.closePath();
+        //Line in-between
+        context.beginPath();
+        context.strokeStyle = "#ffffff"
+        context.moveTo(node.x - 10, node.y - 74);
+        context.lineTo(node.x + 10, node.y - 74);
+        context.stroke();
+        context.closePath();
+      } 
     });
     //End drawing
     context.restore();

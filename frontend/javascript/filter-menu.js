@@ -8,18 +8,20 @@
 
 //Changes the text color of the label when selected
 var lastRadioLabelId;
+var lastRadioChecked;
 function radioToggle(radio) {
   var radioLabelId = radio.id + "-label";
-  if (radioLabelId == lastRadioLabelId) {
+  if (radioLabelId == lastRadioLabelId && lastRadioChecked) {
     radio.checked = false;
     if (lastRadioLabelId) document.getElementById(lastRadioLabelId).classList.remove("label-active");
     similarity("none");
   } else {
     document.getElementById(radioLabelId).classList.add("label-active");
-    if (lastRadioLabelId) document.getElementById(lastRadioLabelId).classList.remove("label-active");
+    if (lastRadioLabelId && lastRadioLabelId != radioLabelId) document.getElementById(lastRadioLabelId).classList.remove("label-active");
     similarity(document.getElementById(radioLabelId).innerText);
   }
   lastRadioLabelId = radioLabelId;
+  lastRadioChecked = radio.checked;
 }
 
 
