@@ -298,6 +298,7 @@ function initgraph(results, song) {
     });   
     
     nodes.forEach(function(node) {
+      console.log(getAlbumCoverURL(node.id))
       if (node == closeNode) {
         //Display the song's name over the node if it is moused-over
         //Draw a dark box behind the text
