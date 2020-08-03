@@ -1,5 +1,5 @@
 // Authentication token (v) Should create a function that generates it live instead. Oh well.
-var auth_token = "BQAYaVx2z15K51ch7zUPn9aRP9pQZxkRPVVl7djnUAIHL15gZ0KTy6nNJkAUGK0ivzZ4UYFI7NwCqTz84hY"
+var auth_token = "BQBzcJ_NTkAEH40xfpY0GG0hwO5Zqm6AXFGjphStHATzFL0Lb0PhDQXm4PcCUFNZZbCFWI5_uXe2uFzztoo"
 // Uses spotify api to grab the album cover of a song.
 var albumCoverURL
 
@@ -9,14 +9,17 @@ async function getAlbumCoverURL(songID) {
   var xhr = new XMLHttpRequest();
   return new Promise(function(resolve, reject) {
     xhr.onreadystatechange = function() {
+      if (xhr.status == 401) {
+        console.log("TOKEN INVALID.");
+      }
+
       if (xhr.readyState == 4) {
         if (xhr.status == 200) {
           let songData = JSON.parse(xhr.responseText);
           let url = songData.album.images[0].url;
-          //console.log(url);
           resolve(url);
         }
-        else reject("Error, status code =" + xhr.status);
+        else reject("Error, status code = " + xhr.status);
         }
 
   }
@@ -36,7 +39,6 @@ async function albumURL(songID) {
     getSongByID(songID).album_cover = user;
     console.log(getSongByID(songID).album_cover)
   } catch (err) {
-    console.error("Error. - " + err)
   }
 }
 
