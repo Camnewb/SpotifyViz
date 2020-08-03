@@ -104,6 +104,11 @@ function getDataAsynchronous(url, songName) {
         jsonData = JSON.parse(xhr.responseText);
         console.log(jsonData);
         songData = getSongByName(songName);
+        for (node of jsonData.nodes) {
+
+          node.album_cover = albumURL(node.id);
+        }
+        console.log()
         //console.log(songData);
         //breadthFirstSearch.forEach(function(a){console.log(a)});
         initgraph(jsonData, songName);//Initialize the graph
@@ -169,6 +174,7 @@ function initgraph(results, song) {
     let nodes = results.nodes;
     let edges = results.edges;
  
+    
 
   console.log("Drawing graph...");
 
@@ -275,6 +281,10 @@ function initgraph(results, song) {
 
     //Draw the nodes
     nodes.forEach(function(node) {
+      //console.log(node.album_cover)
+      let image = new Image();
+      image.src = node.album_cover;
+      context.drawImage(image, node.x, node.y);
       //White border
       context.beginPath();
       context.globalAlpha = 1;
@@ -298,7 +308,6 @@ function initgraph(results, song) {
     });   
     
     nodes.forEach(function(node) {
-      console.log(getAlbumCoverURL(node.id))
       if (node == closeNode) {
         //Display the song's name over the node if it is moused-over
         //Draw a dark box behind the text
