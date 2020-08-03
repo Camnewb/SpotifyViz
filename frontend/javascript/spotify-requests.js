@@ -1,13 +1,23 @@
 // Authentication token (v) Should create a function that generates it live instead. Oh well.
-var auth_token = "BQBAQA-YmONygk-an9Ti1FwB_knHZMo7aMUaR3zU41K49djoJDMQci6_OvMIDNWOohWnk0pdkottFq8U6nw";
+var auth_token = 'BQDr4hXwzDrmG292u5e8GxLJgonNW3vxd-ADvSHTXYkeiSq8hrTdZaY5bOr-ce34rvOjFdeFGzBhQ4VjK_w';
 // Uses spotify api to grab the album cover of a song.
 
+window.onload = function() {
+  getSpotifyAuthToken()
+}
 function getSpotifyAuthToken() {
   var url = 'https://us-central1-spotifyviz-68e56.cloudfunctions.net/getSpotifyAccessToken'
-  console.log("Sending request...");
+  console.log("Sending request for spotify auth token...");
   //Create the request object
+
   var xhr = new XMLHttpRequest();
+  
+  xhr.onerror = function(e) {
+    console.log("Error.")
+  }
+
   xhr.onreadystatechange = function (e) {
+    console.log("Ready State changed: " + this.readyState +  " with Status: " + this.status)
     //On state change, check if the request is ready
     if (this.readyState == 4) {
       if (this.status == 200) {
@@ -16,11 +26,13 @@ function getSpotifyAuthToken() {
         auth_token = JSON.parse(xhr.responseText);
         console.log(auth_token);
     }
-  };
+  }
+};
+  
   xhr.open("GET", url, true);
+  xhr.setRequestHeader("Access-Control-Allow-Origin", url)
   xhr.send();
   console.log("Request sent. Waiting for response...");
-  }
 }
 
 async function getAlbumCoverURL(songID) {
