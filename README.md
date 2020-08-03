@@ -20,3 +20,7 @@ We have successfully implemented and built a web app that uses
   - Firebase Cloud Functions
   - Firebase Hosting
   - Firebase Firestore
+ 
+## Instructions
+- It is recommended to use VS Code with the extension ["Live Server"](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) and running [frontend/index.html](https://github.com/Camnewb/SpotifyViz/blob/master/frontend/index.html) to launch a local web app
+ 
