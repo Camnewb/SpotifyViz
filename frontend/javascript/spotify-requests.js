@@ -36,7 +36,7 @@ async function getAlbumCoverURL(songID) {
       if (xhr.readyState == 4) {
         if (xhr.status == 200) {
           let songData = JSON.parse(xhr.responseText);
-          let url = songData.album.images[0].url;
+          let url = songData.album.images[1].url;
           resolve(url);
         }
         else reject("Error, status code = " + xhr.status);
