@@ -12,7 +12,7 @@
 //=================================
 
 var radius = 10;//Radius of the nodes
-
+var defaultImageURL = 'https://cdn.discordapp.com/attachments/717900911690776579/739656985510805614/transparentLogo.png';
 var graphCanvas = d3.select("canvas").node();  //Canvas element where the graph will be drawn
 
 //When the web page size changes, change the size of the canvas to match
@@ -271,11 +271,15 @@ function initgraph(results, song) {
 
     //Draw the links between nodes
     edges.forEach(function(d) {
+      let graphNodes = [d.source.graph_node, d.target.graph_node]
       //White line
       context.beginPath();
       context.moveTo(d.source.x, d.source.y);
       context.lineTo(d.target.x, d.target.y);
-      context.strokeStyle = "#ffffff";
+      if (selectedNodes.includes(graphNodes[0]) || selectedNodes.includes(graphNodes[1])
+         || graphNodes[0] == closeNode || graphNodes[1] == closeNode) {
+        context.strokeStyle = "#9e2c2c";
+      } else context.strokeStyle = "#ffffff";
       context.lineWidth = 2;
       context.globalAlpha = 0.75;
       context.stroke();
@@ -283,21 +287,26 @@ function initgraph(results, song) {
 
     //Draw the nodes
     nodes.forEach(function(node) {
+       //If the current node is the searched/root node, make it bigger
       let localRadiusBorder = node.name == song ? radius * 1.8 : radius * 1.2;
       let localRadiusFill = node.name == song ? radius * 1.5 : radius;
-      //localRadiusBorder = 0; // no border test 8)
+
+      node.graph_node = node; // Save graph node info for edges.
 
       //White border
       
       context.beginPath();
       context.globalAlpha = 1;
-      //If the current node is the searched/root node, make it bigger
+     
+      //If the node is selected or moused-over, fill the edge with red
       context.arc(node.x, node.y, localRadiusBorder, 0, 2 * Math.PI, true);
-      context.fillStyle = "white";
+      if (selectedNodes.includes(node) || node == closeNode) {
+        context.fillStyle = "#9e2c2c";
+      } else context.fillStyle = "white";
       context.fill();  
       context.closePath();
       
-      //If the node is selected or moused-over, fill with red
+      // Draw Fill (that will be replaced with an image)
       context.save();
       context.beginPath();
       context.arc(node.x, node.y, localRadiusFill, 0, 2 * Math.PI, true);
@@ -306,18 +315,12 @@ function initgraph(results, song) {
       context.fill();
       context.closePath();
       context.clip();
-
-      
-      if (!selectedNodes.includes(node) && node != closeNode) {
-        context.clip();
-        let image = new Image();
-        let length = localRadiusFill * 2.4;
-        image.src = node.album_cover; 
-        // //This creates some 404 errors, because the graph is drawn before all album covers have been grabbed. 
-        // //Maybe wait until all have been grabbed before drawing the graph?
-        context.drawImage(image, node.x - length/2, node.y - length/2, length, length);
-      }
-
+      let image = new Image();
+      let length = localRadiusFill * 2.4;
+      image.src = node.album_cover == undefined ? defaultImageURL : node.album_cover; 
+      // //This creates some 404 errors, because the graph is drawn before all album covers have been grabbed. 
+      // //Maybe wait until all have been grabbed before drawing the graph?
+      context.drawImage(image, node.x - length/2, node.y - length/2, length, length);
       context.restore();
     });   
     
