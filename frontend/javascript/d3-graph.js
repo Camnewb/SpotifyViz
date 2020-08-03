@@ -281,21 +281,19 @@ function initgraph(results, song) {
 
     //Draw the nodes
     nodes.forEach(function(node) {
-      //console.log(node.album_cover)
-      let image = new Image();
-      image.src = node.album_cover;
-      context.drawImage(image, node.x, node.y);
+      let localRadiusBorder = node.name == song ? radius * 1.8 : radius * 1.2;
+      let localRadiusFill = node.name == song ? radius * 1.5 : radius
       //White border
       context.beginPath();
       context.globalAlpha = 1;
       //If the current node is the searched/root node, make it bigger
-      context.arc(node.x, node.y, node.name == song ? radius * 1.8 : radius * 1.2, 0, 2 * Math.PI, true);
+      context.arc(node.x, node.y, localRadiusBorder, 0, 2 * Math.PI, true);
       context.fillStyle = "white";
       context.fill();
       context.closePath();
       //Center fill
       context.beginPath();
-      context.arc(node.x, node.y, node.name == song ? radius * 1.5 : radius, 0, 2 * Math.PI, true);
+      context.arc(node.x, node.y, localRadiusFill, 0, 2 * Math.PI, true);
       //If the node is selected or moused-over, fill with red
       if (selectedNodes.includes(node) || node == closeNode) {
         context.fillStyle = "#9e2c2c";
@@ -305,6 +303,11 @@ function initgraph(results, song) {
       }
       context.globalAlpha = 1;
         context.fill();
+
+      let image = new Image();
+      let length = localRadiusFill * 2;
+      image.src = node.album_cover;
+      context.drawImage(image, node.x - length/2, node.y - length/2, length, length);
     });   
     
     nodes.forEach(function(node) {
