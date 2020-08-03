@@ -1,53 +1,25 @@
-/**
- * This is an example of a basic node.js script that performs
- * the Client Credentials oAuth2 flow to authenticate against
- * the Spotify Accounts.
- *
- * For more information, read
- * https://developer.spotify.com/web-api/authorization-guide/#client_credentials_flow
- */
+// Authentication token (v) Should create a function that generates it live instead. Oh well.
+var auth_token = "BQDFvum3JsAQXoEIFehPuKyRT3ZLVD7i9Xmvn9gxkt-z_DWuphJqB3QV0Ji6vNDVXPTt5PAZJ8lSHvWuHHY"
 
-var request = require('request'); // "Request" library
-
-var client_id = '2711dc5087234919859e0262a27b2065'; // Your client id
-var client_secret = '6a1dd27880ef42329e7e0ff9e137d763'; // Your secret
-
-// your application requests authorization
-var authOptions = {
-  url: 'https://accounts.spotify.com/api/token',
-  headers: {
-    'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
-  },
-  form: {
-    grant_type: 'client_credentials'
-  },
-  json: true
-};
-
-function getAlbumCoverURL(songID)
-{
+// Uses spotify api to grab the album cover of a song.
+function getAlbumCoverURL(songID) {
+ // Used https://stackoverflow.com/questions/61817528/vscode-no-debug-adapter-can-not-send-variables
   let albumCoverURL = ''
-  request.post(authOptions, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-  
-      // use the access token to access the Spotify Web API
-      var token = body.access_token;
-      var options = {
-        url: 'https://api.spotify.com/v1/tracks/' + songID,
-        headers: {
-          'Authorization': 'Bearer ' + token
-        },
-        json: true
-      };
-      request.get(options, function(error, response, body) {
-        albumCoverURL = body.album.images[0].url
-        console.log("Album Cover URL: " + albumCoverURL);
-        console.log(token);
-        
-      });
-    }
-  });
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.spotify.com/v1/tracks/' + songID, true);
+  xhr.setRequestHeader('Accept', 'application/json');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('Authorization', 'Bearer ' + auth_token);
+  xhr.send();
 
-  return albumCoverURL
+    console.log("get")
+  xhr.onreadystatechange = function (e) {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        albumCoverURL = response.album.images[0].url;
+        console.log(albumCoverURL)
+      }
+  }
+return albumCoverURL;
 }
-getAlbumCoverURL('3a09UyeSiFl7NF31K5vXKF')
+
