@@ -162,10 +162,31 @@ function deselectAll() {
   selectedNodes = new Array();
 }
 
+function similarity(property) {
+  if (jsonData == undefined) return;
+  if (property == "none") {
+    jsonData.nodes.forEach(node => node.sim = -1);
+  } else {
+    jsonData.nodes.forEach(function(node) {
+      var actual = node[property.toLowerCase()];
+      var current = songNode[property.toLowerCase()];
+      if (actual == 0) {
+        if (actual == current) {
+          node.sim = 1;
+        } else {
+          node.sim = 0;
+        }
+      } else {
+        node.sim = 1 - Math.abs(Math.abs(actual - current) / actual);
+      }
+    });
+  }
+}
+
 //========================
 // Graph Initialization
 //========================
-
+var songNode;
 function initgraph(results, song) {
   let nodes = results.nodes;
   let edges = results.edges;
@@ -275,6 +296,7 @@ function initgraph(results, song) {
 
     //Draw the nodes
     nodes.forEach(function(node) {
+      if (node.name == song) songNode = node;
       //White border
       context.beginPath();
       context.globalAlpha = 1;

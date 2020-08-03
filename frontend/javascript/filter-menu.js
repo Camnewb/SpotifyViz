@@ -6,24 +6,22 @@
 //          HTML elements.
 //-----------------------------------
 
-//Set all checkbox labels to change color when the checkbox is checked
-//Uses a stack of all the colors and pops each off to give them to a checkbox label when checked
-var checkboxes = document.getElementsByClassName("form-check-input mr-2");//Find all carets
-var colors = ["label-active-1", "label-active-2", "label-active-3", 
-"label-active-4", "label-active-5", "label-active-6", 
-"label-active-7", "label-active-8", "label-active-9", 
-"label-active-10", "label-active-11", "label-active-12"];
-[...checkboxes].forEach(e => e.addEventListener("click", function() {
-  //checkboxLabel refers to the id of the checkbox label
-  var checkboxLabel = this.id + "-label";
-  if (document.getElementById(this.id).checked) {
-    //Add the color to the checkbox label and remove the label from the list of active labels
-    document.getElementById(checkboxLabel).className = colors.shift(checkboxLabel);
+//Changes the text color of the label when selected
+var lastRadioLabelId;
+function radioToggle(radio) {
+  var radioLabelId = radio.id + "-label";
+  if (radioLabelId == lastRadioLabelId) {
+    radio.checked = false;
+    if (lastRadioLabelId) document.getElementById(lastRadioLabelId).classList.remove("label-active");
+    similarity("none");
   } else {
-    colors.unshift(document.getElementById(checkboxLabel).className);//Add the label back to the list of active labels
-    document.getElementById(checkboxLabel).className = "";//Remove the color from the checkbox label
+    document.getElementById(radioLabelId).classList.add("label-active");
+    if (lastRadioLabelId) document.getElementById(lastRadioLabelId).classList.remove("label-active");
+    similarity(document.getElementById(radioLabelId).innerText);
   }
-}, ));
+  lastRadioLabelId = radioLabelId;
+}
+
 
 //JavaScript for the tree list; Shamelessly stolen from w3schools
 var carets = document.getElementsByClassName("caret");//Find all carets
