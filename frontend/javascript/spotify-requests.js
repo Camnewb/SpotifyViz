@@ -30,7 +30,6 @@ function getSpotifyAuthToken() {
 };
   
   xhr.open("GET", url, true);
-  xhr.setRequestHeader("Access-Control-Allow-Origin", url)
   xhr.send();
   console.log("Request sent. Waiting for response...");
 }
