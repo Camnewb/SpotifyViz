@@ -104,6 +104,7 @@ function getDataAsynchronous(url, songName) {
         jsonData = JSON.parse(xhr.responseText);
         console.log(jsonData);
         songData = getSongByName(songName);
+        getSpotifyAuthToken();
         for (node of jsonData.nodes) {
 
           node.album_cover = albumURL(node.id);
