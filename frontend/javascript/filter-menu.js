@@ -183,7 +183,7 @@ function loadList(nodes) {
           key == "x" || 
           key == "y" ||
           key == "fx" ||
-          key =="fy" || 
+          key == "fy" || 
           key == "vx" || 
           key == "vy" || 
           key == "index" ||
