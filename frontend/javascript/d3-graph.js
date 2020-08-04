@@ -106,11 +106,10 @@ function getDataAsynchronous(url, songName) {
         songData = getSongByName(songName);
 
         // Write album_cover data for every song (produces 404 errors because graph is init before this completes)
+  
         for (node of jsonData.nodes) {
-          node.album_cover = albumURL(node.id);
+          albumURL(node.id);
         }
-
-        //console.log(songData);
        
         initgraph(jsonData, songName);//Initialize the graph
       } else {
@@ -270,12 +269,12 @@ function initgraph(results, song) {
     context.scale(transform.k, transform.k);//Zoom the camera to the last state
 
     //Draw the links between nodes
-    edges.forEach(function(d) {
-      let graphNodes = [d.source.graph_node, d.target.graph_node]
+    edges.forEach(function(node) {
+      let graphNodes = [node.source.graph_node, node.target.graph_node]
       //White line
       context.beginPath();
-      context.moveTo(d.source.x, d.source.y);
-      context.lineTo(d.target.x, d.target.y);
+      context.moveTo(node.source.x, node.source.y);
+      context.lineTo(node.target.x, node.target.y);
       if (selectedNodes.includes(graphNodes[0]) || selectedNodes.includes(graphNodes[1])
          || graphNodes[0] == closeNode || graphNodes[1] == closeNode) {
         context.strokeStyle = "#9e2c2c";
@@ -317,10 +316,15 @@ function initgraph(results, song) {
       context.clip();
       let image = new Image();
       let length = localRadiusFill * 2.4;
-      image.src = node.album_cover == undefined ? defaultImageURL : node.album_cover; 
+      if (node.album_cover) {
+        
+        image.src = node.album_cover
       // //This creates some 404 errors, because the graph is drawn before all album covers have been grabbed. 
       // //Maybe wait until all have been grabbed before drawing the graph?
-      context.drawImage(image, node.x - length/2, node.y - length/2, length, length);
+      }
+      if (image.src) {
+        context.drawImage(image, node.x - length/2, node.y - length/2, length, length);
+      }
       context.restore();
     });   
     
