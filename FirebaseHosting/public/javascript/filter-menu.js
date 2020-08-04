@@ -6,24 +6,24 @@
 //          HTML elements.
 //-----------------------------------
 
-//Set all checkbox labels to change color when the checkbox is checked
-//Uses a stack of all the colors and pops each off to give them to a checkbox label when checked
-var checkboxes = document.getElementsByClassName("form-check-input mr-2");//Find all carets
-var colors = ["label-active-1", "label-active-2", "label-active-3", 
-"label-active-4", "label-active-5", "label-active-6", 
-"label-active-7", "label-active-8", "label-active-9", 
-"label-active-10", "label-active-11", "label-active-12"];
-[...checkboxes].forEach(e => e.addEventListener("click", function() {
-  //checkboxLabel refers to the id of the checkbox label
-  var checkboxLabel = this.id + "-label";
-  if (document.getElementById(this.id).checked) {
-    //Add the color to the checkbox label and remove the label from the list of active labels
-    document.getElementById(checkboxLabel).className = colors.shift(checkboxLabel);
+//Changes the text color of the label when the radio button is selected
+var lastRadioLabelId;
+var lastRadioChecked;
+function radioToggle(radio) {
+  var radioLabelId = radio.id + "-label";
+  if (radioLabelId == lastRadioLabelId && lastRadioChecked) {
+    radio.checked = false;
+    if (lastRadioLabelId) document.getElementById(lastRadioLabelId).classList.remove("label-active");
+    similarity("none");
   } else {
-    colors.unshift(document.getElementById(checkboxLabel).className);//Add the label back to the list of active labels
-    document.getElementById(checkboxLabel).className = "";//Remove the color from the checkbox label
+    document.getElementById(radioLabelId).classList.add("label-active");
+    if (lastRadioLabelId && lastRadioLabelId != radioLabelId) document.getElementById(lastRadioLabelId).classList.remove("label-active");
+    similarity(document.getElementById(radioLabelId).innerText);
   }
-}, ));
+  lastRadioLabelId = radioLabelId;
+  lastRadioChecked = radio.checked;
+}
+
 
 //JavaScript for the tree list; Shamelessly stolen from w3schools
 var carets = document.getElementsByClassName("caret");//Find all carets
@@ -41,12 +41,23 @@ resizeMenu();//Size the menu on page initialization
 //    Element Functions
 //==========================
 
+//Takes a search request and feeds it into query()
+var searchInput = document.getElementById("search-input");
+console.log(searchInput.value);
+function searchBarInput(button) {
+  if (button || event.key == "Enter") {//
+    event.preventDefault();//Stops the page from reloading
+    query(searchInput.value);
+  }
+}
+
+//Resizes the menu to fit the current screen height
 function resizeMenu() {
   var topDivHeight = document.getElementById("filter-settings").getBoundingClientRect().height;
   var bottomDivHeight = document.getElementById("search-algo").getBoundingClientRect().height;
   var container = document.getElementById("scroll-container");
-  if (topDivHeight + bottomDivHeight > window.innerHeight - 120) {
-    container.style.height = window.innerHeight - 120+ "px";
+  if (topDivHeight + bottomDivHeight > window.innerHeight - 128) {
+    container.style.height = window.innerHeight - 128 + "px";
   } else {
     container.style.height = topDivHeight + bottomDivHeight + 20 + "px";
   }
@@ -54,7 +65,7 @@ function resizeMenu() {
 
 //Changes the text below the search bar for the request status
 function searchAlert(status) {
-  var alertText = document.getElementById("searchHelp");
+  var alertText = document.getElementById("search-help");
   if (status >= 200 && status < 300) {//Successful responses
     if (status == 200) {
       alertText.innerText = "";
@@ -145,6 +156,16 @@ function loadList(nodes) {
       ul.classList.add("ml-2");
       li.appendChild(ul);
 
+        var linkSpotify = document.createElement("a");
+        linkSpotify.innerText = "Open this song in Spotify";
+        linkSpotify.href = "javascript:window.open(\"spotify:track:" + node.id + "\");";
+        linkSpotify.style.color = "#72c0ff";
+        linkSpotify.classList.add("ml-2");
+        ul.appendChild(linkSpotify);
+
+        var br = document.createElement("br");
+        ul.appendChild(br);
+
         for (var key in node) {
           //Do not show these properties
           if (key == "name" || 
@@ -152,7 +173,10 @@ function loadList(nodes) {
           key == "y" || 
           key == "vx" || 
           key == "vy" || 
-          key == "index") continue;
+          key == "index" || 
+          key == "sim" ||
+          key == "graph_node" || 
+          key == "album_cover") continue;
           var property = document.createTextNode("- " + key + ": " + node[key]);
           ul.appendChild(property);
 
@@ -160,9 +184,7 @@ function loadList(nodes) {
           ul.appendChild(br);
         }
 
-        var br = document.createElement("br");
-        ul.appendChild(br);
-
+        //Eventlistener for the tree list dropdowns
         span.addEventListener("click", function() {
           this.parentElement.querySelector(".nested").classList.toggle("active-list");
           this.classList.toggle("caret-down");
@@ -175,9 +197,21 @@ function loadList(nodes) {
             deselectNode(node);
           }
         }, );
+
+        var linkSearch = document.createElement("a");
+        linkSearch.innerText = "Search this song";
+        linkSearch.href = "javascript:query(\"" + node.name + "\");";
+        linkSearch.style.color = "#72c0ff";
+        linkSearch.classList.add("ml-2");
+        ul.appendChild(linkSearch);
+
+        var br = document.createElement("br");
+        ul.appendChild(br);
+        ul.appendChild(br);
   });
 }
 
+//Clears the search display of songs
 function clearSearchDisplay() {
   var searchDisplay = document.getElementById("search-list");
   //Clear the search window
@@ -190,7 +224,10 @@ function clearSearchDisplay() {
 }
 
 //Highlights successive nodes after a short delay, demonstrating the search methods in real-time
+var isAnimationActive;
 function animateSearch() {
+  if (isAnimationActive) return;
+  else isAnimationActive = true;
   console.log("Starting animation");
   var searchList = document.getElementById("search-list");
   var songDropdowns = searchList.children[0].children;
@@ -211,12 +248,12 @@ function animateSearch() {
 //https://www.freecodecamp.org/news/thrown-for-a-loop-understanding-for-loops-and-timeouts-in-javascript-558d8255d8a4/ 
 function animationFrame(songDropdown, node, index) {
   setTimeout(function() {
-    songDropdown.style.color = "rgb(255, 92, 92)";
-    selectNode(node);
-  }, index * 200);
+    songDropdown.style.color = "rgb(255, 92, 92)";//Color dropdown red
+    selectNode(node);//Color node red
+  }, index * 200);//Wait 200ms
 }
 
-//Reclose all the dropdowns and deselect the nodes
+//Reccolor all the dropdowns and deselect the nodes
 function cleanUpAnimation(songDropdowns) {
   setTimeout(function() {
     console.log("Animation done.");
@@ -224,5 +261,6 @@ function cleanUpAnimation(songDropdowns) {
       songDropdowns[index].style.color = "rgb(245, 245, 245)";
     }
     deselectAll();
+    isAnimationActive = false;
   }, songDropdowns.length * 200 + 100);
 }

@@ -4,102 +4,107 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+    <!-- Site icon -->
+    <link rel="icon" href="transparentLogo.png">
     <!-- Site CSS -->
     <link rel="stylesheet" href="styles/main.css">
 
-    <title>SpotifyViz Site</title>
+    <title>SpotifyViz</title>
   </head>
   <body class="d-flex" style="pointer-events: none; overflow: hidden" onresize="resizeCanvas(); resizeMenu()">
     <!-- Main Card -->
-    <div class="card bg-light m-3" id="outer-card" style="pointer-events: auto; padding: 12px; width: min-content; overflow: hidden; border: none;">
+    <div class="card bg-light m-3 p-3" id="outer-card" style="pointer-events: auto; width: min-content; overflow: hidden; border: none;">
       <div id="loading-bar" class="progress-bar progress-bar-striped progress-bar-primary progress-bar-animated"></div>
-      <form>
-        <div class="form-group">
-          <input type="search" class="form-control" id="search-input" aria-describedby="searchHelp"
-          placeholder="Enter song title" style="margin-top: 10px;" autocomplete="off" onkeydown="query(this.value)">
-          <small id="searchHelp" class="form-text"></small>
-        </div>
-      </form>
+        <form>
+          <div class="form-group form-inline">
+            <input type="search" class="form-control mr-2" id="search-input" aria-describedby="search-help"
+            placeholder="Enter song title" style="width: 76%; height: 36px;" autocomplete="off" onkeydown="searchBarInput(false)">
+            <button id="btn-search" type="button" class="btn btn-secondary" style="width: 20%; height: 36px;" onclick="searchBarInput(true)">Search</button>
+            <small id="search-help" class="form-text"></small>
+          </div>
+        </form>
       <div id="scroll-container" style="width: min-content; overflow-y: scroll;">
         <!-- Filter Settings Body -->
         <div id="filter-settings" class="card-body bg-dark p-3" style="width: 24rem; border-radius: 0.75rem;">
-          <h4 class="card-title"><b>Filter Settings</b></h4>
+          <h4 class="card-title"><b>Song Similarity</b></h4>
           <hr/>
           <div class="d-flex">
+            <!-- General -->
             <div class="flex-fill card bg-light p-3 m-1">
               <h6>General</h6>
               <div class="form-check">
-                <input class="form-check-input mr-2" type="checkbox" id="popularity-checkbox" oninput=""><!--TODO remove excess tags-->
-                <span id="popularity-checkbox-label">Popularity</span>
+                <input class="form-check-input mr-2" type="radio" name="filter" id="popularity-radio" onclick="radioToggle(this)">
+                <label class="mb-0" for="popularity-radio" id="popularity-radio-label">Popularity</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input mr-2" type="checkbox" id="year-checkbox">
-                <span id="year-checkbox-label">Year</span>
+                <input class="form-check-input mr-2" type="radio" name="filter" id="year-radio" onclick="radioToggle(this)">
+                <label class="mb-0" for="year-radio" id="year-radio-label">Year</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input mr-2" type="checkbox" id="duration-checkbox">
-                <span id="duration-checkbox-label">Duration</span>
+                <input class="form-check-input mr-2" type="radio" name="filter" id="duration-radio" onclick="radioToggle(this)">
+                <label class="mb-0" for="duration-radio" id="duration-radio-label">Duration</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input mr-2" type="checkbox" id="explicit-checkbox">
-                <span id="explicit-checkbox-label">Explicit</span>
+                <input class="form-check-input mr-2" type="radio" name="filter" id="explicit-radio" onclick="radioToggle(this)">
+                <label class="mb-0" for="explicit-radio" id="explicit-radio-label">Explicit</label>
               </div>
             </div>
+            <!-- Music Stats -->
             <div class="flex-fill card bg-light p-3 m-1">
               <h6>Music Stats</h6>
               <div class="form-check">
-                <input class="form-check-input mr-2" type="checkbox" id="key-checkbox">
-                <span id="key-checkbox-label">Key</span>
+                <input class="form-check-input mr-2" type="radio" name="filter" id="key-radio" onclick="radioToggle(this)">
+                <label class="mb-0" for="key-radio" id="key-radio-label">Key</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input mr-2" type="checkbox" id="loudness-checkbox">
-                <span id="loudness-checkbox-label">Loudness</span>
+                <input class="form-check-input mr-2" type="radio" name="filter" id="loudness-radio" onclick="radioToggle(this)">
+                <label class="mb-0" for="loudness-radio" id="loudness-radio-label">Loudness</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input mr-2" type="checkbox" id="mode-checkbox">
-                <span id="mode-checkbox-label">Mode</span>
+                <input class="form-check-input mr-2" type="radio" name="filter" id="mode-radio" onclick="radioToggle(this)">
+                <label class="mb-0" for="mode-radio" id="mode-radio-label">Mode</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input mr-2" type="checkbox" id="tempo-checkbox">
-                <span id="tempo-checkbox-label">Tempo</span>
+                <input class="form-check-input mr-2" type="radio" name="filter" id="tempo-radio" onclick="radioToggle(this)">
+                <label class="mb-0" for="tempo-radio" id="tempo-radio-label">Tempo</label>
               </div>
             </div>
           </div>
           <div class="d-flex">
+            <!-- Musical Elements -->
             <div class="flex-fill card bg-light p-3 m-1">
               <div class="d-flex">
                 <div class="flex-fill">
                   <h6>Musical Elements</h6>
                   <div class="form-check">
-                    <input class="form-check-input mr-2" type="checkbox" id="acousticness-checkbox">
-                    <span id="acousticness-checkbox-label">Acousticness</span>
+                    <input class="form-check-input mr-2" type="radio" name="filter" id="acousticness-radio" onclick="radioToggle(this)">
+                    <label class="mb-0" for="acousticness-radio" id="acousticness-radio-label">Acousticness</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input mr-2" type="checkbox" id="danceability-checkbox">
-                    <span id="danceability-checkbox-label">Danceability</span>
+                    <input class="form-check-input mr-2" type="radio" name="filter" id="danceability-radio" onclick="radioToggle(this)">
+                    <label class="mb-0" for="danceability-radio" id="danceability-radio-label">Danceability</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input mr-2" type="checkbox" id="energy-checkbox">
-                    <span id="energy-checkbox-label">Energy</span>
+                    <input class="form-check-input mr-2" type="radio" name="filter" id="energy-radio"  onclick="radioToggle(this)">
+                    <label class="mb-0" for="energy-radio" id="energy-radio-label">Energy</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input mr-2" type="checkbox" id="instrumentalness-checkbox">
-                    <span id="instrumentalness-checkbox-label">Instrumentalness</span>
+                    <input class="form-check-input mr-2" type="radio" name="filter" id="instrumentalness-radio" onclick="radioToggle(this)">
+                    <label class="mb-0" for="instrumentalness-radio" id="instrumentalness-radio-label">Instrumentalness</label>
                   </div>
                 </div>
                 <div class="flex-fill" style="margin-top: 26px;">
                   <div class="form-check">
-                    <input class="form-check-input mr-2" type="checkbox" id="liveness-checkbox">
-                    <span id="liveness-checkbox-label">Liveness</span>
+                    <input class="form-check-input mr-2" type="radio" name="filter" id="liveness-radio" onclick="radioToggle(this)">
+                    <label class="mb-0" for="liveness-radio" id="liveness-radio-label">Liveness</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input mr-2" type="checkbox" id="speechiness-checkbox">
-                    <span id="speechiness-checkbox-label">Speechiness</span>
+                    <input class="form-check-input mr-2" type="radio" name="filter" id="speechiness-radio" onclick="radioToggle(this)">
+                    <label class="mb-0" for="speechiness-radio" id="speechiness-radio-label">Speechiness</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input mr-2" type="checkbox" id="valence-checkbox">
-                    <span id="valence-checkbox-label">Valence</span>
+                    <input class="form-check-input mr-2" type="radio" name="filter" id="valence-radio" onclick="radioToggle(this)">
+                    <label class="mb-0" for="valence-radio" id="valence-radio-label">Valence</label>
                   </div>
                 </div>
               </div>
@@ -108,10 +113,7 @@
         </div>
         <!-- Song Search Body -->
         <div id="search-algo" class="card-body bg-dark mt-3" style="width: 24rem; border-radius: 0.75rem;">
-          <h4 class="card-title"><b>Search</b></h4>
-          <!--<small class="text-muted text-body m-0 p-0" style="line-height: 0rem">
-            Use a depth-first or breadth-first to retrieve a list of song recommendations.
-          </small>-->
+          <h4 class="card-title"><b>Search Algorithms</b></h4>
           <hr/>
           <div id="btn-group-search-algo" class="d-flex btn-group" role="group">
             <button id="btn-depth" type="button" class="btn btn-secondary flex-fill" onclick="toggleButton(1)">Depth-First</button>
@@ -124,6 +126,7 @@
         </div>
       </div>
     </div>
+    <!-- Graph Canvas -->
     <canvas id="graph-window" style="pointer-events: auto; position: absolute; z-index: -1;"></canvas>
 
     <!-- jQuery, Popper.js, Bootstrap JS -->
@@ -146,5 +149,6 @@
     <script src="javascript/filter-menu.js"></script>
     <script src="javascript/d3-graph.js"></script>
     <script src="javascript/searches.js"></script>
+    <script src="javascript/spotify-requests.js"></script>
   </body>
 </html>
