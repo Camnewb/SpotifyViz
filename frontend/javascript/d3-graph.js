@@ -339,14 +339,14 @@ function initgraph(results, song) {
       context.fillStyle = "#9e2c2c";
       let image;
       if (node.sim >= 0) {
-        noImage = false;
-        let r = 255 - 255 * (node.sim ** 2);
-        let g = 255;
-        let b = 255 - 255 * (node.sim ** 2);
+        image = false;
+        let r = 255 - (255 * (node.sim))
+        let g = 255 - (255 * (node.sim))
+        let b = 255;
         context.fillStyle = "rgb(" + r + ", " + g + ", " + b + ")";
       }
       else {
-       noImage = true;
+       image = true;
       }
       context.globalAlpha = 1;
       context.fill();
@@ -417,6 +417,7 @@ function initgraph(results, song) {
     //End drawing
     context.restore();
   }
+}
   
   console.log("Done drawing graph.")
 
