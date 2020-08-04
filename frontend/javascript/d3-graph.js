@@ -314,8 +314,8 @@ function initgraph(results, song) {
     nodes.forEach(function(node) {
 
        //If the current node is the searched/root node, make it bigger
-      let localRadiusBorder = node.name == song ? radius * 1.8 : radius * 1.2;
-      let localRadiusFill = node.name == song ? radius * 1.5 : radius;
+      let localRadiusBorder = node.name == song ? radius * 2.4 : radius * 1.2;
+      let localRadiusFill = node.name == song ? radius * 2 : radius;
 
       node.graph_node = node; // Save graph node info for edges.
       if (node.name == song) songNode = node;
