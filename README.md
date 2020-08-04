@@ -10,7 +10,11 @@ We wanted to make an interactive Spotify song recommendation system with a stron
 
 [spotifyviz.com](http://spotifyviz.com)
 
-![Walkthrough](/media/spotifyVizWalkthrough.gif)
+### The Core Graph and Analytical Features
+![The core features of the graph](/media/GraphFeatures.gif)
+
+### Extra Features for a cleaner experience
+![The extra features to make the experience nicer](/media/ExtraFeatures.gif)
 
 We have successfully implemented and built a web app that uses
 
