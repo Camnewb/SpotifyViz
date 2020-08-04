@@ -34,7 +34,7 @@ var context = graphCanvas.getContext("2d");//Context for drawing the graph
 var simulation = d3.forceSimulation()
               .force("center", d3.forceCenter(window.innerWidth - (graphCanvas.width - 384) / 2, graphCanvas.height / 2))//Forcing the graph towards the center of the screen
               .force("charge", d3.forceManyBody())//Forces from nodes
-              .force("link", d3.forceLink().id(function(d) { return d.id; }))//Forces from links
+              .force("link", d3.forceLink().id(function(node) { return node.id; }))//Forces from links
               .alphaTarget(0.5)//Initial graph movement
               .alphaDecay(0.05);//Physics slowdown after releasing drag
 
