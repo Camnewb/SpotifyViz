@@ -12,7 +12,6 @@
 //=================================
 
 var radius = 10;//Radius of the nodes
-var defaultImageURL = 'https://cdn.discordapp.com/attachments/717900911690776579/739656985510805614/transparentLogo.png';
 var graphCanvas = d3.select("canvas").node();  //Canvas element where the graph will be drawn
 
 //When the web page size changes, change the size of the canvas to match
