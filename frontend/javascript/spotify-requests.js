@@ -1,5 +1,5 @@
 // Authentication token (v) Should create a function that generates it live instead. Oh well.
-var auth_token = 'BQDr4hXwzDrmG292u5e8GxLJgonNW3vxd-ADvSHTXYkeiSq8hrTdZaY5bOr-ce34rvOjFdeFGzBhQ4VjK_w';
+var auth_token = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 // Uses spotify api to grab the album cover of a song.
 
 window.onload = function() {
@@ -23,7 +23,7 @@ function getSpotifyAuthToken() {
       if (this.status == 200) {
         //If it's ready, parse the JSON and set auth_token
         console.log("Data recieved.");
-        auth_token = JSON.parse(xhr.responseText);
+        auth_token = xhr.responseText;
         console.log(auth_token);
     }
   }
@@ -68,8 +68,9 @@ async function albumURL(songID) {
     let user = await getAlbumCoverURL(songID);
     console.log("Success! - " + user)
     getSongByID(songID).album_cover = user;
-    console.log(getSongByID(songID).album_cover)
+    //console.log(getSongByID(songID).album_cover)
   } catch (err) {
+    console.log("YO IT BROKE: " + getSongByID(songID))
   }
 }
 
