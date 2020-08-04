@@ -9917,20 +9917,15 @@ h3 {
     border-color: #dee2e6;
   }
 }
-/*CSS for filter settings list
-shamelessly stolen from w3schools*/
-ul, #filter-settings {
-  list-style-type: none;
-  padding-left: 0.5rem;
-}
-
+/*CSS for filter settings list from w3schools*/
 .body {
   background-color: #222;
 }
 
-#filter-settings {
-  margin: 0;
-  padding: 0;
+ul {
+  list-style-type: none;
+  margin: 0px;
+  padding-left: 8px;
 }
 
 .caret {
@@ -9973,7 +9968,7 @@ ul, #filter-settings {
 
 #loading-bar {
   position: absolute;
-  top: 0px;
+  top: -3px;
   left: 0px;
   width: 110%;
   height: 10px;
@@ -10004,7 +9999,7 @@ ul, #filter-settings {
 }
 
 .label-active {
-  color: #32d362;
+  color: #3cff77;
 }
 
 /*# sourceMappingURL=main.css.map */

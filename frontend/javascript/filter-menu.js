@@ -6,7 +6,7 @@
 //          HTML elements.
 //-----------------------------------
 
-//Changes the text color of the label when selected
+//Changes the text color of the label when the radio button is selected
 var lastRadioLabelId;
 var lastRadioChecked;
 function radioToggle(radio) {
@@ -41,19 +41,23 @@ resizeMenu();//Size the menu on page initialization
 //    Element Functions
 //==========================
 
-function searchBarInput(song) {
-  if (event.key === 'Enter') {
+//Takes a search request and feeds it into query()
+var searchInput = document.getElementById("search-input");
+console.log(searchInput.value);
+function searchBarInput(button) {
+  if (button || event.key == "Enter") {//
     event.preventDefault();//Stops the page from reloading
-    query(song)
+    query(searchInput.value);
   }
 }
 
+//Resizes the menu to fit the current screen height
 function resizeMenu() {
   var topDivHeight = document.getElementById("filter-settings").getBoundingClientRect().height;
   var bottomDivHeight = document.getElementById("search-algo").getBoundingClientRect().height;
   var container = document.getElementById("scroll-container");
-  if (topDivHeight + bottomDivHeight > window.innerHeight - 120) {
-    container.style.height = window.innerHeight - 120+ "px";
+  if (topDivHeight + bottomDivHeight > window.innerHeight - 128) {
+    container.style.height = window.innerHeight - 128 + "px";
   } else {
     container.style.height = topDivHeight + bottomDivHeight + 20 + "px";
   }
@@ -61,7 +65,7 @@ function resizeMenu() {
 
 //Changes the text below the search bar for the request status
 function searchAlert(status) {
-  var alertText = document.getElementById("searchHelp");
+  var alertText = document.getElementById("search-help");
   if (status >= 200 && status < 300) {//Successful responses
     if (status == 200) {
       alertText.innerText = "";
@@ -167,6 +171,7 @@ function loadList(nodes) {
           ul.appendChild(br);
         }
 
+        //Eventlistener for the tree list dropdowns
         span.addEventListener("click", function() {
           this.parentElement.querySelector(".nested").classList.toggle("active-list");
           this.classList.toggle("caret-down");
@@ -193,6 +198,7 @@ function loadList(nodes) {
   });
 }
 
+//Clears the search display of songs
 function clearSearchDisplay() {
   var searchDisplay = document.getElementById("search-list");
   //Clear the search window
@@ -205,7 +211,7 @@ function clearSearchDisplay() {
 }
 
 //Highlights successive nodes after a short delay, demonstrating the search methods in real-time
-var isAnimationActive
+var isAnimationActive;
 function animateSearch() {
   if (isAnimationActive) return;
   else isAnimationActive = true;
@@ -229,12 +235,12 @@ function animateSearch() {
 //https://www.freecodecamp.org/news/thrown-for-a-loop-understanding-for-loops-and-timeouts-in-javascript-558d8255d8a4/ 
 function animationFrame(songDropdown, node, index) {
   setTimeout(function() {
-    songDropdown.style.color = "rgb(255, 92, 92)";
-    selectNode(node);
-  }, index * 200);
+    songDropdown.style.color = "rgb(255, 92, 92)";//Color dropdown red
+    selectNode(node);//Color node red
+  }, index * 200);//Wait 200ms
 }
 
-//Reclose all the dropdowns and deselect the nodes
+//Reccolor all the dropdowns and deselect the nodes
 function cleanUpAnimation(songDropdowns) {
   setTimeout(function() {
     console.log("Animation done.");
