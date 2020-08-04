@@ -105,8 +105,7 @@ function getDataAsynchronous(url, songName) {
         console.log(jsonData);
         songData = getSongByName(songName);
 
-        // Write album_cover data for every song (produces 404 errors because graph is init before this completes)
-  
+        // Write album_cover data for every song
         for (node of jsonData.nodes) {
           albumURL(node.id);
         }
@@ -174,8 +173,6 @@ function deselectAll() {
 function initgraph(results, song) {
     let nodes = results.nodes;
     let edges = results.edges;
- 
-    
 
   console.log("Drawing graph...");
 
@@ -292,8 +289,7 @@ function initgraph(results, song) {
 
       node.graph_node = node; // Save graph node info for edges.
 
-      //White border
-      
+      //White border  
       context.beginPath();
       context.globalAlpha = 1;
      
@@ -317,10 +313,7 @@ function initgraph(results, song) {
       let image = new Image();
       let length = localRadiusFill * 2.4;
       if (node.album_cover) {
-        
         image.src = node.album_cover
-      // //This creates some 404 errors, because the graph is drawn before all album covers have been grabbed. 
-      // //Maybe wait until all have been grabbed before drawing the graph?
       }
       if (image.src) {
         context.drawImage(image, node.x - length/2, node.y - length/2, length, length);
