@@ -24,7 +24,6 @@ function getSpotifyAuthToken() {
         //If it's ready, parse the JSON and set auth_token
         console.log("Data recieved.");
         auth_token = xhr.responseText;
-        console.log(auth_token);
     }
   }
 };
