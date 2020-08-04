@@ -36,7 +36,7 @@ function getNeighbors(songID) {
 function depthFS(parent, numResults) {
     var returnList = [];
     var stack = [];
-    stack.unshift(parent);
+    stack.push(parent);
     var visited = [];
     visited.push(parent);
 
@@ -50,7 +50,7 @@ function depthFS(parent, numResults) {
         getNeighbors(cur.id).forEach(function(neighbor) {
             if (!visited.includes(neighbor)) {
                 visited.push(neighbor);
-                stack.unshift(neighbor);
+                stack.push(neighbor);
             }
         })
     }
@@ -61,7 +61,7 @@ function depthFS(parent, numResults) {
 function breadthFS(parent, numResults) {
     var returnList = [];
     var q = [];
-    q.unshift(parent);
+    q.push(parent);
     var visited = [];
     visited.push(parent);
 
@@ -75,7 +75,7 @@ function breadthFS(parent, numResults) {
         getNeighbors(cur.id).forEach(function(neighbor) {
             if (!visited.includes(neighbor)) {
                 visited.push(neighbor);
-                q.unshift(neighbor);
+                q.push(neighbor);
             }
         })
     }
