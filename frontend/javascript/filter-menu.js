@@ -156,6 +156,16 @@ function loadList(nodes) {
       ul.classList.add("ml-2");
       li.appendChild(ul);
 
+        var linkSpotify = document.createElement("a");
+        linkSpotify.innerText = "Open this song in Spotify";
+        linkSpotify.href = "javascript:window.open(\"spotify:track:" + node.id + "\");";
+        linkSpotify.style.color = "#72c0ff";
+        linkSpotify.classList.add("ml-2");
+        ul.appendChild(linkSpotify);
+
+        var br = document.createElement("br");
+        ul.appendChild(br);
+
         for (var key in node) {
           //Do not show these properties
           if (key == "name" || 
@@ -163,7 +173,10 @@ function loadList(nodes) {
           key == "y" || 
           key == "vx" || 
           key == "vy" || 
-          key == "index") continue;
+          key == "index" || 
+          key == "sim" ||
+          key == "graph_node" || 
+          key == "album_cover") continue;
           var property = document.createTextNode("- " + key + ": " + node[key]);
           ul.appendChild(property);
 
@@ -185,12 +198,12 @@ function loadList(nodes) {
           }
         }, );
 
-        var link = document.createElement("a");
-        link.innerText = "Search this song";
-        link.href = "javascript:query(\"" + node.name + "\");";
-        link.style.color = "#72c0ff";
-        link.classList.add("ml-2");
-        ul.appendChild(link);
+        var linkSearch = document.createElement("a");
+        linkSearch.innerText = "Search this song";
+        linkSearch.href = "javascript:query(\"" + node.name + "\");";
+        linkSearch.style.color = "#72c0ff";
+        linkSearch.classList.add("ml-2");
+        ul.appendChild(linkSearch);
 
         var br = document.createElement("br");
         ul.appendChild(br);
