@@ -166,6 +166,16 @@ function loadList(nodes) {
         var br = document.createElement("br");
         ul.appendChild(br);
 
+        var linkSearch = document.createElement("a");
+        linkSearch.innerText = "Query this song";
+        linkSearch.href = "javascript:query(\"" + node.name + "\");";
+        linkSearch.style.color = "#72c0ff";
+        linkSearch.classList.add("ml-2");
+        ul.appendChild(linkSearch);
+
+        var br = document.createElement("br");
+        ul.appendChild(br);
+
         for (var key in node) {
           //Do not show these properties
           if (key == "name" || 
@@ -197,13 +207,6 @@ function loadList(nodes) {
             deselectNode(node);
           }
         }, );
-
-        var linkSearch = document.createElement("a");
-        linkSearch.innerText = "Search this song";
-        linkSearch.href = "javascript:query(\"" + node.name + "\");";
-        linkSearch.style.color = "#72c0ff";
-        linkSearch.classList.add("ml-2");
-        ul.appendChild(linkSearch);
 
         var br = document.createElement("br");
         ul.appendChild(br);
