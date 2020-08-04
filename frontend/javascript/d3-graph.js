@@ -12,7 +12,6 @@
 //=================================
 
 var radius = 10;//Radius of the nodes
-
 var graphCanvas = d3.select("canvas").node();  //Canvas element where the graph will be drawn
 
 //When the web page size changes, change the size of the canvas to match
@@ -104,8 +103,12 @@ function getDataAsynchronous(url, songName) {
         jsonData = JSON.parse(xhr.responseText);
         console.log(jsonData);
         songData = getSongByName(songName);
-        //console.log(songData);
-        //breadthFirstSearch.forEach(function(a){console.log(a)});
+
+        // Write album_cover data for every song
+        for (node of jsonData.nodes) {
+          albumURL(node.id);
+        }
+       
         initgraph(jsonData, songName);//Initialize the graph
         similarity("none");
       } else {
@@ -196,6 +199,7 @@ function similarity(property) {
 //========================
 var songNode;
 function initgraph(results, song) {
+
   let nodes = results.nodes;
   let edges = results.edges;
  
@@ -291,12 +295,16 @@ function initgraph(results, song) {
     context.scale(transform.k, transform.k);//Zoom the camera to the last state
 
     //Draw the links between nodes
-    edges.forEach(function(d) {
+    edges.forEach(function(node) {
+      let graphNodes = [node.source.graph_node, node.target.graph_node]
       //White line
       context.beginPath();
-      context.moveTo(d.source.x, d.source.y);
-      context.lineTo(d.target.x, d.target.y);
-      context.strokeStyle = "#ffffff";
+      context.moveTo(node.source.x, node.source.y);
+      context.lineTo(node.target.x, node.target.y);
+      if (selectedNodes.includes(graphNodes[0]) || selectedNodes.includes(graphNodes[1])
+         || graphNodes[0] == closeNode || graphNodes[1] == closeNode) {
+        context.strokeStyle = "#9e2c2c";
+      } else context.strokeStyle = "#ffffff";
       context.lineWidth = 2;
       context.globalAlpha = 0.75;
       context.stroke();
@@ -304,38 +312,60 @@ function initgraph(results, song) {
 
     //Draw the nodes
     nodes.forEach(function(node) {
+
+       //If the current node is the searched/root node, make it bigger
+      let localRadiusBorder = node.name == song ? radius * 1.8 : radius * 1.2;
+      let localRadiusFill = node.name == song ? radius * 1.5 : radius;
+
+      node.graph_node = node; // Save graph node info for edges.
       if (node.name == song) songNode = node;
-      //White border
+
       context.beginPath();
       context.globalAlpha = 1;
-      //If the current node is the searched/root node, make it bigger
-      context.arc(node.x, node.y, node.name == song ? radius * 1.8 : radius * 1.2, 0, 2 * Math.PI, true);
-      context.fillStyle = "white";
-      context.fill();
-      context.closePath();
-      //Center fill
-      context.beginPath();
-      context.arc(node.x, node.y, node.name == song ? radius * 1.5 : radius, 0, 2 * Math.PI, true);
-      //If the node is selected or moused-over, fill with red
+     
+      //If the node is selected or moused-over, fill the edge with red
+      context.arc(node.x, node.y, localRadiusBorder, 0, 2 * Math.PI, true);
       if (selectedNodes.includes(node) || node == closeNode) {
         context.fillStyle = "#9e2c2c";
-      //If similarities are shown, fill with a shade of green corresponding to node.sim
-      } else if (node.sim >= 0) {
+        
+      } else context.fillStyle = "white";
+      context.fill();  
+      context.closePath();
+      
+      // Draw Fill (that will be replaced with an image)
+      context.save()
+      context.beginPath();
+      context.arc(node.x, node.y, localRadiusFill, 0, 2 * Math.PI, true);
+      context.fillStyle = "#9e2c2c";
+      let image;
+      if (node.sim >= 0) {
+        noImage = false;
         let r = 255 - 255 * (node.sim ** 2);
         let g = 255;
         let b = 255 - 255 * (node.sim ** 2);
         context.fillStyle = "rgb(" + r + ", " + g + ", " + b + ")";
       }
       else {
-        context.fillStyle = "#3ca0f3";
+       noImage = true;
       }
       context.globalAlpha = 1;
       context.fill();
-    });
-
-    nodes.forEach(function(node) {
+      context.closePath();
       
-    });
+      if (image) {
+        context.clip();
+
+        let image = new Image();
+        let length = localRadiusFill * 2.4;
+        if (node.album_cover) {
+          image.src = node.album_cover
+        }
+        if (image.src) {
+          context.drawImage(image, node.x - length/2, node.y - length/2, length, length);
+        }
+      }
+      context.restore();
+    });   
     
     nodes.forEach(function(node) {
       //Mouseover 
@@ -387,5 +417,6 @@ function initgraph(results, song) {
     //End drawing
     context.restore();
   }
-  console.log("Done drawing graph.");
-}
+  
+  console.log("Done drawing graph.")
+
