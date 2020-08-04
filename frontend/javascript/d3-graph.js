@@ -36,7 +36,7 @@ var simulation = d3.forceSimulation()
               .force("charge", d3.forceManyBody())//Forces from nodes
               .force("link", d3.forceLink().id(function(node) { return node.id; }))//Forces from links
               .alphaTarget(0.5)//Initial graph movement
-              .alphaDecay(0.05);//Physics slowdown after releasing drag
+              .alphaDecay(0.1);//Physics slowdown after releasing drag
 
 var transform = d3.zoomIdentity;//For zooming functionality
 
@@ -59,7 +59,7 @@ function getSearchResultsAsList() {
 
 //This function is from http://js-bits.blogspot.com/2010/07/canvas-rounded-corner-rectangles.html
 //Draws a rounded rectangle in the canvas with the specified properties
-function roundRect(ctx, x, y, width, height, radius, pointerSize) {
+function roundRect(ctx, x, y, width, height, radius, scaleFactor) {
   //Draw the rounded rectangle
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
@@ -74,10 +74,10 @@ function roundRect(ctx, x, y, width, height, radius, pointerSize) {
   ctx.closePath();
   ctx.fill();
 
-  //Draw a small triangle that points to the node
-  ctx.moveTo(x + width / 2 - 10 * pointerSize, y + height);
-  ctx.lineTo(x + width / 2, y + height + 10 * pointerSize);
-  ctx.lineTo(x + width / 2 + 10 * pointerSize, y + height);
+  //Draw a small triangle that points to the node, also scale it
+  ctx.moveTo(x + width / 2 - 10 / scaleFactor, y + height);
+  ctx.lineTo(x + width / 2, y + height + 10 / scaleFactor);
+  ctx.lineTo(x + width / 2 + 10 / scaleFactor, y + height);
   ctx.fill();
 }
 
@@ -181,12 +181,10 @@ function similarity(property) {
       var current = songNode[property.toLowerCase()];
       if (actual == current) {
         node.sim = 1;
-        //console.log(node.sim + " = " + 1);
       } else if (actual == 0 || current == 0) {
         node.sim = 0;
       } else if (Math.abs(actual) < Math.abs(current)) {
         node.sim = Math.abs(actual / current);
-        //console.log(node.sim + " = " + actual + " / (" + actual + " - " + current + ")");
       } else {    
         node.sim = Math.abs(current / actual);
       }
@@ -368,6 +366,7 @@ function initgraph(results, song) {
     });   
     
     nodes.forEach(function(node) {
+      var scaleFactor = transform.k;
       //Mouseover 
       if (node == closeNode && node.sim < 0) {
         //Display the song's name over the node if it is moused-over
@@ -377,17 +376,19 @@ function initgraph(results, song) {
         var nameWidth = context.measureText(node.name).width;
         var artistWidth = context.measureText(node.artists[0]).width;
         var maxWidth = nameWidth > artistWidth ? nameWidth : artistWidth;
-        roundRect(context, node.x - (maxWidth / 2) - 8, node.y - 88, maxWidth + 16, 74, 8, 1);
+        context.font = 24 / scaleFactor + "px sans-serif";
+        roundRect(context, node.x - ((maxWidth + 16) / 2) / scaleFactor, node.y - 88 / scaleFactor - 10, (maxWidth + 16) / scaleFactor, 74 / scaleFactor, 8 / scaleFactor, scaleFactor);
         //Draw the text
         context.fillStyle = "#ffffff";
-        context.fillText(node.name, node.x - nameWidth / 2, node.y - 62);
-        context.fillText(node.artists[0], node.x - artistWidth / 2, node.y - 24);
+        context.fillText(node.name, node.x - (nameWidth / 2) / scaleFactor, node.y - 62 / scaleFactor - 10);
+        context.fillText(node.artists[0], node.x - (artistWidth / 2) / scaleFactor, node.y - 24 / scaleFactor - 10);
         context.closePath();
         //Line in-between
         context.beginPath();
         context.strokeStyle = "#ffffff"
-        context.moveTo(node.x - 10, node.y - 50);
-        context.lineTo(node.x + 10, node.y - 50);
+        context.lineWidth = 2 / scaleFactor;
+        context.moveTo(node.x - 10 / scaleFactor, node.y - 50 / scaleFactor - 10);
+        context.lineTo(node.x + 10 / scaleFactor, node.y - 50 / scaleFactor - 10);
         context.stroke();
       } else if (node == closeNode && node.sim >= 0) {//If a similarity score exists, display the percentage
         //Display the song's name over the node if it is moused-over
@@ -395,29 +396,30 @@ function initgraph(results, song) {
         context.font = "24px sans-serif";
         context.fillStyle = "#4f4f4f";
         var percentage = (node.sim * 100).toPrecision(3) + "%";
+        var percentageWidth = context.measureText(percentage).width;
         var nameWidth = context.measureText(node.name).width;
         var artistWidth = context.measureText(node.artists[0]).width;
         var maxWidth = nameWidth > artistWidth ? nameWidth : artistWidth;
-        roundRect(context, node.x - (maxWidth / 2) - 8, node.y - 112, maxWidth + 16, 106, 8, 1);
+        context.font = 24 / scaleFactor + "px sans-serif";
+        roundRect(context, node.x - ((maxWidth + 16) / 2) / scaleFactor, node.y - 114 / scaleFactor - 10, (maxWidth + 16) / scaleFactor, 106 / scaleFactor, 8 / scaleFactor, scaleFactor);
         //Draw the text
         context.fillStyle = "#ffffff";
-        context.fillText(node.name, node.x - nameWidth / 2, node.y - 86);
-        context.fillText(node.artists[0], node.x - artistWidth / 2, node.y - 48);
-        context.fillText(percentage, node.x - context.measureText(percentage).width / 2, node.y - 16);
+        context.fillText(node.name, node.x - (nameWidth / 2) / scaleFactor, node.y - 86 / scaleFactor - 10);
+        context.fillText(node.artists[0], node.x - (artistWidth/ 2) / scaleFactor, node.y - 48 / scaleFactor - 10);
+        context.fillText(percentage, node.x - ((percentageWidth - 16) / 2) / scaleFactor, node.y - 16 / scaleFactor - 10);
         context.closePath();
         //Line in-between
         context.beginPath();
         context.strokeStyle = "#ffffff"
-        context.moveTo(node.x - 10, node.y - 74);
-        context.lineTo(node.x + 10, node.y - 74);
+        context.lineWidth = 2 / scaleFactor;
+        context.moveTo(node.x - 10 / scaleFactor, node.y - 74 / scaleFactor - 10);
+        context.lineTo(node.x + 10 / scaleFactor, node.y - 74 / scaleFactor - 10);
         context.stroke();
         context.closePath();
-      } 
+      }
     });
     //End drawing
     context.restore();
   }
-}
-  
   console.log("Done drawing graph.")
-
+}
