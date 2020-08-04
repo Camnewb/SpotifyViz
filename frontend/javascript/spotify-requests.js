@@ -3,7 +3,7 @@ var auth_token = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 // Uses spotify api to grab the album cover of a song.
 
 window.onload = function() {
-  getSpotifyAuthToken()
+  getSpotifyAuthToken();
 }
 function getSpotifyAuthToken() {
   var url = 'https://us-central1-spotifyviz-68e56.cloudfunctions.net/getSpotifyAccessToken'
@@ -13,11 +13,11 @@ function getSpotifyAuthToken() {
   var xhr = new XMLHttpRequest();
   
   xhr.onerror = function(e) {
-    console.log("Error.")
+    console.log("Error.");
   }
 
   xhr.onreadystatechange = function (e) {
-    console.log("Ready State changed: " + this.readyState +  " with Status: " + this.status)
+    console.log("Ready State changed: " + this.readyState +  " with Status: " + this.status);
     //On state change, check if the request is ready
     if (this.readyState == 4) {
       if (this.status == 200) {
@@ -66,11 +66,11 @@ async function getAlbumCoverURL(songID) {
 async function albumURL(songID) {
   try {
     let user = await getAlbumCoverURL(songID);
-    console.log("Success! - " + user)
+    console.log("Success! - " + songID);
     getSongByID(songID).album_cover = user;
     //console.log(getSongByID(songID).album_cover)
   } catch (err) {
-    console.log("YO IT BROKE: " + getSongByID(songID))
+    console.log("albumURL ERROR: " + songID);
   }
 }
 
