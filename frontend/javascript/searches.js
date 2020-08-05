@@ -19,8 +19,8 @@ function getSongByID(songID) {
 //From JSON file's edge list, get neighbors by a song's ID
 function getNeighbors(songID) {
     let data = getData();
-    //from the song's JSON data, 
-    //pull the edge list to see what neighbors the song has.
+    //From the song's JSON data, 
+    //Pull the edge list to see what neighbors the song has.
     var neighbors = [];
     
     data.edges.forEach(function(edge) {
