@@ -160,7 +160,6 @@ function loadList(nodes) {
         linkSpotify.innerText = "Open this song in Spotify";
         linkSpotify.href = "javascript:window.open(\"spotify:track:" + node.id + "\");";
         linkSpotify.style.color = "#72c0ff";
-        linkSpotify.classList.add("ml-2");
         ul.appendChild(linkSpotify);
 
         var br = document.createElement("br");
@@ -170,7 +169,6 @@ function loadList(nodes) {
         linkSearch.innerText = "Search this song here";
         linkSearch.href = "javascript:query(\"" + node.name + "\");";
         linkSearch.style.color = "#72c0ff";
-        linkSearch.classList.add("ml-2");
         ul.appendChild(linkSearch);
 
         var br = document.createElement("br");
