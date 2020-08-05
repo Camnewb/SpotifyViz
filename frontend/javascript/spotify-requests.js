@@ -1,6 +1,6 @@
-// Authentication token (v) Should create a function that generates it live instead. Oh well.
+//Authentication token (v) Should create a function that generates it live instead. Oh well.
 var auth_token = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-// Uses spotify api to grab the album cover of a song.
+//Uses spotify api to grab the album cover of a song.
 
 window.onload = function() {
   getSpotifyAuthToken();
@@ -67,7 +67,6 @@ async function albumURL(songID) {
     let user = await getAlbumCoverURL(songID);
     console.log("Success! - " + songID);
     getSongByID(songID).album_cover = user;
-    //console.log(getSongByID(songID).album_cover)
   } catch (err) {
     console.log("albumURL ERROR: " + songID);
   }
