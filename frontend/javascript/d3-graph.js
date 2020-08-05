@@ -47,11 +47,11 @@ function getData() {return jsonData;}
 
 function getSearchResultsAsList() {
   if (searchType == 1) {
-    return depthFS(songData, 50);
+    return depthFS(songData);
   }
   
   else if (searchType == 2) {
-    return breadthFS(songData, 50);
+    return breadthFS(songData);
   }
 
   else return jsonData.nodes;
