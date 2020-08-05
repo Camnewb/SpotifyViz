@@ -103,11 +103,6 @@ function getDataAsynchronous(url, songName) {
         jsonData = JSON.parse(xhr.responseText);
         console.log(jsonData);
         songData = getSongByName(songName);
-
-        // Write album_cover data for every song
-        for (node of jsonData.nodes) {
-          albumURL(node.id);
-        }
        
         initgraph(jsonData, songName);//Initialize the graph
         similarity("none");
@@ -197,6 +192,10 @@ function similarity(property) {
 //========================
 var songNode;
 function initgraph(results, song) {
+  //Write album_cover data for every song
+  for (node of jsonData.nodes) {
+    albumURL(node.id);
+  }
 
   let nodes = results.nodes;
   let edges = results.edges;
@@ -334,7 +333,6 @@ function initgraph(results, song) {
       context.save()
       context.beginPath();
       context.arc(node.x, node.y, localRadiusFill, 0, 2 * Math.PI, true);
-      context.fillStyle = "#9e2c2c";
       let image;
       if (node.sim >= 0) {
         image = false;
@@ -345,6 +343,8 @@ function initgraph(results, song) {
       }
       else {
        image = true;
+        context.fillStyle = "white";
+        image = true;
       }
       context.globalAlpha = 1;
       context.fill();
