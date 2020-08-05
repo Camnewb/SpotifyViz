@@ -41,9 +41,6 @@ function depthFS(parent) {
     visited.push(parent);
 
     while (stack.length > 0) {
-      //  if (returnList.length === numResults+1)
-           // break;
-        
         var cur = stack.pop();
         returnList.push(cur);
         
@@ -66,7 +63,6 @@ function breadthFS(parent) {
     visited.push(parent);
 
     while (q.length > 0) {
-        
         var cur = q.shift();
         returnList.push(cur);
         
@@ -78,8 +74,4 @@ function breadthFS(parent) {
         })
     }
     return returnList;
-}
-
-
-            }
 }
