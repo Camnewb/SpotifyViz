@@ -160,34 +160,42 @@ function loadList(nodes) {
         linkSpotify.innerText = "Open this song in Spotify";
         linkSpotify.href = "javascript:window.open(\"spotify:track:" + node.id + "\");";
         linkSpotify.style.color = "#72c0ff";
-        linkSpotify.classList.add("ml-2");
         ul.appendChild(linkSpotify);
 
         var br = document.createElement("br");
         ul.appendChild(br);
 
         var linkSearch = document.createElement("a");
-        linkSearch.innerText = "Query this song";
+        linkSearch.innerText = "Search this song here";
         linkSearch.href = "javascript:query(\"" + node.name + "\");";
         linkSearch.style.color = "#72c0ff";
-        linkSearch.classList.add("ml-2");
         ul.appendChild(linkSearch);
 
         var br = document.createElement("br");
         ul.appendChild(br);
 
+        var keys = new Map();
         for (var key in node) {
           //Do not show these properties
           if (key == "name" || 
           key == "x" || 
-          key == "y" || 
+          key == "y" ||
+          key == "fx" ||
+          key == "fy" || 
           key == "vx" || 
           key == "vy" || 
-          key == "index" || 
+          key == "index" ||
           key == "sim" ||
           key == "graph_node" || 
           key == "album_cover") continue;
-          var property = document.createTextNode("- " + key + ": " + node[key]);
+          else keys.set(key + '', node[key]);
+          //console.log(key + " : " + node[key])
+        }
+        // Ordered map https://stackoverflow.com/questions/31158902/is-it-possible-to-sort-a-es6-map-object/44109065
+        var orderedKeys = new Map([...keys.entries()].sort());
+        for (key of orderedKeys) {
+          var property = document.createTextNode("- " + key[0] + ": " + key[1]);
+          console.log(key[0] + " : " + key[1])
           ul.appendChild(property);
 
           var br = document.createElement("br");
