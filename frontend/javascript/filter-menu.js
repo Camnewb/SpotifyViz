@@ -190,7 +190,8 @@ function loadList(nodes) {
           key == "album_cover") continue;
           else keys.set(key + '', node[key]);
         }
-        // Ordered map https://stackoverflow.com/questions/31158902/is-it-possible-to-sort-a-es6-map-object/44109065
+        //Sort Map
+        //https://stackoverflow.com/questions/31158902/is-it-possible-to-sort-a-es6-map-object/44109065
         var orderedKeys = new Map([...keys.entries()].sort());
         for (key of orderedKeys) {
           var property = document.createTextNode("- " + key[0] + ": " + key[1]);
