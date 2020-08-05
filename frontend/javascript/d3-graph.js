@@ -271,7 +271,7 @@ function initgraph(results, song) {
     var mouse = transform.invert(d3.mouse(this));//Coordinates of the mouse must be inverted
     //Finds the node closest to the mouse coordinates. Returns undefined if the mouse is not within the node's radius
     closeNode = simulation.find(mouse[0], mouse[1], radius * 1.2);
-    tick();//Update the graph to show the highlighted node
+    if (closeNode) tick();//Update the graph to show the highlighted node
   });
   //On mouse click of a node, open a google search for the song and artist
   d3.select("canvas").on("click", function(){
