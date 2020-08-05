@@ -192,6 +192,8 @@ function similarity(property) {
 //========================
 var songNode;
 function initgraph(results, song) {
+function initgraph(results, songName) {
+
   //Write album_cover data for every song
   for (node of jsonData.nodes) {
     albumURL(node.id);
@@ -311,11 +313,11 @@ function initgraph(results, song) {
     nodes.forEach(function(node) {
 
        //If the current node is the searched/root node, make it bigger
-      let localRadiusBorder = node.name == song ? radius * 2.4 : radius * 1.2;
-      let localRadiusFill = node.name == song ? radius * 2 : radius;
+      let localRadiusBorder = node.name == songName ? radius * 2.4 : radius * 1.2;
+      let localRadiusFill = node.name == songName ? radius * 2 : radius;
 
       node.graph_node = node; // Save graph node info for edges.
-      if (node.name == song) songNode = node;
+      if (node.name == songName) songNode = node;
 
       context.beginPath();
       context.globalAlpha = 1;
