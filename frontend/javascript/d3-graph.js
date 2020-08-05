@@ -191,7 +191,6 @@ function similarity(property) {
 // Graph Initialization
 //========================
 var songNode;
-function initgraph(results, song) {
 function initgraph(results, songName) {
 
   //Write album_cover data for every song
