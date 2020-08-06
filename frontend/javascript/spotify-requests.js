@@ -1,15 +1,16 @@
-//Authentication token (v) Should create a function that generates it live instead. Oh well.
+//Spotify API Authentication token
 var auth_token = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-//Uses spotify api to grab the album cover of a song.
+
 
 window.onload = function() {
   getSpotifyAuthToken();
 }
+
 function getSpotifyAuthToken() {
   var url = 'https://us-central1-spotifyviz-68e56.cloudfunctions.net/getSpotifyAccessToken'
   console.log("Sending request for spotify auth token...");
-  //Create the request object
 
+  //Create the request object
   var xhr = new XMLHttpRequest();
   
   xhr.onerror = function(e) {
@@ -33,8 +34,9 @@ function getSpotifyAuthToken() {
   console.log("Request sent. Waiting for response...");
 }
 
+//A server request to the Spotify API to grab the album cover of a song
 async function getAlbumCoverURL(songID) {
- // Used https://stackoverflow.com/questions/61817528/vscode-no-debug-adapter-can-not-send-variables
+ //Used https://stackoverflow.com/questions/61817528/vscode-no-debug-adapter-can-not-send-variables
  
   var xhr = new XMLHttpRequest();
   return new Promise(function(resolve, reject) {
@@ -62,6 +64,7 @@ async function getAlbumCoverURL(songID) {
   });
 }
 
+//Grab album cover data from server request
 async function albumURL(songID) {
   try {
     let user = await getAlbumCoverURL(songID);

@@ -330,12 +330,13 @@ function initgraph(results, songName) {
       context.fill();  
       context.closePath();
       
-      // Draw Fill (that will be replaced with an image)
+      //Draw Fill (that will be replaced with an image)
       context.save()
       context.beginPath();
       context.arc(node.x, node.y, localRadiusFill, 0, 2 * Math.PI, true);
-      let image;
-      if (node.sim >= 0) {
+      let image; //Boolean flag that determines whether to draw node's album image
+     
+      if (node.sim >= 0) { //Color node based on similarity score
         image = false;
         let r = 255 - (255 * (node.sim))
         let g = 255 - (255 * (node.sim))
@@ -343,9 +344,8 @@ function initgraph(results, songName) {
         context.fillStyle = "rgb(" + r + ", " + g + ", " + b + ")";
       }
       else {
-       image = true;
-        context.fillStyle = "white";
         image = true;
+        context.fillStyle = "white";
       }
       context.globalAlpha = 1;
       context.fill();
@@ -353,15 +353,12 @@ function initgraph(results, songName) {
       
       if (image) {
         context.clip();
-
-        let image = new Image();
+        let img = new Image();
         let length = localRadiusFill * 2.4;
         if (node.album_cover) {
-          image.src = node.album_cover
-        }
-        if (image.src) {
-          context.drawImage(image, node.x - length/2, node.y - length/2, length, length);
-        }
+          img.src = node.album_cover
+          context.drawImage(img, node.x - length/2, node.y - length/2, length, length);
+        } 
       }
       context.restore();
     });   

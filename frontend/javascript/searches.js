@@ -32,7 +32,7 @@ function getNeighbors(songID) {
     return neighbors
 }
 
-//Depth-First Search
+//Depth-First Search (influenced by Module 7 Solutions 7.2a)
 function depthFS(parent) {
     var returnList = [];
     var stack = [];
