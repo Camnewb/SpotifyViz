@@ -103,11 +103,6 @@ function getDataAsynchronous(url, songName) {
         jsonData = JSON.parse(xhr.responseText);
         console.log(jsonData);
         songData = getSongByName(songName);
-
-        // Write album_cover data for every song
-        for (node of jsonData.nodes) {
-          albumURL(node.id);
-        }
        
         initgraph(jsonData, songName);//Initialize the graph
         similarity("none");
@@ -196,7 +191,12 @@ function similarity(property) {
 // Graph Initialization
 //========================
 var songNode;
-function initgraph(results, song) {
+function initgraph(results, songName) {
+
+  //Write album_cover data for every song
+  for (node of jsonData.nodes) {
+    albumURL(node.id);
+  }
 
   let nodes = results.nodes;
   let edges = results.edges;
@@ -312,11 +312,11 @@ function initgraph(results, song) {
     nodes.forEach(function(node) {
 
        //If the current node is the searched/root node, make it bigger
-      let localRadiusBorder = node.name == song ? radius * 2.4 : radius * 1.2;
-      let localRadiusFill = node.name == song ? radius * 2 : radius;
+      let localRadiusBorder = node.name == songName ? radius * 2.4 : radius * 1.2;
+      let localRadiusFill = node.name == songName ? radius * 2 : radius;
 
       node.graph_node = node; // Save graph node info for edges.
-      if (node.name == song) songNode = node;
+      if (node.name == songName) songNode = node;
 
       context.beginPath();
       context.globalAlpha = 1;
@@ -330,13 +330,13 @@ function initgraph(results, song) {
       context.fill();  
       context.closePath();
       
-      // Draw Fill (that will be replaced with an image)
+      //Draw Fill (that will be replaced with an image)
       context.save()
       context.beginPath();
       context.arc(node.x, node.y, localRadiusFill, 0, 2 * Math.PI, true);
-      context.fillStyle = "#9e2c2c";
-      let image;
-      if (node.sim >= 0) {
+      let image; //Boolean flag that determines whether to draw node's album image
+     
+      if (node.sim >= 0) { //Color node based on similarity score
         image = false;
         let r = 255 - (255 * (node.sim))
         let g = 255 - (255 * (node.sim))
@@ -344,7 +344,8 @@ function initgraph(results, song) {
         context.fillStyle = "rgb(" + r + ", " + g + ", " + b + ")";
       }
       else {
-       image = true;
+        image = true;
+        context.fillStyle = "white";
       }
       context.globalAlpha = 1;
       context.fill();
@@ -352,15 +353,12 @@ function initgraph(results, song) {
       
       if (image) {
         context.clip();
-
-        let image = new Image();
+        let img = new Image();
         let length = localRadiusFill * 2.4;
         if (node.album_cover) {
-          image.src = node.album_cover
-        }
-        if (image.src) {
-          context.drawImage(image, node.x - length/2, node.y - length/2, length, length);
-        }
+          img.src = node.album_cover
+          context.drawImage(img, node.x - length/2, node.y - length/2, length, length);
+        } 
       }
       context.restore();
     });   
