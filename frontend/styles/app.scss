@@ -28,7 +28,9 @@ $font-size-base: 0.9375rem;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
-/*CSS for filter settings list from w3schools*/
+/*Site CSS Starts Here*/
+/*CSS for tree-list is from https://www.w3schools.com/howto/howto_js_treeview.asp*/
+
 .body {
     background-color: #222;
 }
@@ -63,6 +65,18 @@ ul {
 .active-list {
     display: block;
 }
+
+.menu-collapse::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 25px;
+    color: #e7e7e7;
+    content: "";
+    display: inline-block;
+    margin-right: 18px;
+    margin-left: 8px;
+    cursor: pointer;
+  }
 
 .settings-input {
     height: 1.85rem;
@@ -116,19 +130,21 @@ ul {
 .autocomplete {
     /*the container must be positioned relative:*/
     position: relative;
-    display: inline-block;
+    overflow: auto;
+    height: 40px;
 }
+
 .autocomplete-items {
-    position: absolute;
+    position: fixed;
     border: 1px solid #d4d4d4;
     border-bottom: none;
     border-top: none;
     z-index: 99;
     /*position the autocomplete items to be the same width as the container:*/
-    top: 100%;
     left: 0;
     right: 0;
 }
+
 .autocomplete-items div {
     padding: 10px;
     cursor: pointer;

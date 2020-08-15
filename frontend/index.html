@@ -13,19 +13,18 @@
   </head>
   <body class="d-flex" style="pointer-events: none; overflow: hidden" onresize="resizeCanvas(); resizeMenu()">
     <!-- Main Card -->
-    <div class="card bg-light m-3 p-3" id="outer-card" style="pointer-events: auto; width: min-content; overflow: hidden; border: none;">
+    <div class="card bg-light m-3" id="outer-card" style="padding: 16px; pointer-events: auto; width: min-content; overflow: hidden; border: none;">
       <div id="loading-bar" class="progress-bar progress-bar-striped progress-bar-primary progress-bar-animated"></div>
-        <form>
-          <div class="form-group form-inline">
-            <div class="autocomplete  mr-2" style="width: 76%;">
+        <form id="search-form" style="height: 40px; overflow: visible;">
+            <span class="menu-collapse" id="btn-menu" style="float: left;"></span>
+            <button id="btn-search" type="button" class="btn btn-secondary" style="margin-left: 8px; height: 36px; float: right;" onclick="searchBarInput(true)">Search</button>
+            <div class="autocomplete mr-2" id="autocomplete">
               <input type="search" class="form-control" id="search-input" aria-describedby="search-help"
-            placeholder="Enter song title" style="width: 100%; height: 36px;" autocomplete="off" onkeydown="searchBarInput(false)">
+                placeholder="Enter song title" style="width: 100%; height: 36px;" autocomplete="off" onkeydown="searchBarInput(false)">
             </div>
-            <button id="btn-search" type="button" class="btn btn-secondary" style="width: 20%; height: 36px;" onclick="searchBarInput(true)">Search</button>
-            <small id="search-help" class="form-text"></small>
-          </div>
+            <small id="search-help" class="form-text" style="position: relative;"></small>
         </form>
-      <div id="scroll-container" style="width: min-content; overflow-y: scroll;">
+      <div id="scroll-container" style="width: min-content; margin-top: 8px; overflow-y: scroll;">
         <!-- Filter Settings Body -->
         <div id="filter-settings" class="card-body bg-dark p-3" style="width: 24rem; border-radius: 0.75rem;">
           <h4 class="card-title"><b>Song Similarity</b></h4>

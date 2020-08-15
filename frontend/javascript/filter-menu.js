@@ -6,6 +6,40 @@
 //          HTML elements.
 //-----------------------------------
 
+function formatMobile() {
+  if (window.innerWidth < 800) {
+    document.getElementById("outer-card").style.width = "100%";
+    document.getElementById("scroll-container").style.width = "100%";
+    document.getElementById("filter-settings").style.width = "100%";
+    document.getElementById("search-algo").style.width = "100%";
+    toggleCollapse(true);
+    document.getElementById("btn-menu").style.display = "block";
+  } else {
+    document.getElementById("outer-card").style.width = "";
+    document.getElementById("scroll-container").style.width = "min-content";
+    document.getElementById("filter-settings").style.width = "24rem";
+    document.getElementById("search-algo").style.width = "24rem";
+    toggleCollapse(false);
+    document.getElementById("btn-menu").style.display = "none";
+  }
+  document.dispatchEvent(new Event("click"));
+}
+
+var collapse;
+
+function toggleCollapse(collapseTheMenu) {
+  if (collapseTheMenu) {
+    collapse = false;
+    document.getElementById("scroll-container").style.display = "none";
+  } else {
+    collapse = true;
+    document.getElementById("scroll-container").style.display = "block";
+    resizeMenu();
+  }
+}
+
+document.getElementById("btn-menu").addEventListener("click", () => toggleCollapse(collapse));
+
 //Changes the text color of the label when the radio button is selected
 var lastRadioLabelId;
 var lastRadioChecked;
@@ -48,6 +82,7 @@ function searchBarInput(button) {
   if (button || event.key == "Enter") {//
     event.preventDefault();//Stops the page from reloading
     query(searchInput.value);
+    document.dispatchEvent(new Event("click"));//Close the autocomplete window
   }
 }
 
@@ -67,20 +102,25 @@ function resizeMenu() {
 function searchAlert(status) {
   var alertText = document.getElementById("search-help");
   if (status >= 200 && status < 300) {//Successful responses
+    //document.getElementById("search-form").setAttribute("style", "height: 40px; overflow: visible;")
+    document.getElementById("scroll-container").style.marginTop = "8px";
+    document.getElementById("outer-card").classList.remove("pb-4");
     if (status == 200) {
       alertText.innerText = "";
       alertText.classList.remove("text-danger");
     }
   } else if (status >= 500 && status < 600) {//Server error responses
+    document.getElementById("scroll-container").style.marginTop = "28px";
     alertText.classList.add("text-danger");
+    document.getElementById("search-form").setAttribute("style", "height: 40px; overflow: visible;")
+    document.getElementById("outer-card").classList.add("pb-4");
     if (status == 500) {
-      alertText.innerText = "Error: Could not find a song with that name. Remember search requests are case-sensitive.";
+      alertText.innerText = "Error: Could not find a song with that name.";
     } else {
       alertText.innerText = "Unknown Server Error - " + status + ": Try again or reload the page."
     }
   } else {//Other error responses
       alertText.innerText = "Unknown Error - " + status + "Try again or reload the page.";
-      
   }
 }
 
@@ -195,7 +235,7 @@ function loadList(nodes) {
         var orderedKeys = new Map([...keys.entries()].sort());
         for (key of orderedKeys) {
           var property = document.createTextNode("- " + key[0] + ": " + key[1]);
-          console.log(key[0] + " : " + key[1])
+          //console.log(key[0] + " : " + key[1])
           ul.appendChild(property);
 
           var br = document.createElement("br");

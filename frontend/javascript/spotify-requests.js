@@ -7,7 +7,7 @@ window.onload = function() {
 }
 function getSpotifyAuthToken() {
   var url = 'https://us-central1-spotifyviz-68e56.cloudfunctions.net/getSpotifyAccessToken'
-  console.log("Sending request for spotify auth token...");
+  console.log("Sending request for Spotify Authentication token...");
   //Create the request object
 
   var xhr = new XMLHttpRequest();
@@ -17,12 +17,12 @@ function getSpotifyAuthToken() {
   }
 
   xhr.onreadystatechange = function (e) {
-    console.log("Ready State changed: " + this.readyState +  " with Status: " + this.status);
+    //console.log("Ready State changed: " + this.readyState +  " with Status: " + this.status);
     //On state change, check if the request is ready
     if (this.readyState == 4) {
       if (this.status == 200) {
         //If it's ready, parse the JSON and set auth_token
-        console.log("Data recieved.");
+        console.log("Token recieved.");
         auth_token = xhr.responseText;
     }
   }
@@ -65,7 +65,7 @@ async function getAlbumCoverURL(songID) {
 async function albumURL(songID) {
   try {
     let user = await getAlbumCoverURL(songID);
-    console.log("Success! - " + songID);
+    //console.log("Success! - " + songID);
     getSongByID(songID).album_cover = user;
     //console.log(getSongByID(songID).album_cover)
   } catch (err) {

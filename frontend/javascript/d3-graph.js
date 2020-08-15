@@ -24,6 +24,8 @@ function resizeCanvas() {
     .attr("height", height + "px")
     .attr("width", width + "px")
     .node();
+
+    formatMobile();
 }
 
 resizeCanvas();
@@ -149,6 +151,8 @@ function query(song) {
   document.getElementById("btn-animate").style.display = "none";
   //Make sure the search bar text is our new query
   document.getElementById("search-input").value = song;
+  //Ensure the search bar has a height of 40px because it's dumb
+  document.getElementById("autocomplete").setAttribute("style","height: 40px;");
   //Finally, resize the menu
   resizeMenu();
 }
