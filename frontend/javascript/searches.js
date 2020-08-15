@@ -19,8 +19,8 @@ function getSongByID(songID) {
 //From JSON file's edge list, get neighbors by a song's ID
 function getNeighbors(songID) {
     let data = getData();
-    //from the song's JSON data, 
-    //pull the edge list to see what neighbors the song has.
+    //From the song's JSON data, 
+    //Pull the edge list to see what neighbors the song has.
     var neighbors = [];
     
     data.edges.forEach(function(edge) {
@@ -32,8 +32,8 @@ function getNeighbors(songID) {
     return neighbors
 }
 
-//Depth-First Search
-function depthFS(parent, numResults) {
+//Depth-First Search (influenced by Module 7 Solutions 7.2a)
+function depthFS(parent) {
     var returnList = [];
     var stack = [];
     stack.push(parent);
@@ -41,9 +41,6 @@ function depthFS(parent, numResults) {
     visited.push(parent);
 
     while (stack.length > 0) {
-        if (returnList.length === numResults+1)
-            break;
-        
         var cur = stack.pop();
         returnList.push(cur);
         
@@ -58,7 +55,7 @@ function depthFS(parent, numResults) {
 }
 
 //Breadth-First Search
-function breadthFS(parent, numResults) {
+function breadthFS(parent) {
     var returnList = [];
     var q = [];
     q.push(parent);
@@ -66,9 +63,6 @@ function breadthFS(parent, numResults) {
     visited.push(parent);
 
     while (q.length > 0) {
-        if (returnList.length === numResults+1)
-            break;
-        
         var cur = q.shift();
         returnList.push(cur);
         
@@ -80,31 +74,4 @@ function breadthFS(parent, numResults) {
         })
     }
     return returnList;
-}
-
-//Generate edges needed for D3 (USELESS NOW)
-function generateEdges(searchResult) {
-    class Edge {
-        constructor(source, target) {
-            this.source = source;
-            this.target = target;
-        }
-    }
-    edges = [];
-    
-    function getNextSong(songID) {
-        let index = searchResult.indexOf(getSongByID(songID));
-        if (index >= searchResult.length - 1 || index < 0)
-            return null;
-        else return searchResult[index + 1];
-    }
-
-    for (song of searchResult) {
-        let nextSong = getNextSong(song.id)
-        if (nextSong != null) {
-                let newEdge = new Edge(song, nextSong);
-                edges.push(newEdge);
-            }
-        }
-    return edges;
 }
