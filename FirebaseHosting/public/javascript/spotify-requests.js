@@ -1,15 +1,16 @@
-// Authentication token (v) Should create a function that generates it live instead. Oh well.
+//Spotify API Authentication token
 var auth_token = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-// Uses spotify api to grab the album cover of a song.
+
 
 window.onload = function() {
   getSpotifyAuthToken();
 }
+
 function getSpotifyAuthToken() {
   var url = 'https://us-central1-spotifyviz-68e56.cloudfunctions.net/getSpotifyAccessToken'
-  console.log("Sending request for spotify auth token...");
-  //Create the request object
+  console.log("Sending request for Spotify Authentication token...");
 
+  //Create the request object
   var xhr = new XMLHttpRequest();
   
   xhr.onerror = function(e) {
@@ -17,12 +18,12 @@ function getSpotifyAuthToken() {
   }
 
   xhr.onreadystatechange = function (e) {
-    console.log("Ready State changed: " + this.readyState +  " with Status: " + this.status);
+    //console.log("Ready State changed: " + this.readyState +  " with Status: " + this.status);
     //On state change, check if the request is ready
     if (this.readyState == 4) {
       if (this.status == 200) {
         //If it's ready, parse the JSON and set auth_token
-        console.log("Data recieved.");
+        console.log("Token recieved.");
         auth_token = xhr.responseText;
     }
   }
@@ -33,8 +34,9 @@ function getSpotifyAuthToken() {
   console.log("Request sent. Waiting for response...");
 }
 
+//A server request to the Spotify API to grab the album cover of a song
 async function getAlbumCoverURL(songID) {
- // Used https://stackoverflow.com/questions/61817528/vscode-no-debug-adapter-can-not-send-variables
+ //Used https://stackoverflow.com/questions/61817528/vscode-no-debug-adapter-can-not-send-variables
  
   var xhr = new XMLHttpRequest();
   return new Promise(function(resolve, reject) {
@@ -62,12 +64,12 @@ async function getAlbumCoverURL(songID) {
   });
 }
 
+//Grab album cover data from server request
 async function albumURL(songID) {
   try {
     let user = await getAlbumCoverURL(songID);
-    console.log("Success! - " + songID);
+    //console.log("Success! - " + songID);
     getSongByID(songID).album_cover = user;
-    //console.log(getSongByID(songID).album_cover)
   } catch (err) {
     console.log("albumURL ERROR: " + songID);
   }
