@@ -13,17 +13,18 @@
   </head>
   <body class="d-flex" style="pointer-events: none; overflow: hidden" onresize="resizeCanvas(); resizeMenu()">
     <!-- Main Card -->
-    <div class="card bg-light m-3 p-3" id="outer-card" style="pointer-events: auto; width: min-content; overflow: hidden; border: none;">
+    <div class="card bg-light m-3" id="outer-card" style="padding: 16px; pointer-events: auto; width: min-content; overflow: hidden; border: none;">
       <div id="loading-bar" class="progress-bar progress-bar-striped progress-bar-primary progress-bar-animated"></div>
-        <form>
-          <div class="form-group form-inline">
-            <input type="search" class="form-control mr-2" id="search-input" aria-describedby="search-help"
-            placeholder="Enter song title" style="width: 76%; height: 36px;" autocomplete="off" onkeydown="searchBarInput(false)">
-            <button id="btn-search" type="button" class="btn btn-secondary" style="width: 20%; height: 36px;" onclick="searchBarInput(true)">Search</button>
-            <small id="search-help" class="form-text"></small>
-          </div>
+        <form id="search-form" style="height: 40px; overflow: visible;">
+            <span class="menu-collapse" id="btn-menu" style="float: left;"></span>
+            <button id="btn-search" type="button" class="btn btn-secondary" style="margin-left: 8px; height: 36px; float: right;" onclick="searchBarInput(true)">Search</button>
+            <div class="autocomplete mr-2" id="autocomplete">
+              <input type="search" class="form-control" id="search-input" aria-describedby="search-help"
+                placeholder="Enter song title" style="width: 100%; height: 36px;" autocomplete="off" onkeydown="searchBarInput(false)">
+            </div>
+            <small id="search-help" class="form-text" style="position: relative;"></small>
         </form>
-      <div id="scroll-container" style="width: min-content; overflow-y: scroll;">
+      <div id="scroll-container" style="width: min-content; margin-top: 8px; overflow-y: scroll;">
         <!-- Filter Settings Body -->
         <div id="filter-settings" class="card-body bg-dark p-3" style="width: 24rem; border-radius: 0.75rem;">
           <h4 class="card-title"><b>Song Similarity</b></h4>
@@ -126,11 +127,12 @@
         </div>
       </div>
     </div>
+
     <!-- Graph Canvas -->
     <canvas id="graph-window" style="pointer-events: auto; position: absolute; z-index: -1;"></canvas>
 
     <!-- jQuery, Popper.js, Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="..\node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
 
@@ -140,15 +142,11 @@
     <!-- D3.js -->
     <script src="https://d3js.org/d3.v4.min.js"></script>
 
-    <!-- Algolia/InstantSearch -->
-    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
-    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
-
     <!-- External Javascript -->
     <script src="javascript/filter-menu.js"></script>
     <script src="javascript/d3-graph.js"></script>
     <script src="javascript/searches.js"></script>
     <script src="javascript/spotify-requests.js"></script>
+    <script src="javascript/autocomplete.js"></script>
   </body>
 </html>
